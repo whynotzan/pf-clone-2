@@ -24,7 +24,17 @@ function toProjectData(slug: string, entry: NonNullable<ProjectEntry>): ProjectD
     if (item.discriminant === "media") {
       const assets = item.value.assets.map(toMediaAsset).filter((a): a is ProjectMediaAsset => a !== null);
       if (assets.length === 0) return [];
-      return [{ type: "media" as const, block: { layout: item.value.layout, assets } }];
+      return [
+        {
+          type: "media" as const,
+          block: {
+            columns: item.value.columns,
+            gap: item.value.gap,
+            fullBleed: item.value.fullBleed,
+            assets,
+          },
+        },
+      ];
     }
     return [
       {

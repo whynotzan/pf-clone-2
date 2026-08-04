@@ -1,5 +1,10 @@
 import { config, fields, collection } from "@keystatic/core";
 
+function assetFilename(value: { filename: string } | string | null): string | null {
+  if (!value) return null;
+  return typeof value === "string" ? value : value.filename;
+}
+
 export default config({
   storage: { kind: "local" },
   collections: {
@@ -35,14 +40,24 @@ export default config({
             }),
             {
               media: fields.object({
-                layout: fields.select({
-                  label: "Layout",
-                  options: [
-                    { label: "Full width", value: "full" },
-                    { label: "Wide (centered)", value: "wide" },
-                    { label: "Pair (side by side)", value: "pair" },
-                  ],
-                  defaultValue: "wide",
+                columns: fields.integer({
+                  label: "Columns",
+                  description:
+                    "How many images/videos sit side by side in this row (1-4). Use 1 for a single full-row image.",
+                  defaultValue: 1,
+                  validation: { isRequired: true, min: 1, max: 4 },
+                }),
+                gap: fields.integer({
+                  label: "Gap (px)",
+                  description: "Spacing between images in this row.",
+                  defaultValue: 24,
+                  validation: { isRequired: true, min: 0, max: 200 },
+                }),
+                fullBleed: fields.checkbox({
+                  label: "Full width",
+                  description:
+                    "Ignore the 85% content cap and span edge-to-edge, like the entry/exit images.",
+                  defaultValue: false,
                 }),
                 assets: fields.array(
                   fields.object({
@@ -67,7 +82,15 @@ export default config({
                   }),
                   {
                     label: "Assets",
-                    itemLabel: (props) => props.fields.kind.value,
+                    itemLabel: (props) => {
+                      const kind = props.fields.kind.value;
+                      const name =
+                        kind === "video"
+                          ? assetFilename(props.fields.video.value)
+                          : assetFilename(props.fields.image.value);
+                      const icon = kind === "video" ? "🎬" : "🖼️";
+                      return `${icon} ${name ?? "(no file yet)"}`;
+                    },
                   }
                 ),
               }),
@@ -86,7 +109,27 @@ export default config({
           ),
           {
             label: "Body blocks",
-            itemLabel: (props) => props.discriminant,
+            itemLabel: (props) => {
+              if (props.discriminant === "text") {
+                const first = props.value.fields.paragraphs.elements[0]?.value ?? "";
+                const cta = props.value.fields.ctaLabel.value;
+                return `📝 Text — ${first || cta || "(empty)"}`;
+              }
+              const media = props.value.fields;
+              const columns = media.columns.value;
+              const fullBleed = media.fullBleed.value;
+              const names = media.assets.elements
+                .map((el) => {
+                  const kind = el.fields.kind.value;
+                  const name =
+                    kind === "video"
+                      ? assetFilename(el.fields.video.value)
+                      : assetFilename(el.fields.image.value);
+                  return name ?? "empty";
+                })
+                .join(", ");
+              return `🖼️ ${columns}-col${fullBleed ? " · full-width" : ""} — ${names}`;
+            },
           }
         ),
         exitImage: fields.image({

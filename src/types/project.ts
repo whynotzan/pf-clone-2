@@ -23,9 +23,14 @@ export interface ProjectMeta {
   year: string;
 }
 
-/** A row of body media: one full-width asset, one centered "wide" asset, or two side by side. */
+/** A row of body media: 1-4 assets laid out side by side in a grid. */
 export interface ProjectMediaBlock {
-  layout: "full" | "wide" | "pair";
+  /** How many assets sit side by side in this row (1-4). */
+  columns: number;
+  /** Spacing between assets in this row, in px. */
+  gap: number;
+  /** Ignore the 85% content cap and span edge-to-edge, like the entry/exit images. */
+  fullBleed: boolean;
   assets: ProjectMediaAsset[];
 }
 
