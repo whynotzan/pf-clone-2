@@ -1,0 +1,109 @@
+{
+  "name": "Matteo Meller",
+  "client": "Matteo Meller",
+  "type": "Brand Identity, Website",
+  "year": "2024",
+  "firstDescription": "Matteo is a young nutritionist who’s starting out after his years of study. His need was to have the tools to be able to \"swim\" in the market, finding his own place. The branding process was an incredible discovery of beautiful values, which led to the foundation of his brand identity",
+  "entryImage": "01K7YBMEEBCQDECMBTEZ96KF3C.webp",
+  "body": [
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YBNP4KG8WS1JM95YYMXPFA.webp" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YBP61KWASJ5JFFHG1CFQ38.webp" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YBPEW9X40KT8HMH0YB5QPG.webp" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YBPYG17A9HRWJ4HTQK9AQX.webp" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "pair",
+        "assets": [
+          { "kind": "image", "image": "01KGZRXFJS46FW9PX4PHNFNP91.jpeg" },
+          { "kind": "image", "image": "01K7YCEH77AYZA7Z2JZ1J7ZKR3.gif" }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YBR3561R9R4TQ47516XJ8W.webp" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YC2MCW9C45VP8Y3W9HYNPS.jpeg" }]
+      }
+    },
+    {
+      "discriminant": "text",
+      "value": {
+        "paragraphs": ["Visit the website!"],
+        "ctaLabel": "matteomeller.com",
+        "ctaHref": "https://matteomeller.com"
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YC6W00H9QD57Y6AP1BZ96J.webp" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YCHMESWDHSX6KYTGJR9TSV.gif" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01KGZRY911MTGDKRGGEDKG3SXJ.jpeg" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "wide",
+        "assets": [{ "kind": "image", "image": "01K7YC9HVGQ9VT27KAPJ7HE4FV.webp" }]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "layout": "pair",
+        "assets": [
+          { "kind": "image", "image": "01K7YCMP9YZTG7876T67W1MSX0.webp" },
+          { "kind": "image", "image": "01K7YCNDKYCV37XWE4351MQYDM.gif" }
+        ]
+      }
+    }
+  ],
+  "exitImage": "01K7YCAZXBCDMWZDDD483SKPA9.webp"
+}
