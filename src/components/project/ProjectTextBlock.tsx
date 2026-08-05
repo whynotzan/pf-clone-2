@@ -3,6 +3,9 @@ import type { ProjectTextBlock as ProjectTextBlockType } from "@/types/project";
 /** An interstitial paragraph block that sometimes appears between body media, e.g. a "Visit the website!" CTA. */
 export function ProjectTextBlock({ block }: { block: ProjectTextBlockType }) {
   const textStyle = { fontSize: block.fontSize, fontWeight: block.fontWeight, color: "#1b1b1b" };
+  // The original site weights the CTA one step above its paragraph. The CMS only exposes a
+  // block-level weight, so derive that emphasis rather than asking the author to set it.
+  const ctaStyle = { ...textStyle, fontWeight: block.fontWeight === 400 ? 500 : block.fontWeight };
   const justify = block.textAlign === "center" ? "center" : block.textAlign === "right" ? "flex-end" : "flex-start";
 
   return (
@@ -16,7 +19,7 @@ export function ProjectTextBlock({ block }: { block: ProjectTextBlockType }) {
         </span>
       ))}
       {block.cta && (
-        <a href={block.cta.href} target="_blank" rel="noreferrer" style={textStyle}>
+        <a href={block.cta.href} target="_blank" rel="noreferrer" style={ctaStyle}>
           {block.cta.label}
         </a>
       )}

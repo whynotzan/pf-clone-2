@@ -128,8 +128,8 @@ function Item({ item }: { item: CanvasItem }) {
           top: item.top,
           left: item.left,
           zIndex: item.zIndex,
-          fontSize: 13,
-          fontWeight: 700,
+          fontSize: 16,
+          fontWeight: 500,
           letterSpacing: "0.05em",
           color: "#1b1b1b",
         }}
