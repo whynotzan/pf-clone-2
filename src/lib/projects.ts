@@ -4,18 +4,19 @@ import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
 import type { ProjectBodyItem, ProjectData, ProjectMediaAsset } from "@/types/project";
 
-const IMAGE_PUBLIC_PATH = "/images/projects/";
-const VIDEO_PUBLIC_PATH = "/videos/projects/";
-const IMAGE_DIR = path.join(process.cwd(), "public", "images", "projects");
-
 const reader = createReader(process.cwd(), keystaticConfig);
 
 type ProjectEntry = Awaited<ReturnType<typeof reader.collections.projects.read>>;
 
-/** Real pixel dimensions of an image on disk, used to reserve layout space via CSS aspect-ratio and avoid load-in shift. */
-async function getImageDimensions(filename: string): Promise<{ width: number; height: number } | null> {
+/**
+ * Real pixel dimensions of an image on disk, used to reserve layout space via
+ * CSS aspect-ratio and avoid load-in shift. `publicPath` is the value Keystatic
+ * stores for image fields - already a full public path (e.g.
+ * "/images/projects/matteomeller/entryImage.webp"), not a bare filename.
+ */
+async function getImageDimensions(publicPath: string): Promise<{ width: number; height: number } | null> {
   try {
-    const { width, height } = await sharp(path.join(IMAGE_DIR, filename)).metadata();
+    const { width, height } = await sharp(path.join(process.cwd(), "public", publicPath)).metadata();
     if (!width || !height) return null;
     return { width, height };
   } catch {
@@ -25,11 +26,11 @@ async function getImageDimensions(filename: string): Promise<{ width: number; he
 
 async function toMediaAsset(asset: { kind: string; image: string | null; video: string | null }): Promise<ProjectMediaAsset | null> {
   if (asset.kind === "video" && asset.video) {
-    return { kind: "video", src: VIDEO_PUBLIC_PATH + asset.video };
+    return { kind: "video", src: asset.video };
   }
   if (asset.image) {
     const dimensions = await getImageDimensions(asset.image);
-    return { kind: "image", src: IMAGE_PUBLIC_PATH + asset.image, ...dimensions };
+    return { kind: "image", src: asset.image, ...dimensions };
   }
   return null;
 }
@@ -80,11 +81,11 @@ async function toProjectData(
 
   return {
     slug,
-    entryImage: { kind: "image", src: IMAGE_PUBLIC_PATH + entryImage, ...entryDimensions },
+    entryImage: { kind: "image", src: entryImage, ...entryDimensions },
     meta: { client: entry.client, type: entry.type, year: entry.year },
     firstDescription: entry.firstDescription,
     body,
-    exitImage: { kind: "image", src: IMAGE_PUBLIC_PATH + exitImage, ...exitDimensions },
+    exitImage: { kind: "image", src: exitImage, ...exitDimensions },
   };
 }
 
