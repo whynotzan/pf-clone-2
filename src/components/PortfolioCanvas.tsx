@@ -51,6 +51,19 @@ const ITEMS: CanvasItem[] = [
     href: "/matteomeller",
   },
   {
+    id: "matteomeller-reel",
+    top: 1484,
+    left: 898,
+    width: 371,
+    height: 464,
+    zIndex: 43,
+    kind: "video",
+    src: "/videos/home/01K7FVNCECYCS9NXXCMDEPJFNY.mp4",
+    poster: "/images/home/01KAVH6HP6ZK57SPGRTM885Q7M.jpeg",
+    alt: "Matteo Meller project video reel",
+    href: "/matteomeller",
+  },
+  {
     id: "nutrients-gif",
     top: 600,
     left: 633,
@@ -126,22 +139,39 @@ function Item({ item }: { item: CanvasItem }) {
     );
   }
 
-  const img = (
-    <Image
-      src={item.src}
-      alt={item.alt}
-      width={item.width}
-      height={item.height}
-      style={{
-        width: item.width,
-        height: item.height,
-        objectFit: "cover",
-        borderRadius: item.borderRadius ?? 0,
-        display: "block",
-      }}
-      unoptimized
-    />
-  );
+  const img =
+    item.kind === "video" ? (
+      <video
+        src={item.src}
+        poster={item.poster}
+        style={{
+          width: item.width,
+          height: item.height,
+          objectFit: "cover",
+          borderRadius: item.borderRadius ?? 0,
+          display: "block",
+        }}
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+    ) : (
+      <Image
+        src={item.src}
+        alt={item.alt}
+        width={item.width}
+        height={item.height}
+        style={{
+          width: item.width,
+          height: item.height,
+          objectFit: "cover",
+          borderRadius: item.borderRadius ?? 0,
+          display: "block",
+        }}
+        unoptimized
+      />
+    );
 
   return (
     <div
@@ -155,7 +185,11 @@ function Item({ item }: { item: CanvasItem }) {
       }}
     >
       {item.href ? (
-        <a href={item.href} aria-label={item.alt}>
+        <a
+          href={item.href}
+          aria-label={item.alt}
+          className="block transition-[filter,opacity] duration-200 ease-linear hover:opacity-80 hover:blur-[1px]"
+        >
           {img}
         </a>
       ) : (

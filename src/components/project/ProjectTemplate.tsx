@@ -21,7 +21,7 @@ export function ProjectTemplate({ project }: { project: ProjectData }) {
         <EntryImage image={project.entryImage} />
         <ProjectInfo meta={project.meta} firstDescription={project.firstDescription} />
 
-        <div className="flex flex-col gap-4 sm:gap-6">
+        <div className="mt-12 flex flex-col gap-4 sm:mt-20 sm:gap-6">
           {project.body.map((item, i) =>
             item.type === "media" ? (
               <ProjectMedia key={i} block={item.block} />
@@ -31,14 +31,16 @@ export function ProjectTemplate({ project }: { project: ProjectData }) {
           )}
         </div>
 
-        <div className="mt-4 sm:mt-6">
+        <div className="mt-16 sm:mt-24">
           <ExitImage image={project.exitImage} />
         </div>
+
+        <div className="w-full bg-background" style={{ height: 34 }} aria-hidden />
       </main>
 
       <Link
         href="/"
-        className="fixed bottom-0 left-0 z-50 flex w-full items-center gap-2 px-4 font-bold backdrop-blur-[30px]"
+        className="fixed bottom-0 left-0 z-50 flex w-full items-center gap-2 px-4 font-bold bg-background/23 backdrop-blur-[30px]"
         style={{ height: 34, fontSize: 17 }}
       >
         <span aria-hidden>←</span> Back

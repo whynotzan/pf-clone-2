@@ -9,6 +9,9 @@
 export interface ProjectMediaAsset {
   kind: "image" | "video";
   src: string;
+  /** Real pixel dimensions, when known (images only) - used to reserve layout space via aspect-ratio and avoid load-in shift. */
+  width?: number;
+  height?: number;
 }
 
 /** The hero image immediately below the header. Full-bleed, runs under the header blur. */
