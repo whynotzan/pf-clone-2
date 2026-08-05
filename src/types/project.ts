@@ -41,6 +41,9 @@ export interface ProjectMediaBlock {
 export interface ProjectTextBlock {
   paragraphs: string[];
   cta?: { label: string; href: string };
+  textAlign: "left" | "center" | "right";
+  fontSize: number;
+  fontWeight: 400 | 500 | 700;
 }
 
 export type ProjectBodyItem =

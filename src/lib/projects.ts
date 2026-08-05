@@ -67,6 +67,9 @@ async function toProjectData(
             block: {
               paragraphs: item.value.paragraphs.filter((p): p is string => !!p),
               cta: item.value.ctaLabel && item.value.ctaHref ? { label: item.value.ctaLabel, href: item.value.ctaHref } : undefined,
+              textAlign: item.value.textAlign,
+              fontSize: item.value.fontSize ?? 22,
+              fontWeight: Number(item.value.fontWeight) as 400 | 500 | 700,
             },
           },
         ];

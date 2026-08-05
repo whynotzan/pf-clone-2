@@ -115,7 +115,9 @@
           "Visit the website!"
         ],
         "ctaLabel": "matteomeller.com",
-        "ctaHref": "https://matteomeller.com"
+        "ctaHref": "https://matteomeller.com",
+        "textAlign": "center",
+        "fontWeight": "400"
       }
     },
     {

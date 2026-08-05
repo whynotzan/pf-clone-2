@@ -104,6 +104,31 @@ export default config({
                 ),
                 ctaLabel: fields.text({ label: "CTA label", defaultValue: "" }),
                 ctaHref: fields.text({ label: "CTA link", defaultValue: "" }),
+                textAlign: fields.select({
+                  label: "Text align",
+                  description: "Applies to this whole text block, including the CTA link.",
+                  options: [
+                    { label: "Left", value: "left" },
+                    { label: "Center", value: "center" },
+                    { label: "Right", value: "right" },
+                  ],
+                  defaultValue: "left",
+                }),
+                fontSize: fields.integer({
+                  label: "Font size (px)",
+                  defaultValue: 22,
+                  validation: { min: 10, max: 72 },
+                }),
+                fontWeight: fields.select({
+                  label: "Font weight",
+                  description: "Limited to the weights the site's font actually loads.",
+                  options: [
+                    { label: "Regular", value: "400" },
+                    { label: "Medium", value: "500" },
+                    { label: "Bold", value: "700" },
+                  ],
+                  defaultValue: "400",
+                }),
               }),
             }
           ),
