@@ -19,15 +19,23 @@ const CV: CvSection[] = [
 ];
 
 /**
- * The CV panel sticks to the bottom of the viewport (like the original site's
- * fixed Experience/Education block) while its own opaque background slides up
- * over the tail end of the portfolio canvas images scrolling behind it.
+ * The CV panel keeps its compact height and opaque background (so it still
+ * covers canvas images scrolling behind it) but sticks at the vertical centre
+ * of the viewport rather than above the footer, which centres the CV on screen.
+ *
+ * The sticky offset is half the 340px panel height back from mid-viewport, so
+ * the panel's centre — and the content centred within it — lands on 50vh.
+ * These class names are spelled out rather than built from a constant because
+ * Tailwind only generates classes it can find as literal strings.
  */
 export function ExperienceSection() {
   return (
-    <div className="sticky bottom-[34px] z-30 w-full bg-background" style={{ minHeight: 340 }}>
-      <div className="relative mx-auto w-full max-w-[1440px] px-4 py-10 sm:px-0">
-        <div className="flex gap-16 sm:absolute sm:left-[52%] sm:top-10 sm:gap-[130px]">
+    <div
+      className="sticky bottom-[34px] z-30 w-full bg-background sm:bottom-[calc(50vh-170px)] sm:h-[340px]"
+      style={{ minHeight: 340 }}
+    >
+      <div className="relative mx-auto w-full max-w-[1440px] px-4 py-10 sm:h-full sm:px-0">
+        <div className="flex gap-16 sm:absolute sm:left-[52%] sm:top-1/2 sm:-translate-y-1/2 sm:gap-[130px]">
           {CV.map((section) => (
             <div key={section.heading} style={{ width: 228 }}>
               <h3 style={{ fontSize: 17, fontWeight: 400, marginBottom: 24, color: "#1b1b1b" }}>
