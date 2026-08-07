@@ -41,10 +41,12 @@ and the grain overlay intensity. Both judged fine as they are — do not reopen 
 
 ### Carried out of Phase 1 on purpose
 
-- **CV panel mechanism** — ours is a sticky panel at the document end; the original keeps it
-  fixed and always mounted. Its internal spacing differs too (original: headings at the top of
-  each column, entries ~330px below). Deferred as a structural decision, not a tweak. This is
-  also why the homepage runs 4394px against the original's 4500px.
+- **CV panel mechanism — decided 2026-08-07: keep ours as is.** The original keeps that block
+  `position: fixed` and always mounted, revealing it by occlusion; ours is a sticky panel at the
+  document end. Alessandro chose to keep ours. Two knock-on differences are therefore accepted
+  rather than bugs: the internal spacing (the original puts each heading at the top of its column
+  with the entries ~330px below) and the homepage running 4394px against the original's 4500px.
+  Do not reopen any of this as a fidelity issue.
 - **Per-row media heights** — see Phase 2. The whole remaining project-page length gap.
 - **Template gaps the original uses** — partial-width offset single images, and uneven column
   splits (735/490); our grid only splits evenly. Phase 2.
@@ -54,7 +56,8 @@ and the grain overlay intensity. Both judged fine as they are — do not reopen 
 Make the Project Template genuinely reusable before pouring content into it.
 
 - [ ] Exercise the untested paths: 3- and 4-column media rows, multiple text blocks in sequence, a `fullBleed` row, a video asset
-- [ ] Decide whether text blocks need per-element styling (paragraph vs CTA) or stay block-level
+- [x] Text blocks stay block-level — decided 2026-08-07, no per-element styling. The CTA inherits
+      the block's weight by design; do not add a separate CTA weight field.
 - [ ] Confirm the entry/exit image crop (fixed 1492x754 / 1492x906 boxes + `object-cover`) holds for portrait, landscape, and square source images
 - [ ] Body media rows need a per-row height: the original crops each row to an authored height (1036, 705, 829, 788, 663 …) rather than using the asset's own aspect ratio, which is why our rows don't line up with it. Needs a schema field, so it was left out of Phase 1.
 - [ ] Settle the homepage → project linking model: every thumbnail currently hardcodes `/matteomeller` in `PortfolioCanvas.tsx`. Once real slugs exist, point each item at its own project.
