@@ -6,7 +6,7 @@ export function SiteFooter() {
   return (
     <footer
       className="fixed bottom-0 left-0 w-full z-50 bg-background/23 backdrop-blur-[30px]"
-      style={{ height: 34 }}
+      style={{ height: 35 }}
     >
       <span className={ITEM} style={{ left: "1.08%" }}>
         2026

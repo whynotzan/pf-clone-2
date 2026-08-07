@@ -9,7 +9,7 @@ export function SiteHeader() {
   return (
     <header
       className="fixed top-0 left-0 w-full z-50 bg-background/23 backdrop-blur-[30px]"
-      style={{ height: 34 }}
+      style={{ height: 35 }}
     >
       <Link href="/" className={ITEM} style={{ left: "0.91%" }}>
         Alessandro Zanatta
