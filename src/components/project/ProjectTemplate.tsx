@@ -35,13 +35,13 @@ export function ProjectTemplate({ project }: { project: ProjectData }) {
           <ExitImage image={project.exitImage} />
         </div>
 
-        <div className="w-full bg-background" style={{ height: 34 }} aria-hidden />
+        <div className="w-full bg-background" style={{ height: 35 }} aria-hidden />
       </main>
 
       <Link
         href="/"
-        className="fixed bottom-0 left-0 z-50 flex w-full items-center gap-2 px-4 font-bold bg-background/23 backdrop-blur-[30px]"
-        style={{ height: 34, fontSize: 17 }}
+        className="fixed bottom-0 left-0 z-50 flex w-full items-center gap-2 px-4 bg-background/23 backdrop-blur-[30px]"
+        style={{ height: 35, fontSize: 16, fontWeight: 500 }}
       >
         <span aria-hidden>←</span> Back
       </Link>
