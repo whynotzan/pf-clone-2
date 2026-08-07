@@ -27,7 +27,8 @@ Make the Project Template genuinely reusable before pouring content into it.
 
 - [ ] Exercise the untested paths: 3- and 4-column media rows, multiple text blocks in sequence, a `fullBleed` row, a video asset
 - [ ] Decide whether text blocks need per-element styling (paragraph vs CTA) or stay block-level
-- [ ] Confirm the entry/exit image `h-screen` + `object-cover` treatment holds for portrait, landscape, and square source images
+- [ ] Confirm the entry/exit image crop (fixed 1492x754 / 1492x906 boxes + `object-cover`) holds for portrait, landscape, and square source images
+- [ ] Body media rows need a per-row height: the original crops each row to an authored height (1036, 705, 829, 788, 663 …) rather than using the asset's own aspect ratio, which is why our rows don't line up with it. Needs a schema field, so it was left out of Phase 1.
 - [ ] Settle the homepage → project linking model: every thumbnail currently hardcodes `/matteomeller` in `PortfolioCanvas.tsx`. Once real slugs exist, point each item at its own project.
 
 ## Phase 3 — Mobile and responsive

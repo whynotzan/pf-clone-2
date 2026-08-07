@@ -68,9 +68,9 @@ middleware.ts                        # 404s /keystatic + /api/keystatic when pro
 Every project page shares one layout. Sections, in order, using the names Alessandro uses for them:
 **Entry Image** → **Client / Type / Year** + **First Description** → **Body** (media rows and text blocks) → **Exit Image**.
 
-Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` (ignore the 85% width cap). Text blocks carry their own `textAlign` / `fontSize` / `fontWeight`.
+Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` (ignore the 81.57% width cap — the original's 1217px column on its 1492px canvas). Text blocks carry their own `textAlign` / `fontSize` / `fontWeight`.
 
-Entry and Exit images are each exactly one viewport tall (`h-screen` + `object-cover`) and run under the fixed header/footer.
+Entry and Exit images are cropped to the original's fixed design boxes — 1492x754 and 1492x906, expressed as `calc(100vw * h / 1492)` with `object-cover`. They are deliberately **not** `h-screen`: the original's heights held at both 900px and 1300px viewport heights, so they scale with canvas width, not screen height. The entry image starts below the 35px header; the exit image runs flush to the bottom edge, behind the footer.
 
 ## CMS gotchas — each of these cost hours; do not relearn them
 
