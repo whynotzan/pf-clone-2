@@ -11,6 +11,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -25,6 +26,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -39,6 +41,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -53,6 +56,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -67,6 +71,7 @@
       "value": {
         "columns": 2,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -85,6 +90,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -99,6 +105,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -112,12 +119,17 @@
       "discriminant": "text",
       "value": {
         "paragraphs": [
-          "Visit the website!"
+          {
+            "text": "Visit the website!",
+            "fontSize": 22,
+            "fontWeight": "400"
+          }
         ],
         "ctaLabel": "matteomeller.com",
         "ctaHref": "https://matteomeller.com",
-        "textAlign": "center",
-        "fontWeight": "400"
+        "ctaFontSize": 22,
+        "ctaFontWeight": "400",
+        "textAlign": "center"
       }
     },
     {
@@ -125,6 +137,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -139,6 +152,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -153,6 +167,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -167,6 +182,7 @@
       "value": {
         "columns": 1,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {
@@ -181,6 +197,7 @@
       "value": {
         "columns": 2,
         "gap": 24,
+        "align": "center",
         "fullBleed": false,
         "assets": [
           {

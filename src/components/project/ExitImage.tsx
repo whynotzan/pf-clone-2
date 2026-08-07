@@ -10,7 +10,7 @@ import type { ExitImage as ExitImageType } from "@/types/project";
 export function ExitImage({ image }: { image: ExitImageType }) {
   return (
     <div className="relative w-full" style={{ height: "calc(100vw * 906 / 1492)" }}>
-      <MediaAsset asset={image} className="block h-full w-full object-cover" />
+      <MediaAsset asset={image} fill className="block h-full w-full object-cover" />
     </div>
   );
 }

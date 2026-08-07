@@ -68,7 +68,11 @@ middleware.ts                        # 404s /keystatic + /api/keystatic when pro
 Every project page shares one layout. Sections, in order, using the names Alessandro uses for them:
 **Entry Image** → **Client / Type / Year** + **First Description** → **Body** (media rows and text blocks) → **Exit Image**.
 
-Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` (ignore the 81.57% width cap — the original's 1217px column on its 1492px canvas). Text blocks carry their own `textAlign` / `fontSize` / `fontWeight`.
+Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` (ignore the 81.57% width cap — the original's 1217px column on its 1492px canvas), `rowHeight`, `columnWidths` and `align`. `rowHeight` and `columnWidths` are authored in px on the 1492 design canvas and scale via `calc(100vw * n / 1492)`, the same convention the entry/exit images use: `rowHeight` crops the row to an authored height the way the original does instead of following the asset's own proportions, and `columnWidths` (`"735 490"`) gives uneven splits — a single value narrower than the row makes a partial-width row that `align` pushes left or right. Both are optional and fall back to the old behaviour.
+
+Text blocks are styled **per piece**: each paragraph and the CTA carry their own `fontSize` and `fontWeight`, while `textAlign` stays block-level.
+
+**Keystatic drops any field sitting at its default when it rewrites a file**, so a value you just wrote can vanish from the JSON on the next save. Every field has to survive being absent — apply the fallback in `src/lib/projects.ts`, never assume the key is there.
 
 Entry and Exit images are cropped to the original's fixed design boxes — 1492x754 and 1492x906, expressed as `calc(100vw * h / 1492)` with `object-cover`. They are deliberately **not** `h-screen`: the original's heights held at both 900px and 1300px viewport heights, so they scale with canvas width, not screen height. The entry image starts below the 35px header; the exit image runs flush to the bottom edge, behind the footer.
 

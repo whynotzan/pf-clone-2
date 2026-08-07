@@ -34,16 +34,38 @@ export interface ProjectMediaBlock {
   gap: number;
   /** Ignore the 85% content cap and span edge-to-edge, like the entry/exit images. */
   fullBleed: boolean;
+  /**
+   * Authored row height in px on the 1492 design canvas. The original crops each row
+   * to a fixed height rather than following the asset's own aspect ratio. Undefined
+   * keeps the natural proportions.
+   */
+  rowHeight?: number;
+  /** Per-column widths in px on the 1492 canvas, for uneven splits (e.g. [735, 490]). Empty means equal columns. */
+  columnWidths: number[];
+  /** Where the row sits when `columnWidths` don't fill the available space. */
+  align: "left" | "center" | "right";
   assets: ProjectMediaAsset[];
 }
 
-/** An interstitial paragraph block, optionally with a call-to-action link (e.g. "Visit the website!"). */
-export interface ProjectTextBlock {
-  paragraphs: string[];
-  cta?: { label: string; href: string };
-  textAlign: "left" | "center" | "right";
+/** Size and weight carried by a single run of text - a paragraph or the CTA. */
+export interface TextStyle {
   fontSize: number;
   fontWeight: 400 | 500 | 700;
+}
+
+export interface ProjectParagraph extends TextStyle {
+  text: string;
+}
+
+/**
+ * An interstitial paragraph block, optionally with a call-to-action link (e.g.
+ * "Visit the website!"). Alignment is block-level; size and weight are per piece,
+ * so a block can mix a 400 paragraph with a 500 link like the original does.
+ */
+export interface ProjectTextBlock {
+  paragraphs: ProjectParagraph[];
+  cta?: { label: string; href: string } & TextStyle;
+  textAlign: "left" | "center" | "right";
 }
 
 export type ProjectBodyItem =

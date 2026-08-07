@@ -49,15 +49,42 @@ and the grain overlay intensity. Both judged fine as they are — do not reopen 
 - **Template gaps the original uses** — partial-width offset single images, and uneven column
   splits (735/490); our grid only splits evenly. Phase 2.
 
-## Phase 2 — Properly set up the template project
+## Phase 2 — Properly set up the template project — DONE (2026-08-07)
 
 Make the Project Template genuinely reusable before pouring content into it.
 
-- [ ] Exercise the untested paths: 3- and 4-column media rows, multiple text blocks in sequence, a `fullBleed` row, a video asset
-- [ ] Decide whether text blocks need per-element styling (paragraph vs CTA) or stay block-level
-- [ ] Confirm the entry/exit image crop (fixed 1492x754 / 1492x906 boxes + `object-cover`) holds for portrait, landscape, and square source images
-- [ ] Body media rows need a per-row height: the original crops each row to an authored height (1036, 705, 829, 788, 663 …) rather than using the asset's own aspect ratio, which is why our rows don't line up with it. Needs a schema field, so it was left out of Phase 1.
-- [ ] Settle the homepage → project linking model: every thumbnail currently hardcodes `/matteomeller` in `PortfolioCanvas.tsx`. Once real slugs exist, point each item at its own project.
+- [x] **Fixed a CMS Save blocker found on the way in.** `columns` and `gap` carried
+  `validation: { isRequired: true }` on `fields.integer()` — the exact trap documented in
+  `AGENTS.md`. Removed; defaults now applied in `src/lib/projects.ts`, matching `fontSize`.
+  Verified in a real browser: an existing entry now saves with zero validation errors.
+- [x] Exercise the untested paths: 3- and 4-column rows, sequential text blocks, a
+  `fullBleed` row, uneven splits, partial-width rows. All verified by rendering a throwaway
+  project through every option, then deleting it. **Video is the one gap** — no video asset
+  exists yet, so only the markup path was checked. Test a real file during Phase 4.
+- [x] Text blocks are **per piece**: every paragraph and the CTA carry their own `fontSize`
+  and `fontWeight`; alignment stays block-level. This is what makes the original's heavier
+  CTA expressible (the mismatch Phase 1 dropped) — the matteomeller CTA is still 400, and
+  changing it is now a CMS edit, not a code change.
+- [x] Entry/exit crop confirmed. They were passing `h-full` while `MediaAsset` also stamped
+  an `aspect-ratio` from the file — harmless (the browser ignores the ratio once both axes
+  resolve) but contradictory. They now pass `fill`, so the fixed box plus `object-cover`
+  crops any source orientation cleanly. *Which part* of a tall photo survives the crop stays
+  an editorial call per image — check it as each project is uploaded.
+- [x] Per-row media height: `rowHeight` on each media row, authored in px on the 1492 canvas
+  and scaled with `calc(100vw * h / 1492)` like the entry/exit images. Empty keeps the
+  asset's own proportions, so nothing changed for existing rows.
+- [x] Homepage → project linking model settled: the hrefs **stay in `PortfolioCanvas.tsx`**.
+  That file is exact-match design coordinates rather than content, so it is not worth a CMS
+  round-trip. Swapping the ten `/matteomeller` hrefs for real slugs is a Phase 4 edit.
+
+### What the template can now express
+
+Per media row: `columns` (1–4), `gap`, `fullBleed`, `rowHeight`, `columnWidths`, `align`.
+`columnWidths` takes canvas px — `"735 490"` gives the original's uneven split, and a single
+value narrower than the row makes a partial-width row that `align` pushes left or right.
+
+Keystatic omits any field sitting at its default when it rewrites a file, so every one of
+these has to survive being absent — `src/lib/projects.ts` supplies the fallbacks.
 
 ## Phase 3 — Mobile and responsive
 
@@ -72,8 +99,14 @@ The homepage canvas currently scales the whole 1440px composition uniformly (`Sc
 Only `matteomeller` exists so far. The original site has these projects (see `PAGE_TOPOLOGY.md`):
 Intersections · Miche · Anselmi · Nutrients · Visual Group · Attiva Servizi
 
+The staged media in `content/_input/03 Web Export/` (gitignored — large source exports) holds
+**ten**: Nutrients, Meller, Intersections, Miche, Bella Che, Anselmi, Galilei, Visual Group,
+Cortina 2K26, Attiva Servizi. Decide which of the four extras belong on the site before starting.
+
 - [ ] Create each project in `/keystatic` — **always upload through the CMS UI**, never by hand-editing JSON (see the gotchas in `AGENTS.md`)
-- [ ] Point each homepage thumbnail at its real slug
+- [ ] Set `rowHeight` per media row to match the original's authored heights
+- [ ] Upload a real video asset — the only template path Phase 2 could not test for lack of a file
+- [ ] Point each homepage thumbnail at its real slug (hand-edit `PortfolioCanvas.tsx`, per the Phase 2 decision)
 
 ## Phase 5 — Check
 

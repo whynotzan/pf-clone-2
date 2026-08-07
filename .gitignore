@@ -47,3 +47,6 @@ next-env.d.ts
 
 # Local temp files
 temp/
+
+# Source media staging - large exports, not part of the site build
+content/_input/

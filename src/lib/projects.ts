@@ -2,7 +2,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
-import type { ProjectBodyItem, ProjectData, ProjectMediaAsset } from "@/types/project";
+import type { ProjectBodyItem, ProjectData, ProjectMediaAsset, TextStyle } from "@/types/project";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 
@@ -35,6 +35,20 @@ async function toMediaAsset(asset: { kind: string; image: string | null; video: 
   return null;
 }
 
+/** "735 490" -> [735, 490]. Anything unparseable is dropped, so a typo degrades to equal columns. */
+function parseColumnWidths(raw: string | null): number[] {
+  if (!raw) return [];
+  return raw
+    .split(/[\s,]+/)
+    .filter(Boolean)
+    .map(Number)
+    .filter((n) => Number.isFinite(n) && n > 0);
+}
+
+function toTextStyle(fontSize: number | null, fontWeight: string): TextStyle {
+  return { fontSize: fontSize ?? 22, fontWeight: Number(fontWeight) as 400 | 500 | 700 };
+}
+
 async function toProjectData(
   slug: string,
   entry: NonNullable<ProjectEntry>,
@@ -53,23 +67,38 @@ async function toProjectData(
             {
               type: "media" as const,
               block: {
-                columns: item.value.columns,
-                gap: item.value.gap,
+                // `?? ` defaults stand in for the schema validation we can't use on
+                // integer fields - see the note in keystatic.config.ts.
+                columns: item.value.columns ?? 1,
+                gap: item.value.gap ?? 24,
                 fullBleed: item.value.fullBleed,
+                // Keystatic omits fields sitting at their default when it rewrites the
+                // file, so every one of these has to survive being absent.
+                rowHeight: item.value.rowHeight ?? undefined,
+                columnWidths: parseColumnWidths(item.value.columnWidths),
+                align: item.value.align ?? "center",
                 assets,
               },
             },
           ];
         }
+        const cta =
+          item.value.ctaLabel && item.value.ctaHref
+            ? {
+                label: item.value.ctaLabel,
+                href: item.value.ctaHref,
+                ...toTextStyle(item.value.ctaFontSize, item.value.ctaFontWeight),
+              }
+            : undefined;
         return [
           {
             type: "text" as const,
             block: {
-              paragraphs: item.value.paragraphs.filter((p): p is string => !!p),
-              cta: item.value.ctaLabel && item.value.ctaHref ? { label: item.value.ctaLabel, href: item.value.ctaHref } : undefined,
+              paragraphs: item.value.paragraphs
+                .filter((p) => !!p.text)
+                .map((p) => ({ text: p.text, ...toTextStyle(p.fontSize, p.fontWeight) })),
+              cta,
               textAlign: item.value.textAlign,
-              fontSize: item.value.fontSize ?? 22,
-              fontWeight: Number(item.value.fontWeight) as 400 | 500 | 700,
             },
           },
         ];
