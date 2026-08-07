@@ -6,20 +6,48 @@ Status: `[ ]` not started · `[~]` in progress · `[x]` done
 
 ---
 
-## Phase 1 — Fix the site as we see it
+## Phase 1 — Fix the site as we see it — DONE (2026-08-07)
 
 Visual fidelity pass against the original. Desktop only at this stage; responsive comes in Phase 3.
 
-- [ ] Walk the homepage and `/matteomeller` side by side with [alessandrozanatta.it](https://alessandrozanatta.it) and list what's off
-- [ ] Known font mismatches, found in a full audit (deferred at the time, still outstanding):
-  - [ ] `PortfolioCanvas.tsx` — "COMING SOON" badge is `700` / `13px`, original is `500` / `16px`
-  - [ ] `ProjectTemplate.tsx` — "Back" link is `700` (`font-bold`) / `17px`, original is `500` / `16px`
+- [x] Walk the homepage and `/matteomeller` side by side with [alessandrozanatta.it](https://alessandrozanatta.it) and list what's off
+- [x] Known font mismatches, found in a full audit:
+  - [x] `PortfolioCanvas.tsx` — "COMING SOON" badge `500` / `16px`
+  - [x] `ProjectTemplate.tsx` — "Back" link `500` / `16px`
+- [x] Canvas geometry — `DESIGN_WIDTH` is 1492, and the scale transform now actually applies
+- [x] `-10deg` rotation on the intersections hero and the video reel
+- [x] attivaservizi border-radius
+- [x] Bio column 343px / 22px gaps, typographic quotes; CV dates on ASCII hyphens
+- [x] 35px chrome bars; CV columns at 730px/1090px of 1440
+- [x] Project page: 81.57% content column, meta at 251/369/724, fixed-box hero images, year 2024
 
-Dropped by Alessandro on 2026-08-07, deliberately not tracked: the text-block CTA weight
-(`matteomeller.com` rendering `400` where the original uses `500`), and the grain overlay
-intensity. Both were judged fine as they are — do not reopen them as fidelity bugs.
+Verified by probing both sites at matched viewports: all ten canvas items land within 1px
+of the original at 1440px, and the project meta block matches exactly.
 
-Everything else checked in that audit (header, footer, bio, CV panel, project meta, first description) already matches on both weight and size.
+### How the original is built — measured, worth not rediscovering
+
+- Its canvas is authored at **1492px** and scales by `viewport / 1492`. Its *text* is authored
+  at **1440px** and scales by `viewport / 1440` — two different reference widths. That is why
+  the canvas lives in `ScaledCanvas` while the chrome, bio and CV keep plain pixel values, and
+  why `PAGE_TOPOLOGY.md` records odd fractional font sizes (17px x 1492/1440 = 17.6px).
+- The bio and the CV block are both `position: fixed` and permanently on screen; the canvas
+  images scroll over them, so the "reveal" is occlusion rather than any scroll effect.
+- It ships a hidden duplicate of every item for mobile, so DOM queries hit zero-size copies first.
+
+### Dropped, deliberately not tracked
+
+The text-block CTA weight (`matteomeller.com` rendering `400` where the original uses `500`)
+and the grain overlay intensity. Both judged fine as they are — do not reopen them as fidelity bugs.
+
+### Carried out of Phase 1 on purpose
+
+- **CV panel mechanism** — ours is a sticky panel at the document end; the original keeps it
+  fixed and always mounted. Its internal spacing differs too (original: headings at the top of
+  each column, entries ~330px below). Deferred as a structural decision, not a tweak. This is
+  also why the homepage runs 4394px against the original's 4500px.
+- **Per-row media heights** — see Phase 2. The whole remaining project-page length gap.
+- **Template gaps the original uses** — partial-width offset single images, and uneven column
+  splits (735/490); our grid only splits evenly. Phase 2.
 
 ## Phase 2 — Properly set up the template project
 
