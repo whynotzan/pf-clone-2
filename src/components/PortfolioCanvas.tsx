@@ -12,6 +12,7 @@ const ITEMS: CanvasItem[] = [
     width: 581,
     height: 533,
     zIndex: 13,
+    rotate: -10,
     src: "/images/home/01K7FSHN3PBRK38PQNRBV3S3XH.webp",
     alt: "Intersections poster on gravel",
     href: "/matteomeller",
@@ -57,6 +58,7 @@ const ITEMS: CanvasItem[] = [
     width: 371,
     height: 464,
     zIndex: 43,
+    rotate: -10,
     kind: "video",
     src: "/videos/home/01K7FVNCECYCS9NXXCMDEPJFNY.mp4",
     poster: "/images/home/01KAVH6HP6ZK57SPGRTM885Q7M.jpeg",
@@ -65,10 +67,10 @@ const ITEMS: CanvasItem[] = [
   },
   {
     id: "nutrients-gif",
-    top: 600,
-    left: 633,
-    width: 563,
-    height: 686,
+    top: 622,
+    left: 655,
+    width: 583,
+    height: 711,
     zIndex: 32,
     src: "/images/home/01K6ED322FX5PF204385YMPZ13.gif",
     alt: "Nutrients project animation",
@@ -116,6 +118,9 @@ const ITEMS: CanvasItem[] = [
     src: "/images/home/01K7CHHJ966KN521QRZEA3GEW7.webp",
     alt: "Attiva Servizi project",
     href: "/matteomeller",
+    // The original declares 934.572px here; the browser clamps it against the
+    // box, so keeping the declared value reproduces the same rounded shape.
+    borderRadius: 935,
   },
 ];
 
@@ -128,8 +133,8 @@ function Item({ item }: { item: CanvasItem }) {
           top: item.top,
           left: item.left,
           zIndex: item.zIndex,
-          fontSize: 13,
-          fontWeight: 700,
+          fontSize: 16,
+          fontWeight: 500,
           letterSpacing: "0.05em",
           color: "#1b1b1b",
         }}
@@ -138,6 +143,10 @@ function Item({ item }: { item: CanvasItem }) {
       </div>
     );
   }
+
+  // The original rotates the asset inside its positioned wrapper, so the tilt
+  // pivots on the item's centre and leaves the recorded top/left untouched.
+  const rotation = item.rotate ? { rotate: `${item.rotate}deg` } : null;
 
   const img =
     item.kind === "video" ? (
@@ -150,6 +159,7 @@ function Item({ item }: { item: CanvasItem }) {
           objectFit: "cover",
           borderRadius: item.borderRadius ?? 0,
           display: "block",
+          ...rotation,
         }}
         autoPlay
         loop
@@ -168,6 +178,7 @@ function Item({ item }: { item: CanvasItem }) {
           objectFit: "cover",
           borderRadius: item.borderRadius ?? 0,
           display: "block",
+          ...rotation,
         }}
         unoptimized
       />
