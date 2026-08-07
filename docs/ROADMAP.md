@@ -14,8 +14,10 @@ Visual fidelity pass against the original. Desktop only at this stage; responsiv
 - [ ] Known font mismatches, found in a full audit (deferred at the time, still outstanding):
   - [ ] `PortfolioCanvas.tsx` — "COMING SOON" badge is `700` / `13px`, original is `500` / `16px`
   - [ ] `ProjectTemplate.tsx` — "Back" link is `700` (`font-bold`) / `17px`, original is `500` / `16px`
-  - [ ] Text-block CTA (e.g. "matteomeller.com") — original weights the CTA `500` against its `400` paragraph. The CMS text-styling control unified both to one block-level weight, so the CTA lost its emphasis. Either give the CTA its own weight field, or set the block to Medium.
-- [ ] Grain overlay intensity — currently `multiply` at 10%; confirm it reads correctly on real displays
+
+Dropped by Alessandro on 2026-08-07, deliberately not tracked: the text-block CTA weight
+(`matteomeller.com` rendering `400` where the original uses `500`), and the grain overlay
+intensity. Both were judged fine as they are — do not reopen them as fidelity bugs.
 
 Everything else checked in that audit (header, footer, bio, CV panel, project meta, first description) already matches on both weight and size.
 
