@@ -189,6 +189,11 @@
   margin-left: 50.25%;
   font-size: 20px;
   font-weight: 700;
+  /* The drift is ~0.3px per frame. Rasterized in place, the glyphs snap to
+     whole pixels and that creep arrives as a 1px jump every few frames —
+     obvious during the hold, when this is the only thing moving. Its own
+     compositor layer lets the transform run at sub-pixel precision. */
+  will-change: transform;
 }
 
 .page-wipe[data-phase="covering"],
@@ -215,14 +220,17 @@
 .page-wipe[data-direction="up"][data-phase="covering"] .page-wipe__tag {
   animation: tag-drift-in-up calc(var(--wipe-cover) + var(--wipe-hold)) linear forwards;
 }
+/* Linear out as well as in. The panel's ease-in starts at zero velocity, which
+   on the tag read as a dead stop between the drift in and the drift out; a
+   constant creep throughout has no such seam. */
 .page-wipe[data-direction="up"][data-phase="revealing"] .page-wipe__tag {
-  animation: tag-drift-out-up var(--wipe-reveal) var(--wipe-in) forwards;
+  animation: tag-drift-out-up var(--wipe-reveal) linear forwards;
 }
 .page-wipe[data-direction="down"][data-phase="covering"] .page-wipe__tag {
   animation: tag-drift-in-down calc(var(--wipe-cover) + var(--wipe-hold)) linear forwards;
 }
 .page-wipe[data-direction="down"][data-phase="revealing"] .page-wipe__tag {
-  animation: tag-drift-out-down var(--wipe-reveal) var(--wipe-in) forwards;
+  animation: tag-drift-out-down var(--wipe-reveal) linear forwards;
 }
 
 @keyframes wipe-cover-up {
