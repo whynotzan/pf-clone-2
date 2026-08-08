@@ -259,6 +259,21 @@
   --page-arrive-ease: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
+/* Coming back down to the index is 700ms all in, and carries no tag — see
+   TIMINGS in TransitionProvider.tsx, which must stay in step. The hold goes to
+   zero with the tag: the hold existed so the word could be read, and with
+   nothing moving on the panel it would only read as a freeze. The page's own
+   settle is shortened to land with the rest, instead of trailing a second
+   behind a wipe that has already finished. */
+.page-wipe[data-direction="down"],
+.page-shift[data-direction="down"] {
+  --wipe-cover: 350ms;
+  --wipe-hold: 0ms;
+  --wipe-reveal: 350ms;
+  --page-arrive-delay: 170ms;
+  --page-arrive: 530ms;
+}
+
 .page-wipe {
   position: fixed;
   inset: 0;
@@ -319,6 +334,9 @@
 .page-wipe[data-direction="up"][data-phase="revealing"] .page-wipe__tag {
   animation: tag-drift-out-up var(--wipe-reveal) linear forwards;
 }
+/* Inert while the return to the index runs wordless — the provider renders no
+   tag element in that direction. Kept so the two directions stay symmetrical if
+   it ever gets one back. */
 .page-wipe[data-direction="down"][data-phase="covering"] .page-wipe__tag {
   animation: tag-drift-in-down calc(var(--wipe-cover) + var(--wipe-hold)) linear forwards;
 }

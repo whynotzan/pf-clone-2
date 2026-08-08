@@ -89,7 +89,9 @@ Entry and Exit images are cropped to the original's fixed design boxes — 1492x
 
 ### The page wipe
 
-Navigating between the homepage and a project runs an opaque panel across the viewport, holds, then carries it off the far edge. `TransitionProvider` owns a four-phase machine (`covering → revealing → settling → idle`) and renders the panel; `TransitionLink` hands a navigation to it; `PageShift` drifts the page underneath. Timings live in **both** `TransitionProvider.tsx` and `globals.css` (`--wipe-cover` / `--wipe-hold` / `--wipe-reveal`) — retune them together.
+Navigating between the homepage and a project runs an opaque panel across the viewport, holds, then carries it off the far edge. `TransitionProvider` owns a four-phase machine (`covering → revealing → settling → idle`) and renders the panel; `TransitionLink` hands a navigation to it; `PageShift` drifts the page underneath. Timings live in **both** `TransitionProvider.tsx` (`TIMINGS`) and `globals.css` (`--wipe-cover` / `--wipe-hold` / `--wipe-reveal`) — retune them together.
+
+The two directions are not symmetric. Going **up** into a project takes 1400ms and holds the destination's tag on the panel; coming back **down** to the index takes **700ms** and shows no tag at all. The hold is zero going down on purpose: it existed so the word could be read, and with nothing moving on the panel a hold only reads as a freeze.
 
 Things that are load-bearing and easy to undo by accident:
 
