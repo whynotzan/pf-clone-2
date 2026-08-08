@@ -60,23 +60,51 @@ Make the Project Template genuinely reusable before pouring content into it.
       the block's weight by design; do not add a separate CTA weight field.
 - [ ] Confirm the entry/exit image crop (fixed 1492x754 / 1492x906 boxes + `object-cover`) holds for portrait, landscape, and square source images
 - [ ] Body media rows need a per-row height: the original crops each row to an authored height (1036, 705, 829, 788, 663 …) rather than using the asset's own aspect ratio, which is why our rows don't line up with it. Needs a schema field, so it was left out of Phase 1.
-- [ ] Settle the homepage → project linking model: every thumbnail currently hardcodes `/matteomeller` in `PortfolioCanvas.tsx`. Once real slugs exist, point each item at its own project.
+- [x] Homepage → project linking model settled 2026-08-08. `CanvasItem.slug` carries each
+      item's real target, and `PortfolioCanvas` renders a link only for slugs that exist in
+      the CMS. Adding a project now needs no code change here. The three targets that had
+      been guessed wrong are corrected — see `PAGE_TOPOLOGY.md`.
+
+### Decide before building: the template cannot express three of the eight projects
+
+Surveying all eight pages on the original (inventory in `PAGE_TOPOLOGY.md`) turned up
+layout features beyond per-row heights and uneven splits: **rotation** (45° and 180°
+items), **overlapping/free-positioned images**, a **YouTube embed** on nutrients,
+**solid colour rectangles** on anselmi and attivaservizi, and **positioned text labels**
+on miche. The original is a canvas with nested groups, not a stack of rows.
+
+Per-row height + uneven splits gets roughly five of eight projects across faithfully.
+**miche, nutrients and bella need more than that.** Open question, to answer before
+writing schema: extend a media row toward a mini-canvas (per-asset offset, rotation,
+z-index), or accept simplified layouts for those three.
 
 ## Phase 3 — Mobile and responsive
 
 The homepage canvas currently scales the whole 1440px composition uniformly (`ScaledCanvas.tsx`), so on a phone everything shrinks proportionally rather than reflowing. `BioPanel` is desktop-only (`hidden lg:flex`).
 
-- [ ] Decide the mobile model: proportional scaling (current), a distinct mobile layout, or a hybrid. The original site ships separate mobile coordinates — see `docs/research/PAGE_TOPOLOGY.md`.
+- [ ] Decide the mobile model. **The original's answer is now known:** proportional scaling
+      against a *second* coordinate set — every item carries `area.m` beside `area.d`. The
+      homepage's mobile coordinates are tabulated in `docs/research/PAGE_TOPOLOGY.md`, so
+      this is a transcription job, not a measuring one. (The video reel even flips its tilt
+      from −10° to +10° on mobile.)
 - [ ] Project pages: check media grid, entry/exit images, sticky header/footer, and text blocks at phone and tablet widths
 - [ ] Verify the sticky CV reveal on short viewports (two canvas items carry z-index above the panel and may bleed through — `coming-soon` at z-48 and `matteomeller` at z-42 vs the panel's z-30)
 
 ## Phase 4 — Upload all project media
 
-Only `matteomeller` exists so far. The original site has these projects (see `PAGE_TOPOLOGY.md`):
-Intersections · Miche · Anselmi · Nutrients · Visual Group · Attiva Servizi
+Only `matteomeller` exists so far. The original has **eight** projects (see `PAGE_TOPOLOGY.md`):
+Intersections · Nutrients · Matteo Meller · **Bella che ti Spiazza** · Miche · Anselmi ·
+Visual Group · Attiva Servizi.
 
 - [ ] Create each project in `/keystatic` — **always upload through the CMS UI**, never by hand-editing JSON (see the gotchas in `AGENTS.md`)
-- [ ] Point each homepage thumbnail at its real slug
+- [x] Homepage thumbnails already point at their real slugs and light up automatically as
+      each project is created — no code change needed per project.
+- [ ] Watch the weight. Raw source in `content/_input/` runs 1–6MB per project (Cortina is
+      24MB), and `/matteomeller` alone already ships ~22MB. Prefer trimming exports before
+      upload over shipping originals.
+- [ ] **Gotcha:** `getProject` returns null unless *both* entry and exit images are set, so a
+      half-finished project 404s with no explanation while still appearing in the route list.
+      Upload both hero images first.
 
 ## Phase 5 — Check
 
