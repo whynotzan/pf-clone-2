@@ -40,22 +40,28 @@ Raycast shortcuts live outside this repo in `/Users/alessandro/raycast-scripts/`
 ```
 src/
   app/
-    page.tsx                    # Homepage
-    [slug]/page.tsx             # Project pages (SSG from CMS entries)
+    (site)/                     # route group: everything sharing the public chrome
+      layout.tsx                #   header + bio + bottom bar, mounted once (see below)
+      page.tsx                  #   Homepage
+      [slug]/page.tsx           #   Project pages (SSG from CMS entries)
     keystatic/[[...params]]/    # CMS admin UI  ("use client" required — see gotchas)
     api/keystatic/[...params]/  # CMS API route
-    globals.css                 # design tokens, grain overlay, hidden scrollbar
+    globals.css                 # design tokens, grain overlay, hidden scrollbar, page wipe
   components/
-    SiteHeader.tsx  SiteFooter.tsx   # fixed chrome, 34px tall, backdrop-blur + bg tint
+    SiteHeader.tsx  SiteBottomBar.tsx  # fixed chrome, 35px tall, backdrop-blur + bg tint
     PortfolioCanvas.tsx              # homepage: absolute-positioned items on a 1440px design canvas
     ScaledCanvas.tsx                 # scales that canvas to any viewport width
     BioPanel.tsx                     # fixed, vertically-centered bio (desktop only)
     ExperienceSection.tsx            # sticky CV reveal panel
+    transition/                      # the page wipe between homepage and projects
+      TransitionProvider.tsx         #   phase machine + the wipe panel itself
+      TransitionLink.tsx  PageShift.tsx
     project/                         # the "Project Template" system
       ProjectTemplate.tsx  EntryImage.tsx  ExitImage.tsx
       ProjectInfo.tsx  ProjectMedia.tsx  ProjectTextBlock.tsx  MediaAsset.tsx
       RevealOnView.tsx               # built but intentionally UNUSED — see roadmap
   lib/projects.ts                    # Keystatic reader → ProjectData
+  lib/transitionTags.ts              # the word the wipe holds, per route
   types/project.ts  types/portfolio.ts
 content/projects/<slug>/index.json   # CMS content (git-tracked)
 public/images/projects/<slug>/...    # CMS-managed assets (paths chosen by Keystatic)
@@ -78,6 +84,21 @@ Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` 
 Widths are absolute, so a row whose widths exceed the 1217px content column spills over its edges. The original's own 735/490 is such a case (1225px before the gap) and wants `fullBleed` ticked.
 
 Entry and Exit images are cropped to the original's fixed design boxes — 1492x754 and 1492x906, expressed as `calc(100vw * h / 1492)` with `object-cover`. They are deliberately **not** `h-screen`: the original's heights held at both 900px and 1300px viewport heights, so they scale with canvas width, not screen height. The entry image starts below the 35px header; the exit image runs flush to the bottom edge, behind the footer.
+
+### The page wipe
+
+Navigating between the homepage and a project runs an opaque panel across the viewport, holds, then carries it off the far edge. `TransitionProvider` owns a four-phase machine (`covering → revealing → settling → idle`) and renders the panel; `TransitionLink` hands a navigation to it; `PageShift` drifts the page underneath. Timings live in **both** `TransitionProvider.tsx` and `globals.css` (`--wipe-cover` / `--wipe-hold` / `--wipe-reveal`) — retune them together.
+
+Things that are load-bearing and easy to undo by accident:
+
+- **The chrome lives in `(site)/layout.tsx`, not in the pages.** Mounted once, it never unmounts across a navigation, so the header and bottom bar do not repaint mid-wipe. Moving either back into a page breaks that.
+- **`BioPanel` is in the layout for a second reason:** `PageShift` applies a transform during a transition, and a transformed ancestor becomes the containing block for `position: fixed` descendants — anything fixed inside the page would re-anchor to it.
+- **`BioPanel`'s wrapper must keep `pointer-events-none`.** It spans the viewport to centre its column, so without it the panel is a full-screen click shield and *no* poster is clickable at any width or scroll position. The text column carries `pointer-events-auto` so it stays selectable.
+- **`TransitionLink` uses `onNavigate`, not `onClick`,** so cmd-click, middle-click and external links keep behaving like ordinary links.
+- The z-order the wipe depends on: header 50, wipe panel 45, bottom bar 44, BioPanel 40, CV panel 30.
+- Reduced-motion visitors skip the wipe entirely and navigate instantly, rather than waiting through a delay with nothing to look at.
+
+**Never conclude a link works from a programmatic `element.click()`** — it skips hit-testing and passes even when the element is shielded. Use `document.elementFromPoint(x, y)` and assert the result is inside the link. Note the posters are a collage and genuinely overlap, so a covered centre is normal; what matters is that each poster is reachable *somewhere*.
 
 ## CMS gotchas — each of these cost hours; do not relearn them
 
