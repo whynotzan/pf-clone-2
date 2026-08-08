@@ -102,13 +102,47 @@ up past the 1217px content column overflow it. The original's own 735/490 split 
 (1225px before the gap) and needs **Full width** ticked, which centres it in the viewport instead.
 The field description says so.
 
-## Phase 3 — Mobile and responsive
+## Phase 3 — Mobile and responsive — DONE (2026-08-08)
 
-The homepage canvas currently scales the whole 1440px composition uniformly (`ScaledCanvas.tsx`), so on a phone everything shrinks proportionally rather than reflowing. `BioPanel` is desktop-only (`hidden lg:flex`).
+- [x] **Mobile model decided: hybrid.** The homepage canvas uses the original's own
+      mobile coordinates; everything else reaches its mobile form with plain CSS.
+- [x] Project pages: body rows collapse to one column at 18px margins, entry/exit images
+      take their own mobile boxes, chrome and text blocks checked at 375px
+- [x] The sticky CV reveal no longer bleeds — `PortfolioCanvas` isolates its stacking context,
+      so `coming-soon` (z-48) and the poster (z-42) can't paint over the panel's z-30
 
-- [ ] Decide the mobile model: proportional scaling (current), a distinct mobile layout, or a hybrid. The original site ships separate mobile coordinates — see `docs/research/PAGE_TOPOLOGY.md`.
-- [ ] Project pages: check media grid, entry/exit images, sticky header/footer, and text blocks at phone and tablet widths
-- [ ] Verify the sticky CV reveal on short viewports (two canvas items carry z-index above the panel and may bleed through — `coming-soon` at z-48 and `matteomeller` at z-42 vs the panel's z-30)
+### How the original does mobile — measured, worth not rediscovering
+
+It ships **two independently authored layouts**, not one that reflows: mobile against a
+**375px** reference, desktop against 1492, switching at **1024px** (which is Tailwind's `lg`).
+Every item carries both coordinate sets.
+
+**All of this came out of the original's own page payload, not out of a browser.** It embeds
+its complete layout table in `<script id="__NEXT_DATA__">` — `props.pageProps.project.layouts`
+gives the breakpoints, `props.pageProps.article.sections[].items` gives every item's `area.m`
+and `area.d`. Dimensions are stored as fractions of the layout width, so multiply by 375 or
+1492. Reach for that before measuring anything by hand; see
+`docs/research/PAGE_TOPOLOGY.md`.
+
+What it turned up that guesswork would have missed:
+
+- Miche's radius is a *fraction of the layout width*, so the same stored value is a full circle
+  on desktop and an ~80px rounded square on mobile. The video's tilt also flips, -10deg to +10deg.
+- The original **hides** "Graphic Design", "Portfolio" and "Say Hello!" from the header below
+  1024, showing a "Graphic Designer" label instead, and hides "LinkedIn" and "Download Area"
+  from the bottom bar. Four items at the desktop offsets collide well before 375px.
+- The bio stops being a fixed centred panel and joins the scroll flow (`MobileBio`), which is
+  why the mobile canvas stops at 2806 — where the original's bio begins.
+- Body media rows ignore `rowHeight`, `columnWidths` and `fullBleed` on mobile. Those are
+  measurements of the 1492px canvas; the original stacks every row at left 18 / width 338.
+
+Rather than the hidden duplicate of every item the original ships, each item carries both
+placements as CSS custom properties and one media query in `globals.css` picks a set — one DOM
+tree, so phones don't download the images twice.
+
+Verified in a headless browser at 375px: all nine posters land within 1px of the original's
+coordinates, all nine are hit-testable via `elementFromPoint`, no horizontal overflow on either
+page, and the 1440px desktop layout is unchanged.
 
 ## Phase 4 — Upload all project media
 

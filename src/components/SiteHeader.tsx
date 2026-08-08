@@ -14,16 +14,25 @@ export function SiteHeader() {
       <TransitionLink href="/" className={ITEM} style={{ left: "0.91%" }}>
         Alessandro Zanatta
       </TransitionLink>
-      <span className={ITEM} style={{ left: "25.69%" }}>
+      {/* The original hides these three below 1024 and shows a "Graphic Designer"
+          label instead — four items at these offsets collide well before 375px. */}
+      <span className={`${ITEM} hidden lg:block`} style={{ left: "25.69%" }}>
         Graphic Design
       </span>
-      <span className={ITEM} style={{ left: "50.25%" }}>
+      <span className={`${ITEM} hidden lg:block`} style={{ left: "50.25%" }}>
         Portfolio
       </span>
       {/* Right-anchored: the original's right edge sits at 99% at every width. */}
-      <a href="mailto:work@alessandrozanatta.it" className={ITEM} style={{ right: "1%" }}>
+      <a
+        href="mailto:work@alessandrozanatta.it"
+        className={`${ITEM} hidden lg:block`}
+        style={{ right: "1%" }}
+      >
         Say Hello!
       </a>
+      <span className={`${ITEM} lg:hidden`} style={{ left: "59.5%" }}>
+        Graphic Designer
+      </span>
     </header>
   );
 }

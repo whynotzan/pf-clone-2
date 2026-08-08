@@ -7,7 +7,7 @@ export function ProjectTextBlock({ block }: { block: ProjectTextBlockType }) {
 
   return (
     <div
-      className="mx-auto flex w-full max-w-[1217px] flex-wrap items-baseline gap-x-3 gap-y-2 px-4 py-6 sm:px-0"
+      className="mx-auto flex w-full max-w-[1217px] flex-wrap items-baseline gap-x-3 gap-y-2 px-[18px] py-6 lg:px-0"
       style={{ textAlign: block.textAlign, justifyContent: justify }}
     >
       {block.paragraphs.map((p, i) => (

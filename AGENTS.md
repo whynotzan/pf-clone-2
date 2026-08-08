@@ -33,6 +33,8 @@ npm run check            # lint + typecheck + build
 
 **Use port 4577, not 3000.** An unrelated long-running process occupies port 3000 on this machine and answers HTTP requests, so naive "is the server up?" checks return false positives. Verify the server is genuinely ours by checking response *content* (e.g. grep for "Alessandro Zanatta"), not just for a 200.
 
+**When working in a worktree, 4577 is probably not yours.** Alessandro's own dev server usually holds it, and parallel worktree sessions take 4578, 4579 and up — `npm run dev` then fails with `EADDRINUSE` in the background while `curl localhost:4577` happily returns *another branch's* build. That cost a full round of verification on 2026-08-08: the page measured as though none of the changes existed. Start on a port you have confirmed free (`lsof -nP -iTCP -sTCP:LISTEN | grep :45`), and grep the response for a string only your branch produces. Never kill the process on 4577 — it is his.
+
 Raycast shortcuts live outside this repo in `/Users/alessandro/raycast-scripts/`: `portfolio.sh` opens the site, `cms.sh` opens `/keystatic`. Both start the dev server on 4577 if it isn't running, sharing one instance.
 
 ## Architecture

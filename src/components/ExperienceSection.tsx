@@ -30,13 +30,14 @@ const CV: CvSection[] = [
  */
 export function ExperienceSection() {
   return (
-    <div
-      className="sticky bottom-[35px] z-30 w-full bg-background sm:bottom-[calc(50vh-170px)] sm:h-[340px]"
-      style={{ minHeight: 340 }}
-    >
-      <div className="relative mx-auto w-full max-w-[1440px] px-4 py-10 sm:h-full sm:px-0">
+    // Below 1024 this is an ordinary block in the scroll, as on the original:
+    // the sticky reveal is a desktop mechanism, and two 220px columns side by
+    // side overflow a 375px screen. The breakpoint was `sm` (640), which handed
+    // tablets the desktop placement well before the original switches to it.
+    <div className="relative z-30 min-h-[340px] w-full bg-background lg:sticky lg:bottom-[calc(50vh-170px)] lg:h-[340px]">
+      <div className="relative mx-auto w-full max-w-[1440px] px-[18px] py-10 lg:h-full lg:px-0">
         {/* Columns land on the original's 730px / 1090px (of 1440) with 220px-wide entries. */}
-        <div className="flex gap-16 sm:absolute sm:left-[50.69%] sm:top-1/2 sm:-translate-y-1/2 sm:gap-[140px]">
+        <div className="flex flex-col gap-10 lg:absolute lg:left-[50.69%] lg:top-1/2 lg:flex-row lg:-translate-y-1/2 lg:gap-[140px]">
           {CV.map((section) => (
             <div key={section.heading} style={{ width: 220 }}>
               <h3 style={{ fontSize: 17, fontWeight: 400, marginBottom: 24, color: "#1b1b1b" }}>

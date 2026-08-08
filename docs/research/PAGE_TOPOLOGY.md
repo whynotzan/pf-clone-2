@@ -2,6 +2,32 @@
 
 Site engine: cntrl.site (Next.js page builder). Body background `#eeeeee`. Font: custom "Overused" (400/500/700, self-hosted OTF) with system fallback.
 
+## Don't measure it — read its layout table
+
+The site embeds its **complete authored layout** in `<script id="__NEXT_DATA__">`, for every
+page and both layouts. One `curl` plus a JSON parse beats any amount of browser probing, and
+it is how the mobile coordinates in Phase 3 were obtained.
+
+```
+curl -sL --compressed -A "<a desktop UA>" https://alessandrozanatta.it -o og-home.html
+# parse the __NEXT_DATA__ script tag as JSON, then:
+props.pageProps.project.layouts             # [{id:"m",startsWith:0,exemplary:375},
+                                            #  {id:"d",startsWith:1024,exemplary:1440}]
+props.pageProps.article.sections[].items    # every item, with area.m and area.d
+```
+
+- `top/left/width/height/radius` are **fractions of the layout width**. Multiply by 375 for
+  mobile, and by **1492** for desktop — the measured canvas width, not the declared 1440.
+  A radius therefore resolves differently per layout (see Miche in `ROADMAP.md`).
+- `hidden.m` / `hidden.d` mark items dropped from a layout — this is how the mobile chrome
+  was established.
+- `item.type` is `richtext` (not `rich-text`), and its copy lives in `commonParams.text`,
+  never in `layoutParams`. Compounds and groups nest their children under `items`.
+- `commonParams.url` is the CDN asset URL; its ULID is what maps an item to our local file.
+- `link.url` is each thumbnail's **real** slug — `/intersections`, `/nutrients`, `/bella`,
+  `/miche`, `/anselmi`, `/visualgroup`, `/attivaservizi`. That is what Phase 4 needs to
+  replace the hardcoded `/matteomeller` on every homepage item.
+
 ## Scope built
 - `/` — Homepage (canvas)
 - `/matteomeller` — Project case study (image stack)

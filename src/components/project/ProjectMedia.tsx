@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { MediaAsset } from "./MediaAsset";
 import type { ProjectMediaBlock } from "@/types/project";
 
@@ -21,33 +22,34 @@ const JUSTIFY = { left: "start", center: "center", right: "end" } as const;
  * overflows the box while `h-full` resolves against the *grown* track and changes nothing.
  * Pinning the rows to `minmax(0, 1fr)` makes them share the container's height instead,
  * which is what lets `h-full` + `object-cover` crop.
+ *
+ * All of that is desktop-only. Below 1024 the original stacks every row into a single
+ * column at left 18 / width 338 of its 375px canvas — no splits, no full-bleed, and no
+ * authored height, since those numbers are measurements of the 1492px canvas and mean
+ * nothing on a phone. `globals.css` holds the two states; these are the desktop values.
  */
 export function ProjectMedia({ block }: { block: ProjectMediaBlock }) {
   const { columns, gap, fullBleed, rowHeight, columnWidths, align, assets } = block;
 
-  const height = rowHeight ? canvasPx(rowHeight) : undefined;
+  const height = rowHeight ? canvasPx(rowHeight) : "auto";
   const gridTemplateColumns = columnWidths.length
     ? columnWidths.map(canvasPx).join(" ")
     : `repeat(${columns}, minmax(0, 1fr))`;
 
+  const vars = {
+    "--row-max": fullBleed ? "none" : "81.57%",
+    "--row-cols": gridTemplateColumns,
+    "--row-justify": JUSTIFY[align],
+    "--row-h": height,
+    "--row-auto": rowHeight ? "minmax(0, 1fr)" : "auto",
+    "--row-asset-h": rowHeight ? "100%" : "auto",
+  } as CSSProperties;
+
   return (
-    <div className={fullBleed ? "w-full" : "mx-auto w-full max-w-[81.57%]"}>
-      <div
-        className={`grid ${height ? "overflow-hidden" : ""}`}
-        style={{
-          gridTemplateColumns,
-          gap,
-          justifyContent: JUSTIFY[align],
-          height,
-          gridAutoRows: height ? "minmax(0, 1fr)" : undefined,
-        }}
-      >
+    <div className="project-row-wrap" style={vars}>
+      <div className={`project-row ${rowHeight ? "lg:overflow-hidden" : ""}`} style={{ gap }}>
         {assets.map((asset, i) => (
-          <MediaAsset
-            key={i}
-            asset={asset}
-            className={`block w-full min-w-0 object-cover ${height ? "h-full min-h-0" : "h-auto"}`}
-          />
+          <MediaAsset key={i} asset={asset} className="project-row-asset block w-full min-w-0 object-cover" />
         ))}
       </div>
     </div>

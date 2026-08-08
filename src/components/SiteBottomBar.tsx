@@ -13,16 +13,18 @@ function HomeItems() {
       <span className={ITEM} style={{ left: "1.08%" }}>
         2026
       </span>
+      {/* Hidden below 1024, as on the original: at 375px these two collide with
+          the email, which is the only one of the three that has to survive. */}
       <a
         href="https://www.linkedin.com/in/alessandro-zanatta-515478223/"
         target="_blank"
         rel="noreferrer"
-        className={ITEM}
+        className={`${ITEM} hidden lg:block`}
         style={{ left: "25.68%" }}
       >
         LinkedIn
       </a>
-      <span className={ITEM} style={{ left: "50.68%" }}>
+      <span className={`${ITEM} hidden lg:block`} style={{ left: "50.68%" }}>
         Download Area
       </span>
       {/* Right-anchored: the original's right edge sits at 98.95% at every width. */}

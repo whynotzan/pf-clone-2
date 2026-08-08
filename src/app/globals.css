@@ -192,6 +192,47 @@
   }
 }
 
+/* -------------------------------------------------------- project body rows */
+/* Below 1024 the original stacks every body row into one column at left 18 /
+   width 338 of its 375px canvas: no multi-column splits, no full-bleed break-
+   out, and no authored row height — those are measurements of the 1492px
+   desktop canvas and crop nonsensically on a phone, so assets keep their own
+   proportions instead. ProjectMedia supplies the desktop values. */
+
+.project-row-wrap {
+  width: 100%;
+}
+
+.project-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding-inline: 18px;
+}
+
+.project-row-asset {
+  height: auto;
+}
+
+@media (min-width: 1024px) {
+  .project-row-wrap {
+    margin-inline: auto;
+    max-width: var(--row-max);
+  }
+
+  .project-row {
+    grid-template-columns: var(--row-cols);
+    justify-content: var(--row-justify);
+    height: var(--row-h);
+    grid-auto-rows: var(--row-auto);
+    padding-inline: 0;
+  }
+
+  .project-row-asset {
+    height: var(--row-asset-h);
+    min-height: 0;
+  }
+}
+
 /* ---------------------------------------------------------------- page wipe */
 /* One opaque panel travels across the viewport, holds, then carries on off the
    far edge in the same direction. Cover eases *out* and reveal eases *in* so
