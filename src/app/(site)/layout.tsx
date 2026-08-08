@@ -1,5 +1,7 @@
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteBottomBar } from "@/components/SiteBottomBar";
+import { BioPanel } from "@/components/BioPanel";
+import { PageShift } from "@/components/transition/PageShift";
 import { TransitionProvider } from "@/components/transition/TransitionProvider";
 
 /**
@@ -13,7 +15,8 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <TransitionProvider>
       <SiteHeader />
-      {children}
+      <BioPanel />
+      <PageShift>{children}</PageShift>
       <SiteBottomBar />
     </TransitionProvider>
   );

@@ -154,6 +154,9 @@
   --wipe-in: cubic-bezier(0.7, 0, 0.84, 0);
   /* How far the tag drifts on its own, independent of the panel. */
   --wipe-tag-drift: 14px;
+  /* How far the page itself drifts. Measured ~5% of viewport height on the
+     reference; enough to feel, small enough not to read as a slide. */
+  --page-drift: 5vh;
 }
 
 .page-wipe {
@@ -248,9 +251,43 @@
   to { transform: translateY(var(--wipe-tag-drift)); }
 }
 
+/* The page's own drift, one step behind the panel. Deliberately small — it is
+   meant to register as departure, not as the page being thrown. The two halves
+   meet while the panel fully covers, so the jump between them is never seen. */
+.page-shift[data-direction="up"][data-phase="covering"] {
+  animation: page-depart-up var(--wipe-cover) var(--wipe-out) forwards;
+}
+.page-shift[data-direction="up"][data-phase="revealing"] {
+  animation: page-arrive-up var(--wipe-reveal) var(--wipe-out) forwards;
+}
+.page-shift[data-direction="down"][data-phase="covering"] {
+  animation: page-depart-down var(--wipe-cover) var(--wipe-out) forwards;
+}
+.page-shift[data-direction="down"][data-phase="revealing"] {
+  animation: page-arrive-down var(--wipe-reveal) var(--wipe-out) forwards;
+}
+
+@keyframes page-depart-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(var(--page-drift) * -1)); }
+}
+@keyframes page-arrive-up {
+  from { transform: translateY(var(--page-drift)); }
+  to { transform: translateY(0); }
+}
+@keyframes page-depart-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(var(--page-drift)); }
+}
+@keyframes page-arrive-down {
+  from { transform: translateY(calc(var(--page-drift) * -1)); }
+  to { transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page-wipe,
-  .page-wipe__tag {
+  .page-wipe__tag,
+  .page-shift {
     animation: none !important;
   }
   .page-wipe[data-phase="covering"],
