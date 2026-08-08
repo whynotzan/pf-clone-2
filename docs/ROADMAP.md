@@ -47,20 +47,48 @@ and the grain overlay intensity. Both judged fine as they are — do not reopen 
   rather than bugs: the internal spacing (the original puts each heading at the top of its column
   with the entries ~330px below) and the homepage running 4394px against the original's 4500px.
   Do not reopen any of this as a fidelity issue.
-- **Per-row media heights** — see Phase 2. The whole remaining project-page length gap.
+- **Per-row media heights** — done in Phase 2 (the `height` field).
 - **Template gaps the original uses** — partial-width offset single images, and uneven column
-  splits (735/490); our grid only splits evenly. Phase 2.
+  splits (735/490); our grid only splits evenly. Still open — now tracked explicitly in the
+  Phase 2 checklist rather than only mentioned here.
 
 ## Phase 2 — Properly set up the template project
 
 Make the Project Template genuinely reusable before pouring content into it.
 
-- [ ] Exercise the untested paths: 3- and 4-column media rows, multiple text blocks in sequence, a `fullBleed` row, a video asset
+- [x] Exercise the untested paths: 3- and 4-column media rows, multiple text blocks in sequence, a `fullBleed` row, a video asset — done 2026-08-08, see "What exercising the template found" below
 - [x] Text blocks stay block-level — decided 2026-08-07, no per-element styling. The CTA inherits
       the block's weight by design; do not add a separate CTA weight field.
-- [ ] Confirm the entry/exit image crop (fixed 1492x754 / 1492x906 boxes + `object-cover`) holds for portrait, landscape, and square source images
-- [ ] Body media rows need a per-row height: the original crops each row to an authored height (1036, 705, 829, 788, 663 …) rather than using the asset's own aspect ratio, which is why our rows don't line up with it. Needs a schema field, so it was left out of Phase 1.
-- [ ] Settle the homepage → project linking model: every thumbnail currently hardcodes `/matteomeller` in `PortfolioCanvas.tsx`. Once real slugs exist, point each item at its own project.
+- [x] Confirm the entry/exit image crop (fixed 1492x754 / 1492x906 boxes + `object-cover`) holds for portrait, landscape, and square source images — done 2026-08-08, all six ratio/slot combinations centre-crop correctly
+- [x] Body media rows need a per-row height: the original crops each row to an authored height (1036, 705, 829, 788, 663 …) rather than using the asset's own aspect ratio, which is why our rows don't line up with it. Needs a schema field, so it was left out of Phase 1. — added 2026-08-08 as the `height` field
+- [ ] **Uneven column splits.** The original uses splits like 735/490; `ProjectMedia` only does
+      `repeat(N, minmax(0, 1fr))`, so every column in a row is the same width. Needs a schema
+      decision (a per-row ratio? a per-asset span?) before it can be built.
+- [ ] **Partial-width offset single images.** The original insets some single images rather than
+      running them at the full content width. No way to express this in the schema today.
+- [ ] ~~Settle the homepage → project linking model~~ — **moved to Phase 4.** Every thumbnail
+      hardcodes `/matteomeller` in `PortfolioCanvas.tsx`, and it cannot be fixed until the other
+      projects exist and have real slugs.
+
+### What exercising the template found
+
+Built three throwaway projects covering every unused path, measured them in a real browser, then
+deleted them. Two genuine bugs, both now fixed:
+
+- **Authored row heights overflowed their box.** Setting `height` on the grid was not enough —
+  grid tracks size to their content, so a tall asset simply overflowed while `h-full` resolved
+  against the grown track. A 400px row was rendering a 1106px image. Fixed by pinning the implicit
+  rows to `minmax(0, 1fr)`. The markup looked correct throughout; only measuring the live rows
+  caught it.
+- **Videos reserved no layout space.** Images get exact dimensions from sharp at build time;
+  videos got nothing, so a `<video>` sat at the browser's default 150px until its metadata loaded
+  and then snapped to full height — a ~1390px jump for an 864x1080 clip in a full-width row. Fixed
+  by reading dimensions from the mp4's `tkhd` box in `src/lib/projects.ts`.
+
+Everything else came through clean: 3- and 4-column rows, full-bleed rows, consecutive text blocks
+with independent alignment/size/weight, and mixed video+image rows all render as authored. A row
+with an authored height aligns sources of wildly different ratios (500x1400, 1800x500, 1000x1000)
+to identical heights — which is the behaviour the original relies on.
 
 ## Phase 3 — Mobile and responsive
 
@@ -76,7 +104,9 @@ Only `matteomeller` exists so far. The original site has these projects (see `PA
 Intersections · Miche · Anselmi · Nutrients · Visual Group · Attiva Servizi
 
 - [ ] Create each project in `/keystatic` — **always upload through the CMS UI**, never by hand-editing JSON (see the gotchas in `AGENTS.md`)
-- [ ] Point each homepage thumbnail at its real slug
+- [ ] Point each homepage thumbnail at its real slug — every item in `PortfolioCanvas.tsx`
+      currently hardcodes `href: "/matteomeller"` (moved here from Phase 2, where it was blocked)
+- [ ] Source media is staged locally in `content/_input/` (gitignored, ~64MB, 11 project folders)
 
 ## Phase 5 — Check
 

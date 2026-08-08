@@ -68,7 +68,11 @@ middleware.ts                        # 404s /keystatic + /api/keystatic when pro
 Every project page shares one layout. Sections, in order, using the names Alessandro uses for them:
 **Entry Image** → **Client / Type / Year** + **First Description** → **Body** (media rows and text blocks) → **Exit Image**.
 
-Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` (ignore the 81.57% width cap — the original's 1217px column on its 1492px canvas). Text blocks carry their own `textAlign` / `fontSize` / `fontWeight`.
+Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` (ignore the 81.57% width cap — the original's 1217px column on its 1492px canvas), and an optional `height`. Text blocks carry their own `textAlign` / `fontSize` / `fontWeight`.
+
+`height` is authored against the 1492px design canvas, like the entry/exit boxes, so it scales with window width rather than window height. It exists because the original crops each row to a height it chose by hand (1036, 705, 829, 788, 663 …) instead of following the asset's aspect ratio. Setting it requires `gridAutoRows: minmax(0, 1fr)` as well as `height` — grid tracks otherwise size to their content and the assets overflow the box. Rows that leave it empty keep the asset's natural proportions.
+
+Columns within a row are always equal width. The original also uses uneven splits (735/490) and inset partial-width single images; neither is expressible yet — see `docs/ROADMAP.md`.
 
 Entry and Exit images are cropped to the original's fixed design boxes — 1492x754 and 1492x906, expressed as `calc(100vw * h / 1492)` with `object-cover`. They are deliberately **not** `h-screen`: the original's heights held at both 900px and 1300px viewport heights, so they scale with canvas width, not screen height. The entry image starts below the 35px header; the exit image runs flush to the bottom edge, behind the footer.
 
@@ -83,6 +87,20 @@ Keystatic's integer field has a hydration bug: an existing saved value renders c
 **3. `src/app/keystatic/[[...params]]/page.tsx` must keep its `"use client"` directive.** Without it the admin renders a blank page with no error.
 
 **4. Debugging the admin UI.** It's a client-rendered React app, so server logs and `curl` reveal almost nothing. When something fails silently, temporarily install Playwright (`npm i -D playwright && npx playwright install chromium`) and drive a real headless browser to capture console/network/DOM — it can even perform genuine uploads via `filechooser` interception. Uninstall it and delete the scratch script afterwards. This technique found both gotchas above after static code reading had stalled.
+
+**5. Editing a body block is a modal dialog, and `Escape` throws the edit away.** Clicking a row
+in Body blocks opens an "Edit item" dialog whose changes only commit when you press its **Done**
+button. While it is open the page-level **Save** is deliberately unclickable — a hit test there
+returns `<body>`, and Playwright reports "body intercepts pointer events". That is correct modal
+behaviour, not the bug it looks like. The working order is: open row → edit → **Done** → **Save**.
+
+**6. Synthetic events do not drive this admin.** Neither the Chrome extension's `computer` clicks
+nor hand-dispatched `PointerEvent`/`click` sequences reach Keystatic's react-aria controls — a
+save appears to succeed while nothing reaches disk. Always confirm an admin write by reading
+`content/**/index.json` back off disk, and use Playwright when you need genuine input.
+
+**7. `fields.integer()` renders with a locale thousands separator.** A saved `1036` reads back
+out of the input as `"1,036"`, so strip non-digits before comparing values in any check.
 
 ## Code style
 
