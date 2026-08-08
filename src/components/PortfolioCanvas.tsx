@@ -1,9 +1,17 @@
 import Image from "next/image";
 import { ScaledCanvas, DESIGN_WIDTH } from "./ScaledCanvas";
+import { getProjectSlugs } from "@/lib/projects";
 import type { CanvasItem } from "@/types/portfolio";
 
 const CANVAS_HEIGHT = 4200;
 
+/**
+ * Slugs below are the original's real link targets, read out of the layout JSON
+ * embedded in alessandrozanatta.it rather than inferred from the artwork. Three
+ * were previously guessed wrong: the video reel is Bella, not Meller; the gif is
+ * Nutrients; and the item at 2403 is the unannounced project the COMING SOON
+ * label sits on, which the original leaves unlinked.
+ */
 const ITEMS: CanvasItem[] = [
   {
     id: "intersections",
@@ -15,7 +23,7 @@ const ITEMS: CanvasItem[] = [
     rotate: -10,
     src: "/images/home/01K7FSHN3PBRK38PQNRBV3S3XH.webp",
     alt: "Intersections poster on gravel",
-    href: "/matteomeller",
+    slug: "intersections",
   },
   {
     id: "matteomeller",
@@ -26,7 +34,7 @@ const ITEMS: CanvasItem[] = [
     zIndex: 42,
     src: "/images/home/01KFRM9P6S9WPJZY8WYQMH09AQ.png",
     alt: "Matteo Meller poster detail",
-    href: "/matteomeller",
+    slug: "matteomeller",
   },
   {
     id: "miche",
@@ -37,7 +45,7 @@ const ITEMS: CanvasItem[] = [
     zIndex: 10,
     src: "/images/home/01K7J9GXPKRC6EHA66C8E3TMWC.webp",
     alt: "Miche project photo",
-    href: "/matteomeller",
+    slug: "miche",
     borderRadius: 9999,
   },
   {
@@ -49,10 +57,10 @@ const ITEMS: CanvasItem[] = [
     zIndex: 26,
     src: "/images/home/01K7H4E2QYKQSFEAY19RKRPFWJ.png",
     alt: "Anselmi project",
-    href: "/matteomeller",
+    slug: "anselmi",
   },
   {
-    id: "matteomeller-reel",
+    id: "bella-reel",
     top: 1484,
     left: 898,
     width: 371,
@@ -62,11 +70,11 @@ const ITEMS: CanvasItem[] = [
     kind: "video",
     src: "/videos/home/01K7FVNCECYCS9NXXCMDEPJFNY.mp4",
     poster: "/images/home/01KAVH6HP6ZK57SPGRTM885Q7M.jpeg",
-    alt: "Matteo Meller project video reel",
-    href: "/matteomeller",
+    alt: "Bella che ti Spiazza project video reel",
+    slug: "bella",
   },
   {
-    id: "nutrients-gif",
+    id: "nutrients",
     top: 622,
     left: 655,
     width: 583,
@@ -74,18 +82,18 @@ const ITEMS: CanvasItem[] = [
     zIndex: 32,
     src: "/images/home/01K6ED322FX5PF204385YMPZ13.gif",
     alt: "Nutrients project animation",
-    href: "/matteomeller",
+    slug: "nutrients",
   },
   {
-    id: "nutrients",
+    id: "coming-soon-project",
     top: 2403,
     left: 757,
     width: 611,
     height: 599,
     zIndex: 29,
     src: "/images/home/01K7CH55PWQR15RV07GT255G67.webp",
-    alt: "Nutrients project",
-    href: "/matteomeller",
+    // Unlinked on the original: this is the project the COMING SOON label marks.
+    alt: "Unannounced project",
   },
   {
     id: "coming-soon",
@@ -106,7 +114,7 @@ const ITEMS: CanvasItem[] = [
     zIndex: 28,
     src: "/images/home/01K7J8RZ7BY2Z2QGC84N1D65G7.webp",
     alt: "Visual Group project",
-    href: "/matteomeller",
+    slug: "visualgroup",
   },
   {
     id: "attivaservizi",
@@ -117,14 +125,14 @@ const ITEMS: CanvasItem[] = [
     zIndex: 27,
     src: "/images/home/01K7CHHJ966KN521QRZEA3GEW7.webp",
     alt: "Attiva Servizi project",
-    href: "/matteomeller",
+    slug: "attivaservizi",
     // The original declares 934.572px here; the browser clamps it against the
     // box, so keeping the declared value reproduces the same rounded shape.
     borderRadius: 935,
   },
 ];
 
-function Item({ item }: { item: CanvasItem }) {
+function Item({ item, href }: { item: CanvasItem; href?: string }) {
   if (item.id === "coming-soon") {
     return (
       <div
@@ -161,6 +169,9 @@ function Item({ item }: { item: CanvasItem }) {
           display: "block",
           ...rotation,
         }}
+        // The reel is the heaviest asset on the site (8MB) and sits well below
+        // the fold. It has a poster, so deferring costs nothing visually.
+        preload="metadata"
         autoPlay
         loop
         muted
@@ -195,9 +206,9 @@ function Item({ item }: { item: CanvasItem }) {
         zIndex: item.zIndex,
       }}
     >
-      {item.href ? (
+      {href ? (
         <a
-          href={item.href}
+          href={href}
           aria-label={item.alt}
           className="block transition-[filter,opacity] duration-200 ease-linear hover:opacity-80 hover:blur-[1px]"
         >
@@ -210,7 +221,12 @@ function Item({ item }: { item: CanvasItem }) {
   );
 }
 
-export function PortfolioCanvas() {
+export async function PortfolioCanvas() {
+  // A thumbnail becomes a link only once its project exists in the CMS. Every
+  // item can therefore carry its real slug today without shipping dead links,
+  // and adding a project needs no change here.
+  const published = new Set(await getProjectSlugs());
+
   return (
     <div
       className="relative w-full"
@@ -219,7 +235,11 @@ export function PortfolioCanvas() {
       <ScaledCanvas>
         <div style={{ position: "relative", width: DESIGN_WIDTH, height: CANVAS_HEIGHT }}>
           {ITEMS.map((item) => (
-            <Item key={item.id} item={item} />
+            <Item
+              key={item.id}
+              item={item}
+              href={item.slug && published.has(item.slug) ? `/${item.slug}` : undefined}
+            />
           ))}
         </div>
       </ScaledCanvas>
