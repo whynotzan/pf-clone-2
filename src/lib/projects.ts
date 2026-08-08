@@ -1,4 +1,5 @@
 import path from "node:path";
+import { readFile } from "node:fs/promises";
 import sharp from "sharp";
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
@@ -24,9 +25,66 @@ async function getImageDimensions(publicPath: string): Promise<{ width: number; 
   }
 }
 
+/**
+ * Display dimensions of an mp4/mov, read straight from its `moov/trak/tkhd` box.
+ *
+ * Videos need the same layout-shift protection images get from sharp: a <video>
+ * with no reserved space renders at the browser's default 300x150 until metadata
+ * arrives, then snaps to its real height - a jump of well over a thousand pixels
+ * for a portrait clip in a full-width row. There is no ffprobe on the build
+ * machine, and the header walk is short enough not to be worth a dependency.
+ *
+ * Returns null for anything it cannot parse (webm, an unexpected layout), which
+ * simply leaves that asset reserving no space, exactly as before.
+ */
+async function getVideoDimensions(publicPath: string): Promise<{ width: number; height: number } | null> {
+  try {
+    const buf = await readFile(path.join(process.cwd(), "public", publicPath));
+
+    const findBox = (start: number, end: number, type: string): [number, number] | null => {
+      let offset = start;
+      while (offset + 8 <= end) {
+        const size = buf.readUInt32BE(offset);
+        if (size < 8) return null;
+        if (buf.toString("ascii", offset + 4, offset + 8) === type) return [offset + 8, offset + size];
+        offset += size;
+      }
+      return null;
+    };
+
+    const moov = findBox(0, buf.length, "moov");
+    const trak = moov && findBox(moov[0], moov[1], "trak");
+    const tkhd = trak && findBox(trak[0], trak[1], "tkhd");
+    if (!tkhd) return null;
+
+    const [payload] = tkhd;
+    const version = buf.readUInt8(payload);
+    // version 1 widens the creation/modification/duration fields; the 36-byte
+    // transform matrix then sits between the track header and the dimensions.
+    const matrixOffset = payload + (version === 1 ? 36 : 24) + 16;
+    const width = buf.readUInt32BE(matrixOffset + 36) / 65536;
+    const height = buf.readUInt32BE(matrixOffset + 40) / 65536;
+    if (!width || !height) return null;
+
+    // A quarter-turn rotation lives in the matrix rather than in the stored
+    // dimensions, so a phone-shot clip would otherwise come back transposed.
+    // The matrix runs a, b, u, c, d, v, x, y, w - hence b at +4 and c at +12.
+    const b = buf.readInt32BE(matrixOffset + 4) / 65536;
+    const c = buf.readInt32BE(matrixOffset + 12) / 65536;
+    const rotated = Math.abs(b) === 1 && Math.abs(c) === 1;
+
+    return rotated
+      ? { width: Math.round(height), height: Math.round(width) }
+      : { width: Math.round(width), height: Math.round(height) };
+  } catch {
+    return null;
+  }
+}
+
 async function toMediaAsset(asset: { kind: string; image: string | null; video: string | null }): Promise<ProjectMediaAsset | null> {
   if (asset.kind === "video" && asset.video) {
-    return { kind: "video", src: asset.video };
+    const dimensions = await getVideoDimensions(asset.video);
+    return { kind: "video", src: asset.video, ...dimensions };
   }
   if (asset.image) {
     const dimensions = await getImageDimensions(asset.image);
