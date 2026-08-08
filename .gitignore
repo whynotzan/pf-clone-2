@@ -41,9 +41,18 @@ next-env.d.ts
 # Local settings (not project config)
 .claude/settings.local.json
 
+# Agent worktrees are full checkouts of this repo — never commit them
+.claude/worktrees/
+
 # User-specific skills (not part of the template)
 .claude/skills/customize/
 .claude/skills/release/
+
+# Raw source assets (~64MB of client originals). These are the *input* to the
+# CMS, not site content: media reaches the site by being uploaded through
+# /keystatic, which writes its own copy under public/. Committing these would
+# put them in git history permanently for no benefit.
+content/_input/
 
 # Local temp files
 temp/
