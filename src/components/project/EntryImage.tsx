@@ -18,7 +18,9 @@ export function EntryImage({ image }: { image: EntryImageType }) {
       className="relative h-[calc(100vw*444/375)] w-full lg:h-[calc(100vw*754/1492)]"
       style={{ marginTop: 35 }}
     >
-      <MediaAsset asset={image} className="block h-full w-full object-cover" />
+      {/* `priority` because this is the only above-the-fold asset on a project
+          page — everything below it is deferred by MediaAsset's default. */}
+      <MediaAsset asset={image} className="block h-full w-full object-cover" priority />
     </div>
   );
 }
