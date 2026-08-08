@@ -93,6 +93,16 @@ async function toMediaAsset(asset: { kind: string; image: string | null; video: 
   return null;
 }
 
+/** "735 490" -> [735, 490]. Anything unparseable is dropped, so a typo degrades to equal columns. */
+function parseColumnWidths(raw: string | null): number[] {
+  if (!raw) return [];
+  return raw
+    .split(/[\s,]+/)
+    .filter(Boolean)
+    .map(Number)
+    .filter((n) => Number.isFinite(n) && n > 0);
+}
+
 async function toProjectData(
   slug: string,
   entry: NonNullable<ProjectEntry>,
@@ -111,10 +121,14 @@ async function toProjectData(
             {
               type: "media" as const,
               block: {
-                columns: item.value.columns,
-                gap: item.value.gap,
+                // These `??` defaults stand in for the schema validation the integer
+                // fields cannot carry - see the note in keystatic.config.ts.
+                columns: item.value.columns ?? 1,
+                gap: item.value.gap ?? 24,
                 fullBleed: item.value.fullBleed,
-                height: item.value.height ?? undefined,
+                rowHeight: item.value.rowHeight ?? undefined,
+                columnWidths: parseColumnWidths(item.value.columnWidths),
+                align: item.value.align ?? "center",
                 assets,
               },
             },

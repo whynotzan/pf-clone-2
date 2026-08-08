@@ -40,18 +40,22 @@ export default config({
             }),
             {
               media: fields.object({
+                // None of these integers carry isRequired: Keystatic's integer field never
+                // populates its validated state from a saved value, so requiring one blocks
+                // Save forever on any existing entry. Defaults live in src/lib/projects.ts
+                // instead. See the CMS gotchas in AGENTS.md.
                 columns: fields.integer({
                   label: "Columns",
                   description:
-                    "How many images/videos sit side by side in this row (1-4). Use 1 for a single full-row image.",
+                    "How many images/videos sit side by side in this row (1-4). Use 1 for a single full-row image. Ignored when column widths are set.",
                   defaultValue: 1,
-                  validation: { isRequired: true, min: 1, max: 4 },
+                  validation: { min: 1, max: 4 },
                 }),
                 gap: fields.integer({
                   label: "Gap (px)",
                   description: "Spacing between images in this row.",
                   defaultValue: 24,
-                  validation: { isRequired: true, min: 0, max: 200 },
+                  validation: { min: 0, max: 200 },
                 }),
                 fullBleed: fields.checkbox({
                   label: "Full width",
@@ -59,14 +63,28 @@ export default config({
                     "Ignore the 85% content cap and span edge-to-edge, like the entry/exit images.",
                   defaultValue: false,
                 }),
-                height: fields.integer({
+                rowHeight: fields.integer({
                   label: "Row height (px)",
                   description:
-                    "Crop the row to a fixed height instead of letting the images keep their own proportions. Measured on the 1492px design canvas, so it scales with the window like the entry/exit images. Leave empty to use the image's natural height.",
-                  // No isRequired: Keystatic's integer field never populates its validated
-                  // state from a saved value, which would block Save forever on existing
-                  // entries. See the CMS gotchas in AGENTS.md.
+                    "Crop the row to a fixed height instead of letting the images keep their own proportions, like the original does (e.g. 1036, 705, 829). Measured on the 1492px design canvas, so it scales with the window like the entry/exit images. Leave empty to use the image's natural height.",
                   validation: { min: 0, max: 4000 },
+                }),
+                columnWidths: fields.text({
+                  label: "Column widths (px)",
+                  description:
+                    'Optional. Space-separated widths on the 1492px canvas, for uneven splits like "735 490". A single number makes a partial-width row. Leave empty for equal columns filling the row. Widths adding up past the 1217px content column need Full width ticked, or the row will spill over its edges.',
+                  defaultValue: "",
+                }),
+                align: fields.select({
+                  label: "Row alignment",
+                  description:
+                    "Where the row sits when the column widths don't fill the available space.",
+                  options: [
+                    { label: "Left", value: "left" },
+                    { label: "Center", value: "center" },
+                    { label: "Right", value: "right" },
+                  ],
+                  defaultValue: "center",
                 }),
                 assets: fields.array(
                   fields.object({
@@ -152,7 +170,8 @@ export default config({
               const media = props.value.fields;
               const columns = media.columns.value;
               const fullBleed = media.fullBleed.value;
-              const height = media.height.value;
+              const rowHeight = media.rowHeight.value;
+              const widths = media.columnWidths.value.trim();
               const names = media.assets.elements
                 .map((el) => {
                   const kind = el.fields.kind.value;
@@ -163,7 +182,8 @@ export default config({
                   return name ?? "empty";
                 })
                 .join(", ");
-              return `🖼️ ${columns}-col${fullBleed ? " · full-width" : ""}${height ? ` · ${height}px` : ""} — ${names}`;
+              const shape = widths ? widths.replace(/[\s,]+/g, "/") : `${columns}-col`;
+              return `🖼️ ${shape}${fullBleed ? " · full-width" : ""}${rowHeight ? ` · ${rowHeight}px` : ""} — ${names}`;
             },
           }
         ),

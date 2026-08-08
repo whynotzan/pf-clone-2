@@ -28,9 +28,9 @@ export interface ProjectMeta {
 
 /** A row of body media: 1-4 assets laid out side by side in a grid. */
 export interface ProjectMediaBlock {
-  /** How many assets sit side by side in this row (1-4). */
+  /** How many assets sit side by side in this row (1-4). Ignored when `columnWidths` is set. */
   columns: number;
-  /** Spacing between assets in this row, in px. */
+  /** Spacing between assets in this row, in px. Unlike the widths below, this is a real screen px value. */
   gap: number;
   /** Ignore the 85% content cap and span edge-to-edge, like the entry/exit images. */
   fullBleed: boolean;
@@ -41,7 +41,15 @@ export interface ProjectMediaBlock {
    * 705, 829, 788, 663 ...) rather than following the asset's own aspect ratio.
    * Left undefined, the row keeps the asset's natural proportions.
    */
-  height?: number;
+  rowHeight?: number;
+  /**
+   * Per-column widths on the same 1492px canvas, for the uneven splits the original
+   * uses (e.g. [735, 490]). A single width makes a partial-width row. Empty means
+   * equal columns filling the available width.
+   */
+  columnWidths: number[];
+  /** Where the row sits when `columnWidths` don't fill the available width. */
+  align: "left" | "center" | "right";
   assets: ProjectMediaAsset[];
 }
 

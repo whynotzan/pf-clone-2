@@ -61,11 +61,10 @@ Make the Project Template genuinely reusable before pouring content into it.
       the block's weight by design; do not add a separate CTA weight field.
 - [x] Confirm the entry/exit image crop (fixed 1492x754 / 1492x906 boxes + `object-cover`) holds for portrait, landscape, and square source images — done 2026-08-08, all six ratio/slot combinations centre-crop correctly
 - [x] Body media rows need a per-row height: the original crops each row to an authored height (1036, 705, 829, 788, 663 …) rather than using the asset's own aspect ratio, which is why our rows don't line up with it. Needs a schema field, so it was left out of Phase 1. — added 2026-08-08 as the `height` field
-- [ ] **Uneven column splits.** The original uses splits like 735/490; `ProjectMedia` only does
-      `repeat(N, minmax(0, 1fr))`, so every column in a row is the same width. Needs a schema
-      decision (a per-row ratio? a per-asset span?) before it can be built.
-- [ ] **Partial-width offset single images.** The original insets some single images rather than
-      running them at the full content width. No way to express this in the schema today.
+- [x] **Uneven column splits** — done 2026-08-08. A `columnWidths` text field takes canvas px
+      (`"735 490"`); anything unparseable degrades to equal columns.
+- [x] **Partial-width offset single images** — done 2026-08-08, and it fell out of the same field:
+      a single width leaves the row short, and `align` (left/center/right) places it.
 - [ ] ~~Settle the homepage → project linking model~~ — **moved to Phase 4.** Every thumbnail
       hardcodes `/matteomeller` in `PortfolioCanvas.tsx`, and it cannot be fixed until the other
       projects exist and have real slugs.
@@ -89,6 +88,19 @@ Everything else came through clean: 3- and 4-column rows, full-bleed rows, conse
 with independent alignment/size/weight, and mixed video+image rows all render as authored. A row
 with an authored height aligns sources of wildly different ratios (500x1400, 1800x500, 1000x1000)
 to identical heights — which is the behaviour the original relies on.
+
+### Where the media schema came from
+
+`rowHeight`, `columnWidths` and `align` were taken from the unmerged `worktree-phase-2-template`
+branch (7bf990a), along with its removal of `isRequired` from `columns` and `gap`. That branch also
+gave every paragraph and CTA its own font size and weight; **that half was deliberately dropped** —
+it predates the "no per-element text styling" decision and would have meant migrating stored
+content. Text blocks stay block-level. The branch can be deleted.
+
+One thing to know when authoring: `columnWidths` are absolute canvas measurements, so widths adding
+up past the 1217px content column overflow it. The original's own 735/490 split is one of these
+(1225px before the gap) and needs **Full width** ticked, which centres it in the viewport instead.
+The field description says so.
 
 ## Phase 3 — Mobile and responsive
 

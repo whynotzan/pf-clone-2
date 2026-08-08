@@ -68,11 +68,14 @@ middleware.ts                        # 404s /keystatic + /api/keystatic when pro
 Every project page shares one layout. Sections, in order, using the names Alessandro uses for them:
 **Entry Image** → **Client / Type / Year** + **First Description** → **Body** (media rows and text blocks) → **Exit Image**.
 
-Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` (ignore the 81.57% width cap — the original's 1217px column on its 1492px canvas), and an optional `height`. Text blocks carry their own `textAlign` / `fontSize` / `fontWeight`.
+Body media rows are a flexible grid: `columns` (1–4), `gap` (px), `fullBleed` (ignore the 81.57% width cap — the original's 1217px column on its 1492px canvas), plus optional `rowHeight`, `columnWidths` and `align`. Text blocks carry their own `textAlign` / `fontSize` / `fontWeight`, and stay block-level by decision — do not add per-paragraph or per-CTA typography.
 
-`height` is authored against the 1492px design canvas, like the entry/exit boxes, so it scales with window width rather than window height. It exists because the original crops each row to a height it chose by hand (1036, 705, 829, 788, 663 …) instead of following the asset's aspect ratio. Setting it requires `gridAutoRows: minmax(0, 1fr)` as well as `height` — grid tracks otherwise size to their content and the assets overflow the box. Rows that leave it empty keep the asset's natural proportions.
+`rowHeight` and `columnWidths` are both authored against the 1492px design canvas, like the entry/exit boxes, so they scale with window width rather than window height. `gap`, by contrast, is a real screen px value and does not scale — worth remembering when a row has to match the original exactly.
 
-Columns within a row are always equal width. The original also uses uneven splits (735/490) and inset partial-width single images; neither is expressible yet — see `docs/ROADMAP.md`.
+- **`rowHeight`** exists because the original crops each row to a height it chose by hand (1036, 705, 829, 788, 663 …) instead of following the asset's aspect ratio. Setting it requires `gridAutoRows: minmax(0, 1fr)` as well as `height` — grid tracks otherwise size to their content and the assets overflow the box. Empty keeps the asset's natural proportions.
+- **`columnWidths`** is a space-separated string (`"735 490"`) covering the original's uneven splits. A single width makes a partial-width row, and `align` then places it left/center/right. Empty means equal columns; anything unparseable degrades to equal columns rather than failing.
+
+Widths are absolute, so a row whose widths exceed the 1217px content column spills over its edges. The original's own 735/490 is such a case (1225px before the gap) and wants `fullBleed` ticked.
 
 Entry and Exit images are cropped to the original's fixed design boxes — 1492x754 and 1492x906, expressed as `calc(100vw * h / 1492)` with `object-cover`. They are deliberately **not** `h-screen`: the original's heights held at both 900px and 1300px viewport heights, so they scale with canvas width, not screen height. The entry image starts below the 35px header; the exit image runs flush to the bottom edge, behind the footer.
 
