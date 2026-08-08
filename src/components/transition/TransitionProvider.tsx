@@ -8,9 +8,9 @@ import { usePathname, useRouter } from "next/navigation";
  * They live in both places because CSS drives the paint and JS drives the route
  * change; keep the two in step if you retune them.
  */
-const COVER_MS = 350;
-const HOLD_MS = 200;
-const REVEAL_MS = 350;
+const COVER_MS = 550;
+const HOLD_MS = 300;
+const REVEAL_MS = 550;
 
 /** Bail out of a stuck navigation rather than leaving the panel up forever. */
 const SAFETY_MS = 4000;

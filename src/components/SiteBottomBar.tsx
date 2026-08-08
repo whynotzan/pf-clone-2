@@ -47,20 +47,19 @@ function ProjectItems() {
 
 /**
  * The bottom chrome, hoisted out of the pages so the bar itself never unmounts.
- * The blurred block holds still across a navigation; only the row of text
- * inside it slides out and the next one slides in, clipped by the bar's height.
+ * It sits below the wipe panel (z-44 against the panel's 45), so a navigation
+ * simply buries it — no animation of its own. Its contents therefore swap while
+ * they are already hidden underneath.
  */
 export function SiteBottomBar() {
-  const { phase, direction, displayedPath } = useSiteTransition();
+  const { displayedPath } = useSiteTransition();
 
   return (
     <div
-      className="fixed bottom-0 left-0 z-50 w-full overflow-hidden bg-background/23 backdrop-blur-[30px]"
+      className="fixed bottom-0 left-0 z-[44] w-full bg-background/23 backdrop-blur-[30px]"
       style={{ height: 35 }}
     >
-      <div className="bottom-bar-swap" data-phase={phase} data-direction={direction}>
-        {displayedPath === "/" ? <HomeItems /> : <ProjectItems />}
-      </div>
+      {displayedPath === "/" ? <HomeItems /> : <ProjectItems />}
     </div>
   );
 }

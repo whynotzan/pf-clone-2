@@ -147,9 +147,9 @@
    separate animations. Timings are mirrored in TransitionProvider.tsx. */
 
 :root {
-  --wipe-cover: 350ms;
-  --wipe-hold: 200ms;
-  --wipe-reveal: 350ms;
+  --wipe-cover: 550ms;
+  --wipe-hold: 300ms;
+  --wipe-reveal: 550ms;
   --wipe-out: cubic-bezier(0.16, 1, 0.3, 1);
   --wipe-in: cubic-bezier(0.7, 0, 0.84, 0);
   /* How far the tag drifts on its own, independent of the panel. */
@@ -159,12 +159,13 @@
 .page-wipe {
   position: fixed;
   inset: 0;
-  /* Above BioPanel (40) and the CV panel (30), below the fixed chrome (50) —
-     the header and bottom bar stay put and legible while this passes under. */
+  /* Above BioPanel (40), the CV panel (30) and the bottom bar (44), below the
+     header (50) — the header stays put and legible while this passes under it,
+     and the bottom bar disappears beneath it rather than moving. */
   z-index: 45;
   display: grid;
   place-items: center;
-  background: #ffffff;
+  background: var(--background);
   color: var(--foreground);
   pointer-events: none;
   visibility: hidden;
@@ -243,46 +244,9 @@
   to { transform: translateY(var(--wipe-tag-drift)); }
 }
 
-/* The bar block itself never moves; this is only the row of text inside it,
-   clipped by the bar's 35px height. */
-.bottom-bar-swap {
-  position: absolute;
-  inset: 0;
-}
-.bottom-bar-swap[data-direction="up"][data-phase="covering"] {
-  animation: bar-text-out-up var(--wipe-cover) var(--wipe-out) forwards;
-}
-.bottom-bar-swap[data-direction="up"][data-phase="revealing"] {
-  animation: bar-text-in-up var(--wipe-reveal) var(--wipe-out) forwards;
-}
-.bottom-bar-swap[data-direction="down"][data-phase="covering"] {
-  animation: bar-text-out-down var(--wipe-cover) var(--wipe-out) forwards;
-}
-.bottom-bar-swap[data-direction="down"][data-phase="revealing"] {
-  animation: bar-text-in-down var(--wipe-reveal) var(--wipe-out) forwards;
-}
-
-@keyframes bar-text-out-up {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-100%); opacity: 0; }
-}
-@keyframes bar-text-in-up {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-@keyframes bar-text-out-down {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(100%); opacity: 0; }
-}
-@keyframes bar-text-in-down {
-  from { transform: translateY(-100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .page-wipe,
-  .page-wipe__tag,
-  .bottom-bar-swap {
+  .page-wipe__tag {
     animation: none !important;
   }
   .page-wipe[data-phase="covering"],
