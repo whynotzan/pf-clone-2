@@ -8,8 +8,13 @@ import type { ProjectMediaBlock } from "@/types/project";
  * An authored `height` crops the row rather than letting the assets set their own
  * proportions, which is how the original sizes its rows. It is expressed against the
  * same 1492px canvas as the entry/exit boxes, so it scales with window width rather
- * than window height. With a height set, `h-full` overrides the aspect-ratio that
- * MediaAsset applies, and `object-cover` does the cropping.
+ * than window height.
+ *
+ * Fixing that height needs `gridAutoRows` as well as `height`. Grid tracks size to
+ * their content by default, so an image whose aspect-ratio makes it taller than the
+ * row simply overflows the box while `h-full` resolves against the *grown* track and
+ * changes nothing. Pinning the tracks to `minmax(0, 1fr)` makes them share the
+ * container's height instead, which is what lets `h-full` + `object-cover` crop.
  */
 export function ProjectMedia({ block }: { block: ProjectMediaBlock }) {
   const { columns, gap, fullBleed, height, assets } = block;
@@ -18,14 +23,19 @@ export function ProjectMedia({ block }: { block: ProjectMediaBlock }) {
   return (
     <div className={fullBleed ? "w-full" : "mx-auto w-full max-w-[81.57%]"}>
       <div
-        className="grid"
-        style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, gap, height: rowHeight }}
+        className={`grid ${rowHeight ? "overflow-hidden" : ""}`}
+        style={{
+          gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+          gap,
+          height: rowHeight,
+          gridAutoRows: rowHeight ? "minmax(0, 1fr)" : undefined,
+        }}
       >
         {assets.map((asset, i) => (
           <MediaAsset
             key={i}
             asset={asset}
-            className={`block w-full min-w-0 object-cover ${rowHeight ? "h-full" : "h-auto"}`}
+            className={`block w-full min-w-0 object-cover ${rowHeight ? "h-full min-h-0" : "h-auto"}`}
           />
         ))}
       </div>
