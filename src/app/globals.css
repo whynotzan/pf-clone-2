@@ -154,9 +154,16 @@
   --wipe-in: cubic-bezier(0.7, 0, 0.84, 0);
   /* How far the tag drifts on its own, independent of the panel. */
   --wipe-tag-drift: 14px;
-  /* How far the page itself drifts. Measured ~5% of viewport height on the
-     reference; enough to feel, small enough not to read as a slide. */
-  --page-drift: 5vh;
+  /* How far the page itself drifts. */
+  --page-drift: 10vh;
+  /* The arriving page is deliberately late and long. The panel's reveal is
+     steeply eased-in — it uncovers almost entirely in its last third — so a
+     settle that finished within the reveal would play out behind the panel and
+     never be seen. This starts partway through the reveal and outlives it, so
+     most of the travel happens once the page is actually on screen. */
+  --page-arrive-delay: 300ms;
+  --page-arrive: 700ms;
+  --page-arrive-ease: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .page-wipe {
@@ -257,14 +264,21 @@
 .page-shift[data-direction="up"][data-phase="covering"] {
   animation: page-depart-up var(--wipe-cover) var(--wipe-out) forwards;
 }
-.page-shift[data-direction="up"][data-phase="revealing"] {
-  animation: page-arrive-up var(--wipe-reveal) var(--wipe-out) forwards;
-}
 .page-shift[data-direction="down"][data-phase="covering"] {
   animation: page-depart-down var(--wipe-cover) var(--wipe-out) forwards;
 }
-.page-shift[data-direction="down"][data-phase="revealing"] {
-  animation: page-arrive-down var(--wipe-reveal) var(--wipe-out) forwards;
+
+/* Listed across both phases with identical values so the animation carries on
+   uninterrupted when the panel finishes and the phase advances — the settle is
+   one continuous movement that simply outlasts the wipe. `both` holds the
+   start offset through the delay, instead of snapping to it when it begins. */
+.page-shift[data-direction="up"][data-phase="revealing"],
+.page-shift[data-direction="up"][data-phase="settling"] {
+  animation: page-arrive-up var(--page-arrive) var(--page-arrive-ease) var(--page-arrive-delay) both;
+}
+.page-shift[data-direction="down"][data-phase="revealing"],
+.page-shift[data-direction="down"][data-phase="settling"] {
+  animation: page-arrive-down var(--page-arrive) var(--page-arrive-ease) var(--page-arrive-delay) both;
 }
 
 @keyframes page-depart-up {

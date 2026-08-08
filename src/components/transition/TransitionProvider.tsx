@@ -11,11 +11,17 @@ import { usePathname, useRouter } from "next/navigation";
 const COVER_MS = 550;
 const HOLD_MS = 300;
 const REVEAL_MS = 550;
+/**
+ * The panel is gone by REVEAL_MS, but the arriving page is still settling into
+ * place — that tail is the only part of its drift the visitor actually sees.
+ * Navigation is allowed again during it, so this does not lengthen the wipe.
+ */
+const SETTLE_MS = 450;
 
 /** Bail out of a stuck navigation rather than leaving the panel up forever. */
 const SAFETY_MS = 4000;
 
-type Phase = "idle" | "covering" | "revealing";
+type Phase = "idle" | "covering" | "revealing" | "settling";
 type Direction = "up" | "down";
 
 type TransitionValue = {
@@ -56,8 +62,9 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
 
   const begin = useCallback(
     (href: string, nextTag: string) => {
-      // Ignore re-entrant clicks, and links that go nowhere.
-      if (phase !== "idle" || href === pathname) return false;
+      // Ignore re-entrant clicks, and links that go nowhere. "settling" counts
+      // as available: the panel has already gone, so a new wipe can start.
+      if ((phase !== "idle" && phase !== "settling") || href === pathname) return false;
       // Hand back to Next rather than making these visitors sit through a
       // delay with nothing to look at — the CSS opts out of the paint, but the
       // wait would remain unless the navigation itself stays instant.
@@ -101,7 +108,10 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
     timers.current.push(
       window.setTimeout(() => {
         setPhase("revealing");
-        timers.current.push(window.setTimeout(() => setPhase("idle"), REVEAL_MS));
+        timers.current.push(
+          window.setTimeout(() => setPhase("settling"), REVEAL_MS),
+          window.setTimeout(() => setPhase("idle"), REVEAL_MS + SETTLE_MS)
+        );
       }, 32)
     );
   }, [pathname]);
