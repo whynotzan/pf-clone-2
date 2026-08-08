@@ -140,6 +140,184 @@
   }
 }
 
+/* ---------------------------------------------------------------- page wipe */
+/* One opaque panel travels across the viewport, holds, then carries on off the
+   far edge in the same direction. Cover eases *out* and reveal eases *in* so
+   the two halves read as a single swoop with a held middle, not as two
+   separate animations. Timings are mirrored in TransitionProvider.tsx. */
+
+:root {
+  --wipe-cover: 550ms;
+  --wipe-hold: 300ms;
+  --wipe-reveal: 550ms;
+  --wipe-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --wipe-in: cubic-bezier(0.7, 0, 0.84, 0);
+  /* How far the tag drifts on its own, independent of the panel. */
+  --wipe-tag-drift: 14px;
+  /* How far the page itself drifts. */
+  --page-drift: 10vh;
+  /* The arriving page is deliberately late and long. The panel's reveal is
+     steeply eased-in — it uncovers almost entirely in its last third — so a
+     settle that finished within the reveal would play out behind the panel and
+     never be seen. This starts partway through the reveal and outlives it, so
+     most of the travel happens once the page is actually on screen. */
+  --page-arrive-delay: 300ms;
+  --page-arrive: 700ms;
+  --page-arrive-ease: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  /* Above BioPanel (40), the CV panel (30) and the bottom bar (44), below the
+     header (50) — the header stays put and legible while this passes under it,
+     and the bottom bar disappears beneath it rather than moving. */
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  background: var(--background);
+  color: var(--foreground);
+  pointer-events: none;
+  visibility: hidden;
+  transform: translateY(100%);
+}
+
+.page-wipe__tag {
+  /* Left-aligned from the same x as "Portfolio" in the header, so the tag sits
+     on the nav's third column rather than being optically centred. Keep in step
+     with SiteHeader's offset if that ever moves. */
+  margin-left: 50.25%;
+  font-size: 20px;
+  font-weight: 700;
+  /* The drift is ~0.3px per frame. Rasterized in place, the glyphs snap to
+     whole pixels and that creep arrives as a 1px jump every few frames —
+     obvious during the hold, when this is the only thing moving. Its own
+     compositor layer lets the transform run at sub-pixel precision. */
+  will-change: transform;
+}
+
+.page-wipe[data-phase="covering"],
+.page-wipe[data-phase="revealing"] {
+  visibility: visible;
+}
+
+.page-wipe[data-direction="up"][data-phase="covering"] {
+  animation: wipe-cover-up var(--wipe-cover) var(--wipe-out) forwards;
+}
+.page-wipe[data-direction="up"][data-phase="revealing"] {
+  animation: wipe-reveal-up var(--wipe-reveal) var(--wipe-in) forwards;
+}
+.page-wipe[data-direction="down"][data-phase="covering"] {
+  animation: wipe-cover-down var(--wipe-cover) var(--wipe-out) forwards;
+}
+.page-wipe[data-direction="down"][data-phase="revealing"] {
+  animation: wipe-reveal-down var(--wipe-reveal) var(--wipe-in) forwards;
+}
+
+/* The tag's drift outlasts the panel's cover by the hold, so it is still
+   creeping while the panel itself is stationary — that slow movement is what
+   keeps the held moment from reading as a freeze-frame. */
+.page-wipe[data-direction="up"][data-phase="covering"] .page-wipe__tag {
+  animation: tag-drift-in-up calc(var(--wipe-cover) + var(--wipe-hold)) linear forwards;
+}
+/* Linear out as well as in. The panel's ease-in starts at zero velocity, which
+   on the tag read as a dead stop between the drift in and the drift out; a
+   constant creep throughout has no such seam. */
+.page-wipe[data-direction="up"][data-phase="revealing"] .page-wipe__tag {
+  animation: tag-drift-out-up var(--wipe-reveal) linear forwards;
+}
+.page-wipe[data-direction="down"][data-phase="covering"] .page-wipe__tag {
+  animation: tag-drift-in-down calc(var(--wipe-cover) + var(--wipe-hold)) linear forwards;
+}
+.page-wipe[data-direction="down"][data-phase="revealing"] .page-wipe__tag {
+  animation: tag-drift-out-down var(--wipe-reveal) linear forwards;
+}
+
+@keyframes wipe-cover-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes wipe-reveal-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+@keyframes wipe-cover-down {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+@keyframes wipe-reveal-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+@keyframes tag-drift-in-up {
+  from { transform: translateY(var(--wipe-tag-drift)); }
+  to { transform: translateY(0); }
+}
+@keyframes tag-drift-out-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(var(--wipe-tag-drift) * -1)); }
+}
+@keyframes tag-drift-in-down {
+  from { transform: translateY(calc(var(--wipe-tag-drift) * -1)); }
+  to { transform: translateY(0); }
+}
+@keyframes tag-drift-out-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(var(--wipe-tag-drift)); }
+}
+
+/* The page's own drift, one step behind the panel. Deliberately small — it is
+   meant to register as departure, not as the page being thrown. The two halves
+   meet while the panel fully covers, so the jump between them is never seen. */
+.page-shift[data-direction="up"][data-phase="covering"] {
+  animation: page-depart-up var(--wipe-cover) var(--wipe-out) forwards;
+}
+.page-shift[data-direction="down"][data-phase="covering"] {
+  animation: page-depart-down var(--wipe-cover) var(--wipe-out) forwards;
+}
+
+/* Listed across both phases with identical values so the animation carries on
+   uninterrupted when the panel finishes and the phase advances — the settle is
+   one continuous movement that simply outlasts the wipe. `both` holds the
+   start offset through the delay, instead of snapping to it when it begins. */
+.page-shift[data-direction="up"][data-phase="revealing"],
+.page-shift[data-direction="up"][data-phase="settling"] {
+  animation: page-arrive-up var(--page-arrive) var(--page-arrive-ease) var(--page-arrive-delay) both;
+}
+.page-shift[data-direction="down"][data-phase="revealing"],
+.page-shift[data-direction="down"][data-phase="settling"] {
+  animation: page-arrive-down var(--page-arrive) var(--page-arrive-ease) var(--page-arrive-delay) both;
+}
+
+@keyframes page-depart-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(var(--page-drift) * -1)); }
+}
+@keyframes page-arrive-up {
+  from { transform: translateY(var(--page-drift)); }
+  to { transform: translateY(0); }
+}
+@keyframes page-depart-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(var(--page-drift)); }
+}
+@keyframes page-arrive-down {
+  from { transform: translateY(calc(var(--page-drift) * -1)); }
+  to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-wipe,
+  .page-wipe__tag,
+  .page-shift {
+    animation: none !important;
+  }
+  .page-wipe[data-phase="covering"],
+  .page-wipe[data-phase="revealing"] {
+    visibility: hidden;
+  }
+}
+
 .grain-overlay {
   position: fixed;
   inset: 0;

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TransitionLink } from "./transition/TransitionLink";
 
 // Offsets are percentages of the viewport width, measured on the original at
 // 1024/1440/1920 — they were identical at all three, so the original positions
@@ -11,9 +11,9 @@ export function SiteHeader() {
       className="fixed top-0 left-0 w-full z-50 bg-background/23 backdrop-blur-[30px]"
       style={{ height: 35 }}
     >
-      <Link href="/" className={ITEM} style={{ left: "0.91%" }}>
+      <TransitionLink href="/" className={ITEM} style={{ left: "0.91%" }}>
         Alessandro Zanatta
-      </Link>
+      </TransitionLink>
       <span className={ITEM} style={{ left: "25.69%" }}>
         Graphic Design
       </span>
