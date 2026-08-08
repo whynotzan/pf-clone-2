@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { TransitionLink } from "./transition/TransitionLink";
 import { ScaledCanvas, DESIGN_WIDTH } from "./ScaledCanvas";
 import type { CanvasItem } from "@/types/portfolio";
 
@@ -196,13 +197,13 @@ function Item({ item }: { item: CanvasItem }) {
       }}
     >
       {item.href ? (
-        <a
+        <TransitionLink
           href={item.href}
           aria-label={item.alt}
           className="block transition-[filter,opacity] duration-200 ease-linear hover:opacity-80 hover:blur-[1px]"
         >
           {img}
-        </a>
+        </TransitionLink>
       ) : (
         img
       )}

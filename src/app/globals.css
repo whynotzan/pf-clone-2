@@ -140,6 +140,157 @@
   }
 }
 
+/* ---------------------------------------------------------------- page wipe */
+/* One opaque panel travels across the viewport, holds, then carries on off the
+   far edge in the same direction. Cover eases *out* and reveal eases *in* so
+   the two halves read as a single swoop with a held middle, not as two
+   separate animations. Timings are mirrored in TransitionProvider.tsx. */
+
+:root {
+  --wipe-cover: 350ms;
+  --wipe-hold: 200ms;
+  --wipe-reveal: 350ms;
+  --wipe-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --wipe-in: cubic-bezier(0.7, 0, 0.84, 0);
+  /* How far the tag drifts on its own, independent of the panel. */
+  --wipe-tag-drift: 14px;
+}
+
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  /* Above BioPanel (40) and the CV panel (30), below the fixed chrome (50) —
+     the header and bottom bar stay put and legible while this passes under. */
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  color: var(--foreground);
+  pointer-events: none;
+  visibility: hidden;
+  transform: translateY(100%);
+}
+
+.page-wipe__tag {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.page-wipe[data-phase="covering"],
+.page-wipe[data-phase="revealing"] {
+  visibility: visible;
+}
+
+.page-wipe[data-direction="up"][data-phase="covering"] {
+  animation: wipe-cover-up var(--wipe-cover) var(--wipe-out) forwards;
+}
+.page-wipe[data-direction="up"][data-phase="revealing"] {
+  animation: wipe-reveal-up var(--wipe-reveal) var(--wipe-in) forwards;
+}
+.page-wipe[data-direction="down"][data-phase="covering"] {
+  animation: wipe-cover-down var(--wipe-cover) var(--wipe-out) forwards;
+}
+.page-wipe[data-direction="down"][data-phase="revealing"] {
+  animation: wipe-reveal-down var(--wipe-reveal) var(--wipe-in) forwards;
+}
+
+/* The tag's drift outlasts the panel's cover by the hold, so it is still
+   creeping while the panel itself is stationary — that slow movement is what
+   keeps the held moment from reading as a freeze-frame. */
+.page-wipe[data-direction="up"][data-phase="covering"] .page-wipe__tag {
+  animation: tag-drift-in-up calc(var(--wipe-cover) + var(--wipe-hold)) linear forwards;
+}
+.page-wipe[data-direction="up"][data-phase="revealing"] .page-wipe__tag {
+  animation: tag-drift-out-up var(--wipe-reveal) var(--wipe-in) forwards;
+}
+.page-wipe[data-direction="down"][data-phase="covering"] .page-wipe__tag {
+  animation: tag-drift-in-down calc(var(--wipe-cover) + var(--wipe-hold)) linear forwards;
+}
+.page-wipe[data-direction="down"][data-phase="revealing"] .page-wipe__tag {
+  animation: tag-drift-out-down var(--wipe-reveal) var(--wipe-in) forwards;
+}
+
+@keyframes wipe-cover-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes wipe-reveal-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+@keyframes wipe-cover-down {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+@keyframes wipe-reveal-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+@keyframes tag-drift-in-up {
+  from { transform: translateY(var(--wipe-tag-drift)); }
+  to { transform: translateY(0); }
+}
+@keyframes tag-drift-out-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(var(--wipe-tag-drift) * -1)); }
+}
+@keyframes tag-drift-in-down {
+  from { transform: translateY(calc(var(--wipe-tag-drift) * -1)); }
+  to { transform: translateY(0); }
+}
+@keyframes tag-drift-out-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(var(--wipe-tag-drift)); }
+}
+
+/* The bar block itself never moves; this is only the row of text inside it,
+   clipped by the bar's 35px height. */
+.bottom-bar-swap {
+  position: absolute;
+  inset: 0;
+}
+.bottom-bar-swap[data-direction="up"][data-phase="covering"] {
+  animation: bar-text-out-up var(--wipe-cover) var(--wipe-out) forwards;
+}
+.bottom-bar-swap[data-direction="up"][data-phase="revealing"] {
+  animation: bar-text-in-up var(--wipe-reveal) var(--wipe-out) forwards;
+}
+.bottom-bar-swap[data-direction="down"][data-phase="covering"] {
+  animation: bar-text-out-down var(--wipe-cover) var(--wipe-out) forwards;
+}
+.bottom-bar-swap[data-direction="down"][data-phase="revealing"] {
+  animation: bar-text-in-down var(--wipe-reveal) var(--wipe-out) forwards;
+}
+
+@keyframes bar-text-out-up {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-100%); opacity: 0; }
+}
+@keyframes bar-text-in-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes bar-text-out-down {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(100%); opacity: 0; }
+}
+@keyframes bar-text-in-down {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-wipe,
+  .page-wipe__tag,
+  .bottom-bar-swap {
+    animation: none !important;
+  }
+  .page-wipe[data-phase="covering"],
+  .page-wipe[data-phase="revealing"] {
+    visibility: hidden;
+  }
+}
+
 .grain-overlay {
   position: fixed;
   inset: 0;
