@@ -55,13 +55,19 @@ function ProjectItems() {
  */
 export function SiteBottomBar() {
   const { displayedPath } = useSiteTransition();
+  const isHome = displayedPath === "/";
 
   return (
     <div
-      className="fixed bottom-0 left-0 z-[44] w-full bg-background/23 backdrop-blur-[30px]"
+      // On the mobile homepage the bar is gone entirely: its links now sit in
+      // the flow under the CV (`MobileHomeLinks`). Project pages keep it at
+      // every width — it carries the only way back.
+      className={`fixed bottom-0 left-0 z-[44] w-full bg-background/23 backdrop-blur-[30px] ${
+        isHome ? "hidden lg:block" : ""
+      }`}
       style={{ height: 35 }}
     >
-      {displayedPath === "/" ? <HomeItems /> : <ProjectItems />}
+      {isHome ? <HomeItems /> : <ProjectItems />}
     </div>
   );
 }

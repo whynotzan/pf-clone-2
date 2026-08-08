@@ -11,7 +11,9 @@ export function SiteHeader() {
       className="fixed top-0 left-0 w-full z-50 bg-background/23 backdrop-blur-[30px]"
       style={{ height: 35 }}
     >
-      <TransitionLink href="/" className={ITEM} style={{ left: "0.91%" }}>
+      {/* 0.91% of a 375px screen is 3px, which reads as touching the edge. Below
+          1024 it sits on the same 18px inset as the bio, CV and project content. */}
+      <TransitionLink href="/" className={`${ITEM} left-[18px] lg:left-[0.91%]`}>
         Alessandro Zanatta
       </TransitionLink>
       {/* The original hides these three below 1024 and shows a "Graphic Designer"
