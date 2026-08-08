@@ -12,7 +12,7 @@ import type { EntryImage as EntryImageType } from "@/types/project";
 export function EntryImage({ image }: { image: EntryImageType }) {
   return (
     <div className="relative w-full" style={{ marginTop: 35, height: "calc(100vw * 754 / 1492)" }}>
-      <MediaAsset asset={image} className="block h-full w-full object-cover" />
+      <MediaAsset asset={image} className="block h-full w-full object-cover" priority />
     </div>
   );
 }
