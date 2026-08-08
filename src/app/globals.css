@@ -140,6 +140,58 @@
   }
 }
 
+/* ----------------------------------------------------------- homepage canvas */
+/* The original authors two independent layouts — mobile against a 375px
+   reference, desktop against 1492 — and switches at 1024px, which is also
+   Tailwind's `lg`. Every item carries both coordinate sets as custom
+   properties and these blocks pick one, so a single DOM tree serves both.
+   The original instead ships a hidden duplicate of every item; duplicating
+   would double the image payload on phones. Mobile values are its own,
+   read from its embedded layout table. */
+
+.canvas-root {
+  --canvas-w: 375;
+  --canvas-h: 2806;
+}
+
+.canvas-item {
+  position: absolute;
+  top: calc(var(--m-top) * 1px);
+  left: calc(var(--m-left) * 1px);
+  width: calc(var(--m-w) * 1px);
+  height: calc(var(--m-h) * 1px);
+  z-index: var(--m-z);
+}
+
+.canvas-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--m-radius) * 1px);
+  rotate: calc(var(--m-rot) * 1deg);
+}
+
+@media (min-width: 1024px) {
+  .canvas-root {
+    --canvas-w: 1492;
+    --canvas-h: 4200;
+  }
+
+  .canvas-item {
+    top: calc(var(--d-top) * 1px);
+    left: calc(var(--d-left) * 1px);
+    width: calc(var(--d-w) * 1px);
+    height: calc(var(--d-h) * 1px);
+    z-index: var(--d-z);
+  }
+
+  .canvas-media {
+    border-radius: calc(var(--d-radius) * 1px);
+    rotate: calc(var(--d-rot) * 1deg);
+  }
+}
+
 /* ---------------------------------------------------------------- page wipe */
 /* One opaque panel travels across the viewport, holds, then carries on off the
    far edge in the same direction. Cover eases *out* and reveal eases *in* so
