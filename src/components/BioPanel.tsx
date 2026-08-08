@@ -7,9 +7,13 @@ const PARAGRAPHS = [
 
 export function BioPanel() {
   return (
-    <div className="fixed top-0 left-0 z-40 hidden h-screen w-full lg:flex lg:items-center">
+    // The wrapper spans the whole viewport to centre the column vertically, so
+    // it would otherwise swallow every click meant for the canvas behind it —
+    // no poster was reachable at any desktop width. Only the text itself takes
+    // pointer events, which keeps it selectable.
+    <div className="pointer-events-none fixed top-0 left-0 z-40 hidden h-screen w-full lg:flex lg:items-center">
       <div
-        className="flex flex-col gap-[22px]"
+        className="pointer-events-auto flex flex-col gap-[22px]"
         style={{
           marginLeft: 16,
           // 343/22px measured on the original; the previous 355/16px changed
