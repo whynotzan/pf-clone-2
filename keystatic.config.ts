@@ -59,6 +59,15 @@ export default config({
                     "Ignore the 85% content cap and span edge-to-edge, like the entry/exit images.",
                   defaultValue: false,
                 }),
+                height: fields.integer({
+                  label: "Row height (px)",
+                  description:
+                    "Crop the row to a fixed height instead of letting the images keep their own proportions. Measured on the 1492px design canvas, so it scales with the window like the entry/exit images. Leave empty to use the image's natural height.",
+                  // No isRequired: Keystatic's integer field never populates its validated
+                  // state from a saved value, which would block Save forever on existing
+                  // entries. See the CMS gotchas in AGENTS.md.
+                  validation: { min: 0, max: 4000 },
+                }),
                 assets: fields.array(
                   fields.object({
                     kind: fields.select({
@@ -143,6 +152,7 @@ export default config({
               const media = props.value.fields;
               const columns = media.columns.value;
               const fullBleed = media.fullBleed.value;
+              const height = media.height.value;
               const names = media.assets.elements
                 .map((el) => {
                   const kind = el.fields.kind.value;
@@ -153,7 +163,7 @@ export default config({
                   return name ?? "empty";
                 })
                 .join(", ");
-              return `🖼️ ${columns}-col${fullBleed ? " · full-width" : ""} — ${names}`;
+              return `🖼️ ${columns}-col${fullBleed ? " · full-width" : ""}${height ? ` · ${height}px` : ""} — ${names}`;
             },
           }
         ),

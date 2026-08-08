@@ -34,6 +34,14 @@ export interface ProjectMediaBlock {
   gap: number;
   /** Ignore the 85% content cap and span edge-to-edge, like the entry/exit images. */
   fullBleed: boolean;
+  /**
+   * Authored row height on the original's 1492px design canvas - not a pixel height
+   * on screen, and unrelated to ProjectMediaAsset.height (which is an asset's real
+   * dimensions). The original crops each row to a height it picked by hand (1036,
+   * 705, 829, 788, 663 ...) rather than following the asset's own aspect ratio.
+   * Left undefined, the row keeps the asset's natural proportions.
+   */
+  height?: number;
   assets: ProjectMediaAsset[];
 }
 

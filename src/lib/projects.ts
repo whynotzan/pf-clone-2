@@ -56,6 +56,7 @@ async function toProjectData(
                 columns: item.value.columns,
                 gap: item.value.gap,
                 fullBleed: item.value.fullBleed,
+                height: item.value.height ?? undefined,
                 assets,
               },
             },

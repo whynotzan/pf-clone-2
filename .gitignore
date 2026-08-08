@@ -47,3 +47,7 @@ next-env.d.ts
 
 # Local temp files
 temp/
+
+# Raw source media, staged locally before being uploaded through the CMS.
+# Tens of megabytes of originals — the repo only ever holds what Keystatic writes.
+content/_input/
