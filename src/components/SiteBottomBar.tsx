@@ -24,9 +24,15 @@ function HomeItems() {
       >
         LinkedIn
       </a>
-      <span className={`${ITEM} hidden lg:block`} style={{ left: "50.68%" }}>
+      <a
+        href="https://www.dropbox.com/scl/fo/8gxt6zdavvwwu0rs1aaq9/AKNits2QF9aPRZtoL5YI5zw?rlkey=1wgmz5k9817xc17a94qnbshny&st=0y19lh35&dl=0"
+        target="_blank"
+        rel="noreferrer"
+        className={`${ITEM} hidden lg:block`}
+        style={{ left: "50.68%" }}
+      >
         Download Area
-      </span>
+      </a>
       {/* Right-anchored: the original's right edge sits at 98.95% at every width. */}
       <a href="mailto:work@alessandrozanatta.it" className={ITEM} style={{ right: "1.05%" }}>
         work@alessandrozanatta.it

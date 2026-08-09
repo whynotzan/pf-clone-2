@@ -18,7 +18,13 @@ export function MobileHomeLinks() {
       >
         LinkedIn
       </a>
-      <span>Download Area</span>
+      <a
+        href="https://www.dropbox.com/scl/fo/8gxt6zdavvwwu0rs1aaq9/AKNits2QF9aPRZtoL5YI5zw?rlkey=1wgmz5k9817xc17a94qnbshny&st=0y19lh35&dl=0"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Download Area
+      </a>
     </div>
   );
 }

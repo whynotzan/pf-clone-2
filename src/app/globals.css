@@ -267,6 +267,13 @@
 
 .project-canvas-text {
   white-space: pre-line;
+  /* Below 1024 the desktop's viewport-scaled type is meaningless: the authored
+     sizes measure a 1440px text grid, so the 17 every text item carries lands at
+     ~4.4px on a 375px phone. Mobile drops the scaling and takes the same 17/22
+     as the first description (ProjectInfo.tsx), so the body copy and the opening
+     description read at one size throughout. */
+  font-size: 17px;
+  line-height: 22px;
 }
 
 @media (min-width: 1024px) {
@@ -298,6 +305,13 @@
 
   .project-canvas-media {
     height: 100%;
+  }
+
+  .project-canvas-text {
+    font-size: var(--ct-fs);
+    /* `inherit` and not a value of its own: desktop had no line-height here
+       before the mobile rule above existed, and inheriting is what it did. */
+    line-height: inherit;
   }
 }
 

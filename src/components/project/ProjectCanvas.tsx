@@ -73,12 +73,17 @@ function renderContent(item: ProjectCanvasItem) {
       return (
         <p
           className="project-canvas-text"
-          style={{
-            // Type is authored against the original's 1440px text reference, not
-            // the 1492px canvas — the two differ, see PAGE_TOPOLOGY.md.
-            fontSize: `calc(100vw * ${item.fontSize} / 1440)`,
-            fontWeight: item.fontWeight,
-          }}
+          style={
+            {
+              // Type is authored against the original's 1440px text reference, not
+              // the 1492px canvas — the two differ, see PAGE_TOPOLOGY.md. It rides
+              // a custom property rather than `font-size` directly because the
+              // scaling is desktop-only; `globals.css` picks the set, as it does
+              // for the item's coordinates.
+              "--ct-fs": `calc(100vw * ${item.fontSize} / 1440)`,
+              fontWeight: item.fontWeight,
+            } as CSSProperties
+          }
         >
           {item.text}
         </p>
