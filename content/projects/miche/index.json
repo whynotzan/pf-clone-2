@@ -19,6 +19,7 @@
             "width": 1217,
             "height": 787,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 319,
             "fontSize": 22,
             "fontWeight": "400"
@@ -30,6 +31,7 @@
             "left": 138,
             "width": 482,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 327,
             "fontSize": 17,
             "fontWeight": "500"
@@ -41,6 +43,7 @@
             "left": 751,
             "width": 604,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 326,
             "fontSize": 17,
             "fontWeight": "400"
@@ -52,6 +55,7 @@
             "left": 750,
             "width": 604,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 331,
             "fontSize": 17,
             "fontWeight": "400"
@@ -63,6 +67,7 @@
             "left": 139,
             "width": 604,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 312,
             "fontSize": 17,
             "fontWeight": "400"
@@ -75,6 +80,7 @@
             "width": 547,
             "height": 525,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 313,
             "fontSize": 22,
             "fontWeight": "400"
@@ -87,6 +93,7 @@
             "width": 532,
             "height": 510,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 315,
             "fontSize": 22,
             "fontWeight": "400"
@@ -99,6 +106,7 @@
             "width": 1217,
             "height": 829,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 309,
             "fontSize": 22,
             "fontWeight": "400"
@@ -111,6 +119,7 @@
             "width": 1217,
             "height": 953,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 308,
             "fontSize": 22,
             "fontWeight": "400"
@@ -123,6 +132,7 @@
             "width": 1217,
             "height": 870,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 310,
             "fontSize": 22,
             "fontWeight": "400"
@@ -135,6 +145,7 @@
             "width": 569,
             "height": 705,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 335,
             "fontSize": 22,
             "fontWeight": "400"
@@ -147,6 +158,7 @@
             "width": 569,
             "height": 705,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 336,
             "fontSize": 22,
             "fontWeight": "400"
@@ -159,6 +171,7 @@
             "width": 1217,
             "height": 788,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 317,
             "fontSize": 22,
             "fontWeight": "400"
@@ -171,6 +184,7 @@
             "width": 862,
             "height": 788,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 321,
             "fontSize": 22,
             "fontWeight": "400"
@@ -182,6 +196,7 @@
             "left": 137,
             "width": 604,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 328,
             "fontSize": 17,
             "fontWeight": "400"
@@ -194,6 +209,7 @@
             "width": 1225,
             "height": 788,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 318,
             "fontSize": 22,
             "fontWeight": "400"
@@ -206,6 +222,7 @@
             "width": 1217,
             "height": 788,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 318,
             "fontSize": 22,
             "fontWeight": "400"
@@ -217,6 +234,7 @@
             "left": 137,
             "width": 604,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 300,
             "fontSize": 17,
             "fontWeight": "400"
@@ -229,6 +247,7 @@
             "width": 569,
             "height": 711,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 309,
             "fontSize": 22,
             "fontWeight": "400"
@@ -241,6 +260,7 @@
             "width": 569,
             "height": 711,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 308,
             "fontSize": 22,
             "fontWeight": "400"
@@ -252,6 +272,7 @@
             "left": 139,
             "width": 604,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 345,
             "fontSize": 17,
             "fontWeight": "400"
@@ -264,6 +285,7 @@
             "width": 1403,
             "height": 256,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 340,
             "fontSize": 22,
             "fontWeight": "400"
@@ -276,6 +298,7 @@
             "width": 1281,
             "height": 234,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 344,
             "fontSize": 22,
             "fontWeight": "400"
@@ -288,6 +311,7 @@
             "width": 1217,
             "height": 386,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 278,
             "fontSize": 22,
             "fontWeight": "400"
@@ -299,6 +323,7 @@
             "left": 137,
             "width": 604,
             "rotate": 0,
+            "blend": "normal",
             "zIndex": 317,
             "fontSize": 17,
             "fontWeight": "400"

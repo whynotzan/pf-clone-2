@@ -79,6 +79,11 @@ export interface ProjectCanvasItem {
   height?: number;
   /** Degrees about the item's centre. */
   rotate: number;
+  /**
+   * `multiply` drops a white photographic background into the page colour, so a
+   * product shot taken on white stops reading as a white box on the site's grey.
+   */
+  blend: "normal" | "multiply" | "darken";
   zIndex: number;
   fontSize: number;
   fontWeight: 400 | 500 | 700;

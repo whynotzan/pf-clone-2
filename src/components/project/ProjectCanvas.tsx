@@ -49,6 +49,9 @@ function CanvasItem({ item }: { item: ProjectCanvasItem }) {
     // Text has no authored height on the original; it sizes to its content.
     "--ci-h": item.height ? canvasPx(item.height) : "auto",
     "--ci-rot": `${item.rotate}deg`,
+    // Multiply has to sit on the item, not the media: an isolated stacking
+    // context would blend it against its own wrapper instead of the page.
+    mixBlendMode: item.blend === "normal" ? undefined : item.blend,
     zIndex: item.zIndex,
   } as CSSProperties;
 

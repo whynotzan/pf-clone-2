@@ -182,6 +182,17 @@ export default config({
                       defaultValue: 0,
                       validation: { min: -360, max: 360 },
                     }),
+                    blend: fields.select({
+                      label: "Blend",
+                      description:
+                        "Multiply drops a white background into the page colour, so a photo shot on white sits on the grey without a visible box. Darken is gentler and only replaces pixels lighter than the page.",
+                      options: [
+                        { label: "None", value: "normal" },
+                        { label: "Multiply (hide white)", value: "multiply" },
+                        { label: "Darken", value: "darken" },
+                      ],
+                      defaultValue: "normal",
+                    }),
                     zIndex: fields.integer({
                       label: "Layer",
                       description: "Higher paints on top. Use to control overlaps.",

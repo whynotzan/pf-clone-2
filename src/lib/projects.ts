@@ -121,6 +121,7 @@ type CanvasItemEntry = {
   width: number | null;
   height: number | null;
   rotate: number | null;
+  blend: string;
   zIndex: number | null;
   fontSize: number | null;
   fontWeight: string;
@@ -133,6 +134,7 @@ async function toCanvasItem(item: CanvasItemEntry): Promise<ProjectCanvasItem | 
     width: item.width ?? 0,
     height: item.height ?? undefined,
     rotate: item.rotate ?? 0,
+    blend: (item.blend ?? "normal") as ProjectCanvasItem["blend"],
     zIndex: item.zIndex ?? 1,
     fontSize: item.fontSize ?? 22,
     fontWeight: Number(item.fontWeight) as 400 | 500 | 700,

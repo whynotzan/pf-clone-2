@@ -135,6 +135,14 @@ async function addCanvasItem(item) {
   await setText(d, "Width (px)", item.width);
   if (item.height !== undefined) await setText(d, "Height (px)", item.height);
   if (item.rotate) await setText(d, "Rotation", item.rotate);
+  if (item.blend && item.blend !== "normal") {
+    // Selects here take their accessible name from their option text, so match
+    // by position: [0] Kind, [1] Blend, [2] Font weight.
+    await d.locator("select").nth(1).selectOption({
+      label: { multiply: "Multiply (hide white)", darken: "Darken" }[item.blend],
+    });
+    await page.waitForTimeout(250);
+  }
   await setText(d, "Layer", item.zIndex ?? 1);
   await commit();
 }
