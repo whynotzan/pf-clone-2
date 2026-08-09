@@ -35,6 +35,22 @@ npm run check            # lint + typecheck + build
 
 **When working in a worktree, 4577 is probably not yours.** Alessandro's own dev server usually holds it, and parallel worktree sessions take 4578, 4579 and up — `npm run dev` then fails with `EADDRINUSE` in the background while `curl localhost:4577` happily returns *another branch's* build. That cost a full round of verification on 2026-08-08: the page measured as though none of the changes existed. Start on a port you have confirmed free (`lsof -nP -iTCP -sTCP:LISTEN | grep :45`), and grep the response for a string only your branch produces. Never kill the process on 4577 — it is his.
 
+**A long-running dev server serves stale CSS after a structural merge.** Symptom: the page looks
+broken in a *structural* way — elements stacked, nothing positioned — with no error in the console,
+the terminal or the build. Cause: Turbopack keeps serving an old CSS bundle **under the same chunk
+filename**, so the HTML updates and the stylesheet does not. It bit us on 2026-08-08 when Phase 3
+moved the homepage canvas positioning out of inline styles into `globals.css`: with the old
+stylesheet no `.canvas-item` got `position: absolute`, and all ten posters collapsed into the flow.
+
+- **Diagnose in one step.** Fetch the CSS chunk the HTML references and grep it for a rule you know
+  you just added. If the HTML contains `canvas-item` and the CSS does not, it is staleness, not a bug:
+  `curl -s localhost:4577 | grep -o '/_next/static/[^"]*\.css'`, then `curl` that path.
+- **Fix — both halves matter.** Kill the dev server *and confirm the PID actually died*; ours did not
+  the first time, and the same process from the previous day kept answering. Then **hard-refresh** the
+  browser (⌘⇧R): the chunk filename is unchanged, so an ordinary reload reuses the broken copy.
+- **You cannot A/B it.** Next 16 refuses to start a second dev server on the same directory, so there
+  is no clean instance to compare against. Restarting is the only path.
+
 Raycast shortcuts live outside this repo in `/Users/alessandro/raycast-scripts/`: `portfolio.sh` opens the site, `cms.sh` opens `/keystatic`. Both start the dev server on 4577 if it isn't running, sharing one instance.
 
 ## Architecture
