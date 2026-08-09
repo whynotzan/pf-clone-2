@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Worktrees live inside the repo, so without this ESLint lints every
+    // parallel branch's checkout — node_modules and all.
+    ".claude/**",
   ]),
 ]);
 
