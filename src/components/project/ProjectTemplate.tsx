@@ -1,6 +1,7 @@
 import { EntryImage } from "./EntryImage";
 import { ExitImage } from "./ExitImage";
 import { ProjectInfo } from "./ProjectInfo";
+import { ProjectCanvas } from "./ProjectCanvas";
 import { ProjectMedia } from "./ProjectMedia";
 import { ProjectTextBlock } from "./ProjectTextBlock";
 import type { ProjectData } from "@/types/project";
@@ -18,13 +19,11 @@ export function ProjectTemplate({ project }: { project: ProjectData }) {
         <ProjectInfo meta={project.meta} firstDescription={project.firstDescription} />
 
         <div className="mt-12 flex flex-col gap-4 sm:mt-20 sm:gap-6">
-          {project.body.map((item, i) =>
-            item.type === "media" ? (
-              <ProjectMedia key={i} block={item.block} />
-            ) : (
-              <ProjectTextBlock key={i} block={item.block} />
-            )
-          )}
+          {project.body.map((item, i) => {
+            if (item.type === "media") return <ProjectMedia key={i} block={item.block} />;
+            if (item.type === "canvas") return <ProjectCanvas key={i} block={item.block} />;
+            return <ProjectTextBlock key={i} block={item.block} />;
+          })}
         </div>
 
         <div className="mt-16 sm:mt-24">

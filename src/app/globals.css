@@ -233,6 +233,58 @@
   }
 }
 
+/* ------------------------------------------------------------ canvas blocks */
+/* Free placement for the parts of the original that are not rows. Below 1024
+   the authored coordinates measure a 1492px canvas and mean nothing on a phone,
+   so items stack in top order at the same 18px margins as every other block —
+   which is how the original's own mobile layout handles these sections. */
+
+.project-canvas {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-inline: 18px;
+}
+
+.project-canvas-item {
+  width: 100%;
+}
+
+.project-canvas-media {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+}
+
+.project-canvas-text {
+  white-space: pre-line;
+}
+
+@media (min-width: 1024px) {
+  .project-canvas {
+    position: relative;
+    display: block;
+    height: var(--canvas-block-h);
+    padding-inline: 0;
+  }
+
+  .project-canvas-item {
+    position: absolute;
+    top: var(--ci-top);
+    left: var(--ci-left);
+    width: var(--ci-w);
+    height: var(--ci-h);
+    /* Rotating the item rather than its contents pivots on the centre and
+       leaves the authored top/left untouched, as the original does. */
+    transform: rotate(var(--ci-rot));
+  }
+
+  .project-canvas-media {
+    height: 100%;
+  }
+}
+
 /* ---------------------------------------------------------------- page wipe */
 /* One opaque panel travels across the viewport, holds, then carries on off the
    far edge in the same direction. Cover eases *out* and reveal eases *in* so

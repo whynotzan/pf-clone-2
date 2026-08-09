@@ -3,7 +3,12 @@ import { readFile } from "node:fs/promises";
 import sharp from "sharp";
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
-import type { ProjectBodyItem, ProjectData, ProjectMediaAsset } from "@/types/project";
+import type {
+  ProjectBodyItem,
+  ProjectCanvasItem,
+  ProjectData,
+  ProjectMediaAsset,
+} from "@/types/project";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 
@@ -93,6 +98,72 @@ async function toMediaAsset(asset: { kind: string; image: string | null; video: 
   return null;
 }
 
+/** Accepts a full watch/share URL or a bare id, and yields the id the embed needs. */
+function parseYouTubeId(raw: string): string | null {
+  const value = raw.trim();
+  if (!value) return null;
+  const match = value.match(
+    /(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{6,})/
+  );
+  if (match) return match[1];
+  return /^[A-Za-z0-9_-]{6,}$/.test(value) ? value : null;
+}
+
+type CanvasItemEntry = {
+  kind: string;
+  image: string | null;
+  video: string | null;
+  youtubeUrl: string;
+  color: string;
+  text: string;
+  top: number | null;
+  left: number | null;
+  width: number | null;
+  height: number | null;
+  rotate: number | null;
+  zIndex: number | null;
+  fontSize: number | null;
+  fontWeight: string;
+};
+
+async function toCanvasItem(item: CanvasItemEntry): Promise<ProjectCanvasItem | null> {
+  const base = {
+    top: item.top ?? 0,
+    left: item.left ?? 0,
+    width: item.width ?? 0,
+    height: item.height ?? undefined,
+    rotate: item.rotate ?? 0,
+    zIndex: item.zIndex ?? 1,
+    fontSize: item.fontSize ?? 22,
+    fontWeight: Number(item.fontWeight) as 400 | 500 | 700,
+  };
+
+  switch (item.kind) {
+    case "video":
+      if (!item.video) return null;
+      return { ...base, kind: "video", src: item.video };
+    case "youtube": {
+      const id = parseYouTubeId(item.youtubeUrl);
+      return id ? { ...base, kind: "youtube", src: id } : null;
+    }
+    case "rectangle":
+      return { ...base, kind: "rectangle", src: item.color || "#e5e5e5" };
+    case "text":
+      return item.text.trim() ? { ...base, kind: "text", text: item.text } : null;
+    default: {
+      if (!item.image) return null;
+      const dimensions = await getImageDimensions(item.image);
+      return {
+        ...base,
+        kind: "image",
+        src: item.image,
+        naturalWidth: dimensions?.width,
+        naturalHeight: dimensions?.height,
+      };
+    }
+  }
+}
+
 /** "735 490" -> [735, 490]. Anything unparseable is dropped, so a typo degrades to equal columns. */
 function parseColumnWidths(raw: string | null): number[] {
   if (!raw) return [];
@@ -131,6 +202,18 @@ async function toProjectData(
                 align: item.value.align ?? "center",
                 assets,
               },
+            },
+          ];
+        }
+        if (item.discriminant === "canvas") {
+          const items = (
+            await Promise.all(item.value.items.map(toCanvasItem))
+          ).filter((i): i is ProjectCanvasItem => i !== null);
+          if (items.length === 0) return [];
+          return [
+            {
+              type: "canvas" as const,
+              block: { height: item.value.height ?? undefined, items },
             },
           ];
         }
