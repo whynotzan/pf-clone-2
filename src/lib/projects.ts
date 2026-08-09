@@ -169,6 +169,22 @@ export async function getProjectSlugs(): Promise<string[]> {
   return reader.collections.projects.list();
 }
 
+/**
+ * Slugs whose pages actually render. `getProject` returns null unless both hero
+ * images are set, so a half-finished entry is listed by `getProjectSlugs` while
+ * its route 404s — linking to those from the homepage would ship dead links.
+ */
+export async function getPublishedProjectSlugs(): Promise<string[]> {
+  const slugs = await reader.collections.projects.list();
+  const entries = await Promise.all(
+    slugs.map(async (slug) => {
+      const entry = await reader.collections.projects.read(slug);
+      return entry?.entryImage && entry.exitImage ? slug : null;
+    })
+  );
+  return entries.filter((slug): slug is string => slug !== null);
+}
+
 export async function getProject(slug: string): Promise<ProjectData | null> {
   const entry = await reader.collections.projects.read(slug);
   if (!entry || !entry.entryImage || !entry.exitImage) return null;
