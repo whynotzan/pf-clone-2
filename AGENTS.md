@@ -45,9 +45,14 @@ stylesheet no `.canvas-item` got `position: absolute`, and all ten posters colla
 - **Diagnose in one step.** Fetch the CSS chunk the HTML references and grep it for a rule you know
   you just added. If the HTML contains `canvas-item` and the CSS does not, it is staleness, not a bug:
   `curl -s localhost:4577 | grep -o '/_next/static/[^"]*\.css'`, then `curl` that path.
-- **Fix — both halves matter.** Kill the dev server *and confirm the PID actually died*; ours did not
-  the first time, and the same process from the previous day kept answering. Then **hard-refresh** the
-  browser (⌘⇧R): the chunk filename is unchanged, so an ordinary reload reuses the broken copy.
+- **Fix — three halves, it turns out.** Kill the dev server *and confirm the PID actually died*; ours
+  did not the first time, and the same process from the previous day kept answering. Then **hard-refresh**
+  the browser (⌘⇧R): the chunk filename is unchanged, so an ordinary reload reuses the broken copy.
+  **A restart alone was not enough on 2026-08-09** — the freshly started server still served the
+  pre-merge stylesheet, because Turbopack's persistent cache under `.next` survives the restart and is
+  keyed by path, not content. `rm -rf .next` (with the server stopped) is what actually cleared it.
+  The tell that it is the cache and not an edit you forgot: the chunk contains rules from *both sides*
+  of your new block (here `project-row-asset` above and `wipe-cover` below) but not the block itself.
 - **You cannot A/B it.** Next 16 refuses to start a second dev server on the same directory, so there
   is no clean instance to compare against. Restarting is the only path.
 
