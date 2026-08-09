@@ -8,13 +8,7 @@ const ITEM = "absolute top-1/2 -translate-y-1/2 font-bold text-[17px] whitespace
 export function SiteHeader() {
   return (
     <header
-      // Opaque, deliberately unlike the original, which frosts this bar at 30%
-      // alpha. Content passing under it there is legible because it is mostly
-      // light; our project pages put full-bleed black spreads under it, which
-      // bled through and swallowed the nav text. Alessandro asked for the bar to
-      // stay over everything — this is that, not a stacking fix (the canvas
-      // already isolates, so nothing paints above z-50).
-      className="fixed top-0 left-0 w-full z-50 bg-background"
+      className="fixed top-0 left-0 w-full z-50 bg-background/23 backdrop-blur-[30px]"
       style={{ height: 35 }}
     >
       {/* 0.91% of a 375px screen is 3px, which reads as touching the edge. Below

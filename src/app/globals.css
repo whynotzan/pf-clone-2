@@ -244,14 +244,12 @@
   flex-direction: column;
   gap: 24px;
   padding-inline: 18px;
-  /* Canvas items carry the original's own z-indices, which run into the 300s —
-     far above the header's z-50. Isolating gives them their own stacking
-     context so they order correctly among themselves but can never paint over
-     the site chrome. Same reason PortfolioCanvas isolates the homepage.
-
-     Isolating also makes this the blending group, so an item set to multiply
-     would otherwise blend against a transparent backdrop and keep its white.
-     Painting the page colour here gives it the surface it expects. */
+  /* Layers are compacted to 1..n in src/lib/projects.ts, so items can no longer
+     reach the header's z-50 on their own — that is the actual guard. Isolating
+     is a second line of defence, and is what makes this the blending group: an
+     item set to multiply needs a surface to blend against, which the page
+     colour below provides. Without it multiply would meet a transparent
+     backdrop and keep its white. */
   isolation: isolate;
   background: var(--background);
 }

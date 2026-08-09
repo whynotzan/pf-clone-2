@@ -166,6 +166,23 @@ async function toCanvasItem(item: CanvasItemEntry): Promise<ProjectCanvasItem | 
   }
 }
 
+/**
+ * Rewrites authored layers to 1..n, keeping their order.
+ *
+ * The numbers transcribed from the original are absolute positions in *its*
+ * whole-page stack and run into the 300s, far above the header's z-50 — so a
+ * canvas item scrolling past the header painted straight over it, which media
+ * rows never do because they carry no z-index at all. Only the relative order
+ * within a canvas ever mattered, so compacting it makes these blocks obey the
+ * same rule as every other part of a project page, structurally rather than by
+ * being contained.
+ */
+function compactLayers(items: ProjectCanvasItem[]): ProjectCanvasItem[] {
+  const order = [...items].sort((a, b) => a.zIndex - b.zIndex);
+  const rank = new Map(order.map((item, i) => [item, i + 1]));
+  return items.map((item) => ({ ...item, zIndex: rank.get(item) ?? 1 }));
+}
+
 /** "735 490" -> [735, 490]. Anything unparseable is dropped, so a typo degrades to equal columns. */
 function parseColumnWidths(raw: string | null): number[] {
   if (!raw) return [];
@@ -208,9 +225,11 @@ async function toProjectData(
           ];
         }
         if (item.discriminant === "canvas") {
-          const items = (
-            await Promise.all(item.value.items.map(toCanvasItem))
-          ).filter((i): i is ProjectCanvasItem => i !== null);
+          const items = compactLayers(
+            (await Promise.all(item.value.items.map(toCanvasItem))).filter(
+              (i): i is ProjectCanvasItem => i !== null
+            )
+          );
           if (items.length === 0) return [];
           return [
             {
