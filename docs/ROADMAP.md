@@ -197,11 +197,77 @@ correctly 536px for a 379px square.
 
 Full QA pass before going public on the real domain.
 
-- [ ] Every project page renders correctly and every link resolves
-- [ ] `npm run check` clean; CI green
-- [ ] Cross-browser and cross-device spot check
-- [ ] SEO basics: Open Graph tags, per-project `generateMetadata`, `sitemap.ts`, `robots.txt` — none exist yet
-- [ ] Accessibility: CMS-driven images currently render with empty `alt` (`MediaAsset.tsx`); consider an alt-text field in the schema
+- [x] Every project page renders correctly and every link resolves — all 9 routes 200,
+      **0 broken assets** across 260 references, 0 dead internal links, `/does-not-exist` 404s
+- [x] `npm run check` clean; CI green
+- [x] Cross-browser and cross-device spot check — Chromium, Firefox and WebKit at 1440x900
+      and 375x812: no console errors, no page errors, no horizontal overflow, and every
+      homepage poster hit-testable via `elementFromPoint` in all six combinations
+- [x] SEO basics — `metadataBase`, site-wide Open Graph + Twitter cards, per-project
+      `generateMetadata`, `sitemap.ts`, `robots.ts`
+- [x] A real `not-found.tsx` (there was none; unknown URLs got Next's bare default)
+- [x] Accessibility: **decided 2026-08-09 — CMS-driven images stay `alt=""` as decorative.**
+      The case study's text blocks carry the meaning; an empty alt makes a screen reader skip
+      the image rather than announce a filename. Do not replace this with a generated string —
+      real per-image alt text means a schema field and ~100 authored strings. The decision is
+      commented at both sites (`MediaAsset.tsx`, `ProjectCanvas.tsx`).
+
+### Two real bugs found and fixed
+
+- **Every desktop width scrolled sideways on `/intersections`** — 12px at 1440, growing with
+  the viewport (8px at 1024, 21px at 2560). Not a transcription error: the original authors
+  that PORTFOLIO 2 image at left 950.9 / width 552.6, i.e. running to **1503.6 on a 1492
+  canvas**. The original absorbs it with `overflow: clip` on its `.article` wrapper; we had no
+  equivalent. Fixed with `overflow-x: clip` on the desktop `.project-canvas` rule. It must be
+  `clip` and not `hidden` — `hidden` on one axis forces the other to `auto`, making the canvas
+  a scroll container. Phase 3 only ever checked overflow at 375px, which is why this survived.
+- **`/nutrients` would have shared a blank link preview.** Its entry image is an SVG, and no
+  major network renders SVG in a card. `generateMetadata` now falls back to the site card for
+  SVG heroes.
+
+### Open — need your call, not blockers
+
+- **`public/seo/og-image.jpeg` is 300x209.** Above every network's minimum, so previews do
+  work, but far below the 1200x630 they render at, so it will look soft and small. Replacing
+  it is a design decision, so it was left alone; the real dimensions are declared in
+  `layout.tsx` and the comment there says to update them when the asset changes.
+- **The LinkedIn profile link cannot be verified programmatically.** It returns `999` to both
+  curl and a real headless Chromium — that is LinkedIn's anti-automation block, not a dead
+  link. Worth one manual click before going public.
+- **`metadataBase` falls back to `https://pf-clone-2.vercel.app`.** Phase 6 should set
+  `NEXT_PUBLIC_SITE_URL` to the real origin rather than edit `src/lib/site.ts`.
+
+### Page weight — measured, not optimised
+
+Deliberately measured only (decided 2026-08-09). Two numbers per page, and the gap between
+them is the offscreen deferral from Phase 4 doing its job:
+
+| Route | Initial load | Fully scrolled |
+|---|---|---|
+| `/` | 8.4 MB | 15.0 MB |
+| `/matteomeller` | 4.6 MB | 23.3 MB |
+| `/intersections` | 4.3 MB | 12.7 MB |
+| `/miche` | 3.3 MB | 12.6 MB |
+| `/bella` | 3.0 MB | 10.4 MB |
+| `/nutrients` | 6.0 MB | 3.5 MB* |
+| `/attivaservizi` | 3.1 MB | 5.5 MB |
+| `/anselmi` | 4.1 MB | 4.2 MB |
+| `/visualgroup` | 2.7 MB | 3.7 MB |
+
+\* `/nutrients` measures *higher* on initial load because its GIFs and SVGs are inline and
+eager, so nothing is deferred; the "fully scrolled" column counts `Content-Length` and the
+two large GIFs compress differently in transit. It is the one page where deferral buys nothing.
+
+The homepage's 8.4 MB before a single scroll is the number to watch if it ever matters — it is
+the first impression and the heaviest entry point. Everything else is the original's own
+already-compressed exports on a CDN.
+
+### Branch housekeeping
+
+`worktree-phase-4-projects` and `worktree-wipe-home-return` are fully merged into `master` and
+can be deleted. `worktree-priorities-security-links` is stale — its code landed under different
+hashes — **but its `docs/research/PAGE_TOPOLOGY.md` has two sections master's copy lacks** (the
+mobile coordinate table and the per-page item inventory). Salvage that file before deleting it.
 
 ## Phase 6 — Connect the domain
 

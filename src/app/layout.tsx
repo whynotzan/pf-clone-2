@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const overused = localFont({
@@ -11,10 +12,32 @@ const overused = localFont({
   ],
 });
 
+const title = "Alessandro Zanatta / Graphic Designer";
+const description =
+  "Graphic designer based in Treviso, Italy. Brand and visual identity, editorial and motion design.";
+
 export const metadata: Metadata = {
-  title: "Alessandro Zanatta / Graphic Designer",
-  description: "Graphic Designer",
+  metadataBase: siteUrl,
+  title: { default: title, template: "%s / Alessandro Zanatta" },
+  description,
   icons: { icon: "/seo/favicon.svg" },
+  openGraph: {
+    type: "website",
+    siteName: "Alessandro Zanatta",
+    title,
+    description,
+    url: "/",
+    // NOTE: this asset is only 300x209. It is above the minimum every network
+    // accepts, so previews work, but it is well below the 1200x630 they render
+    // at — see docs/ROADMAP.md Phase 5. Update the dimensions when it is replaced.
+    images: [{ url: "/seo/og-image.jpeg", width: 300, height: 209, alt: title }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/seo/og-image.jpeg"],
+  },
 };
 
 export default function RootLayout({

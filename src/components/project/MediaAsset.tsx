@@ -39,6 +39,10 @@ export function MediaAsset({
     // eslint-disable-next-line @next/next/no-img-element -- dimensions are read from disk at build time and applied via aspect-ratio
     <img
       src={asset.src}
+      // Decorative by decision (Phase 5): body media is the case study's imagery,
+      // described by the surrounding text blocks. An empty alt makes a screen
+      // reader skip it rather than read a filename. Do not "fix" this to a
+      // generated string — adding real per-image alt text means a schema field.
       alt=""
       className={className}
       style={style}

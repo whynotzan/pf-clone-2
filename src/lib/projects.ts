@@ -261,6 +261,7 @@ async function toProjectData(
 
   return {
     slug,
+    name: entry.name,
     entryImage: { kind: "image", src: entryImage, ...entryDimensions },
     meta: { client: entry.client, type: entry.type, year: entry.year },
     firstDescription: entry.firstDescription,
@@ -287,6 +288,21 @@ export async function getPublishedProjectSlugs(): Promise<string[]> {
     })
   );
   return entries.filter((slug): slug is string => slug !== null);
+}
+
+/**
+ * Just the fields `generateMetadata` needs, without building the whole page.
+ *
+ * `getProject` runs sharp over every asset on the page to reserve layout space;
+ * metadata needs none of that, and Next calls it as a separate pass, so reusing
+ * `getProject` here would probe several hundred files a second time at build.
+ */
+export async function getProjectSeo(
+  slug: string
+): Promise<{ name: string; description: string; image: string } | null> {
+  const entry = await reader.collections.projects.read(slug);
+  if (!entry || !entry.entryImage || !entry.exitImage) return null;
+  return { name: entry.name, description: entry.firstDescription, image: entry.entryImage };
 }
 
 export async function getProject(slug: string): Promise<ProjectData | null> {

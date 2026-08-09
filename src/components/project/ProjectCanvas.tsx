@@ -113,6 +113,7 @@ function renderContent(item: ProjectCanvasItem) {
         <Image
           className="project-canvas-media object-cover"
           src={item.src ?? ""}
+          // Decorative by decision (Phase 5) — see the note in MediaAsset.tsx.
           alt=""
           width={item.naturalWidth ?? item.width}
           height={item.naturalHeight ?? item.height ?? item.width}

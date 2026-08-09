@@ -111,6 +111,8 @@ export type ProjectBodyItem =
 
 export interface ProjectData {
   slug: string;
+  /** The project's display name ("Bella che ti Spiazza"), distinct from the client. */
+  name: string;
   entryImage: EntryImage;
   meta: ProjectMeta;
   firstDescription: string;
