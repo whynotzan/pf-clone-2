@@ -62,9 +62,52 @@ export interface ProjectTextBlock {
   fontWeight: 400 | 500 | 700;
 }
 
+/**
+ * One freely placed item on a canvas block, in the original's 1492px design
+ * space — the same coordinate system as the homepage canvas and as the
+ * measurements in docs/research/PAGE_TOPOLOGY.md.
+ */
+export interface ProjectCanvasItem {
+  kind: "image" | "video" | "youtube" | "rectangle" | "text";
+  /** Asset URL for image/video, the video id for youtube, a CSS colour for rectangle. */
+  src?: string;
+  text?: string;
+  top: number;
+  left: number;
+  width: number;
+  /** Undefined on text, which sizes to its content. */
+  height?: number;
+  /** Degrees about the item's centre. */
+  rotate: number;
+  /**
+   * `multiply` drops a white photographic background into the page colour, so a
+   * product shot taken on white stops reading as a white box on the site's grey.
+   */
+  blend: "normal" | "multiply" | "darken";
+  zIndex: number;
+  fontSize: number;
+  fontWeight: 400 | 500 | 700;
+  /** Real pixel dimensions for images, to reserve layout space. */
+  naturalWidth?: number;
+  naturalHeight?: number;
+}
+
+/**
+ * A freely positioned group, for the parts of the original that are not rows:
+ * rotated items, overlapping columns, text floating over media, embeds and
+ * colour blocks. On mobile the items stack in top order, matching the original,
+ * which collapses every desktop composition to a single 338px column.
+ */
+export interface ProjectCanvasBlock {
+  /** Block height on the 1492px canvas. Falls back to the lowest item's extent. */
+  height?: number;
+  items: ProjectCanvasItem[];
+}
+
 export type ProjectBodyItem =
   | { type: "media"; block: ProjectMediaBlock }
-  | { type: "text"; block: ProjectTextBlock };
+  | { type: "text"; block: ProjectTextBlock }
+  | { type: "canvas"; block: ProjectCanvasBlock };
 
 export interface ProjectData {
   slug: string;

@@ -1,0 +1,234 @@
+{
+  "name": "Nutrients",
+  "client": "Personal",
+  "type": "Motion Design",
+  "year": "2024",
+  "firstDescription": "Nutrition labels are great: informative, precise, and clear.\nThey let consumers know what they’re inserting in their body with just a read.\nBut is it possible to do that in a glance?\nThe explorations of this personal project had this aim.",
+  "entryImage": "/images/projects/nutrients/entryImage.svg",
+  "body": [
+    {
+      "discriminant": "canvas",
+      "value": {
+        "height": 4927,
+        "items": [
+          {
+            "kind": "youtube",
+            "youtubeUrl": "https://www.youtube.com/watch?v=_f3ioKd7LSg",
+            "top": 0,
+            "left": 382,
+            "width": 728,
+            "height": 787,
+            "rotate": 0,
+            "zIndex": 278,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "text",
+            "text": "I tried transforming raw nutritional data\ninto a visual system.\n\nThe visual system was designed to make the data as communicative as possible.\n\nEach nutrient was assigned a geometric shape/color/texture proportional to its relative value, making it easy to understand the content.",
+            "top": 1076,
+            "left": 137,
+            "width": 380,
+            "rotate": 0,
+            "zIndex": 314,
+            "fontSize": 17,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/2/image.svg",
+            "top": 1078,
+            "left": 620,
+            "width": 742,
+            "height": 295,
+            "rotate": 0,
+            "zIndex": 310,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/3/image.gif",
+            "top": 1616,
+            "left": 137,
+            "width": 464,
+            "height": 580,
+            "rotate": 0,
+            "zIndex": 319,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/4/image.gif",
+            "top": 1616,
+            "left": 898,
+            "width": 464,
+            "height": 580,
+            "rotate": 0,
+            "zIndex": 318,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/5/image.svg",
+            "top": 1891,
+            "left": 716,
+            "width": 60,
+            "height": 30,
+            "rotate": 180,
+            "zIndex": 325,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/6/image.jpeg",
+            "top": 2398,
+            "left": 137,
+            "width": 547,
+            "height": 769,
+            "rotate": 0,
+            "zIndex": 327,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/7/image.jpeg",
+            "top": 2398,
+            "left": 807,
+            "width": 547,
+            "height": 769,
+            "rotate": 0,
+            "zIndex": 329,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/8/image.jpeg",
+            "top": 3290,
+            "left": 137,
+            "width": 546,
+            "height": 769,
+            "rotate": 0,
+            "zIndex": 328,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/9/image.jpeg",
+            "top": 3290,
+            "left": 808,
+            "width": 546,
+            "height": 764,
+            "rotate": 0,
+            "zIndex": 330,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/10/image.webp",
+            "top": 4287,
+            "left": 137,
+            "width": 212,
+            "height": 262,
+            "rotate": 0,
+            "zIndex": 310,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/11/image.webp",
+            "top": 4287,
+            "left": 473,
+            "width": 212,
+            "height": 262,
+            "rotate": 0,
+            "zIndex": 315,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/12/image.webp",
+            "top": 4287,
+            "left": 808,
+            "width": 212,
+            "height": 262,
+            "rotate": 0,
+            "zIndex": 312,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/13/image.webp",
+            "top": 4287,
+            "left": 1143,
+            "width": 212,
+            "height": 262,
+            "rotate": 0,
+            "zIndex": 314,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/14/image.webp",
+            "top": 4665,
+            "left": 137,
+            "width": 212,
+            "height": 262,
+            "rotate": 0,
+            "zIndex": 317,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/15/image.webp",
+            "top": 4665,
+            "left": 473,
+            "width": 212,
+            "height": 262,
+            "rotate": 0,
+            "zIndex": 318,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/16/image.webp",
+            "top": 4665,
+            "left": 808,
+            "width": 212,
+            "height": 262,
+            "rotate": 0,
+            "zIndex": 311,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/nutrients/body/0/value/items/17/image.webp",
+            "top": 4665,
+            "left": 1143,
+            "width": 212,
+            "height": 262,
+            "rotate": 0,
+            "zIndex": 316,
+            "fontSize": 22,
+            "fontWeight": "400"
+          }
+        ]
+      }
+    }
+  ],
+  "exitImage": "/images/projects/nutrients/exitImage.png"
+}

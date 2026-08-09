@@ -1,0 +1,172 @@
+{
+ "slug": "intersections",
+ "name": "Intersections",
+ "client": "Intersections Festival",
+ "type": "Visual Identity",
+ "year": "2024",
+ "description": "Intersections examines how art, technology, and humanity are blending\nto reshape cultural identity in today’s globalized world.\nThe event focuses on how design, architecture, and media are pushing\nthe boundaries of creativity and connection, redefining heritage\nin a rapidly evolving landscape.",
+ "entry": "00-entry_1492x754_t0_l0.webp",
+ "exit": "99-exit_1492x906_t0_l0.webp",
+ "body": [
+  {
+   "type": "canvas",
+   "height": 8122,
+   "items": [
+    {
+     "top": 0,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 279,
+     "rotate": 0,
+     "kind": "image",
+     "file": "10-body_1217x953_t0_l137.webp",
+     "height": 953
+    },
+    {
+     "top": 1036,
+     "left": 383,
+     "width": 726,
+     "zIndex": 280,
+     "rotate": 0,
+     "kind": "image",
+     "file": "11-body_726x953_t1036_l383.webp",
+     "height": 953
+    },
+    {
+     "top": 2072,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 281,
+     "rotate": 0,
+     "kind": "image",
+     "file": "12-body_1217x870_t2072_l137.webp",
+     "height": 870
+    },
+    {
+     "top": 3025,
+     "left": 137,
+     "width": 553,
+     "zIndex": 287,
+     "rotate": 0,
+     "kind": "image",
+     "file": "13-body_553x788_t3025_l137.webp",
+     "height": 788
+    },
+    {
+     "top": 3025,
+     "left": 803,
+     "width": 551,
+     "zIndex": 285,
+     "rotate": 0,
+     "kind": "image",
+     "file": "14-body_551x788_t3025_l803.webp",
+     "height": 788
+    },
+    {
+     "top": 3895,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 284,
+     "rotate": 0,
+     "kind": "image",
+     "file": "15-body_1217x954_t3895_l137.webp",
+     "height": 954
+    },
+    {
+     "top": 5032,
+     "left": 292,
+     "width": 379,
+     "zIndex": 297,
+     "rotate": 45,
+     "kind": "image",
+     "file": "16-body_379x379_t5032_l292_rot45.png",
+     "height": 379
+    },
+    {
+     "top": 5135,
+     "left": 868,
+     "width": 452,
+     "zIndex": 326,
+     "rotate": 0,
+     "kind": "text",
+     "text": "The core of a flexible visual identity.",
+     "fontSize": 17,
+     "fontWeight": 500
+    },
+    {
+     "top": 5173,
+     "left": 868,
+     "width": 486,
+     "zIndex": 324,
+     "rotate": 0,
+     "kind": "text",
+     "text": "A star-shaped structure forms the backbone of the Intersections visual identity, serving as a dynamic and adaptable element that can be reshaped and combined in various ways. This basic sign supports the flexibility of the entire identity, allowing for consistent application across different media while maintaining harmony.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 5594,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 286,
+     "rotate": 0,
+     "kind": "image",
+     "file": "17-body_1217x788_t5594_l137.webp",
+     "height": 788
+    },
+    {
+     "top": 6464,
+     "left": 596,
+     "width": 553,
+     "zIndex": 288,
+     "rotate": 0,
+     "kind": "image",
+     "file": "18-body_553x788_t6464_l596.webp",
+     "height": 788
+    },
+    {
+     "top": 6464,
+     "left": 951,
+     "width": 553,
+     "zIndex": 289,
+     "rotate": 0,
+     "kind": "image",
+     "file": "19-body_553x788_t6464_l951.webp",
+     "height": 788
+    },
+    {
+     "top": 6706,
+     "left": 137,
+     "width": 361,
+     "zIndex": 302,
+     "rotate": 0,
+     "kind": "text",
+     "text": "Beign flexible means beign able to tell more stories, to more people, with the same words.",
+     "fontSize": 17,
+     "fontWeight": 500
+    },
+    {
+     "top": 6772,
+     "left": 137,
+     "width": 360,
+     "zIndex": 301,
+     "rotate": 0,
+     "kind": "text",
+     "text": "A flexible visual system allows the same core\ndesign elements to be adapted and applied\nacross various media, creating a consistent\nyet dynamic visual impression.\n\nBy adjusting colors, shapes, and layouts,\nthe system can be tailored to different platforms or tools, ensuring that the identity remains cohesive while being versatile enough to meet diverse communication needs, both pragmatic and semantic.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 7334,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 290,
+     "rotate": 0,
+     "kind": "image",
+     "file": "20-body_1217x788_t7334_l137.webp",
+     "height": 788
+    }
+   ]
+  }
+ ]
+}

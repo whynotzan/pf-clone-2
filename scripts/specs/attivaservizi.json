@@ -1,0 +1,88 @@
+{
+ "slug": "attivaservizi",
+ "name": "Attiva Servizi",
+ "client": "Attiva Servizi",
+ "type": "Visual Identity",
+ "year": "2025",
+ "description": "Attiva Servizi is an established cleaning service company, specializing in office\nand industrial areas.\nThe brand expressed the need to comunicate their youthful\nbut precise work approach, which was possible with a modern type and geometric styling combination .",
+ "entry": "00-entry_1492x754_t0_l0.webp",
+ "exit": "99-exit_1492x906_t0_l0.webp",
+ "body": [
+  {
+   "type": "canvas",
+   "height": 5223,
+   "items": [
+    {
+     "top": 0,
+     "left": 0,
+     "width": 1492,
+     "zIndex": 278,
+     "rotate": 0,
+     "kind": "rectangle",
+     "color": "#000000",
+     "height": 1036
+    },
+    {
+     "top": 0,
+     "left": 382,
+     "width": 727,
+     "zIndex": 279,
+     "rotate": 0,
+     "kind": "image",
+     "file": "10-body_727x1036_t0_l382.webp",
+     "height": 1036
+    },
+    {
+     "top": 1119,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 281,
+     "rotate": 0,
+     "kind": "image",
+     "file": "11-body_1217x580_t1119_l137.png",
+     "height": 580
+    },
+    {
+     "top": 1782,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 281,
+     "rotate": 0,
+     "kind": "image",
+     "file": "12-body_1217x829_t1782_l137.webp",
+     "height": 829
+    },
+    {
+     "top": 2694,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 288,
+     "rotate": 0,
+     "kind": "image",
+     "file": "13-body_1217x788_t2694_l137.png",
+     "height": 788
+    },
+    {
+     "top": 3569,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 290,
+     "rotate": 0,
+     "kind": "image",
+     "file": "14-body_1217x783_t3569_l137.webp",
+     "height": 783
+    },
+    {
+     "top": 4435,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 289,
+     "rotate": 0,
+     "kind": "image",
+     "file": "15-body_1217x788_t4435_l137.webp",
+     "height": 788
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,128 @@
+{
+ "slug": "visualgroup",
+ "name": "Visual Group",
+ "client": "Visual Group",
+ "type": "Editorial",
+ "year": "2025",
+ "description": "We sometimes forget that the mannequins that are displayed \nin the windows do work because we feel like we're watching ourselves.\nThis physical catalogue wanted to enhance the mannequins value,\nbringing, thanks to its layout, the human touch back to the conversation.",
+ "entry": "00-entry_1492x754_t0_l0.png",
+ "exit": "10-body_1492x906_t0_l0.webp",
+ "body": [
+  {
+   "type": "canvas",
+   "height": 9449,
+   "items": [
+    {
+     "top": 125,
+     "left": 135,
+     "width": 1221,
+     "zIndex": 330,
+     "rotate": 0,
+     "kind": "video",
+     "file": "12-body_1221x526_t125_l135.mp4",
+     "height": 526
+    },
+    {
+     "top": 870,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 326,
+     "rotate": 0,
+     "kind": "image",
+     "file": "13-body_1219x746_t870_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 1741,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 325,
+     "rotate": 0,
+     "kind": "image",
+     "file": "14-body_1219x746_t1741_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 2611,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 328,
+     "rotate": 0,
+     "kind": "image",
+     "file": "15-body_1219x746_t2611_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 3477,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 329,
+     "rotate": 0,
+     "kind": "image",
+     "file": "16-body_1219x746_t3477_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 4352,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 331,
+     "rotate": 0,
+     "kind": "image",
+     "file": "17-body_1219x746_t4352_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 5222,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 339,
+     "rotate": 0,
+     "kind": "image",
+     "file": "18-body_1219x746_t5222_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 6092,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 341,
+     "rotate": 0,
+     "kind": "image",
+     "file": "19-body_1219x746_t6092_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 6963,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 340,
+     "rotate": 0,
+     "kind": "image",
+     "file": "20-body_1219x746_t6963_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 7833,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 342,
+     "rotate": 0,
+     "kind": "image",
+     "file": "21-body_1219x746_t7833_l136.webp",
+     "height": 746
+    },
+    {
+     "top": 8703,
+     "left": 136,
+     "width": 1219,
+     "zIndex": 343,
+     "rotate": 0,
+     "kind": "image",
+     "file": "22-body_1219x746_t8703_l136.webp",
+     "height": 746
+    }
+   ]
+  }
+ ]
+}

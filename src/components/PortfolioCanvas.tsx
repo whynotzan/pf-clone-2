@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import { TransitionLink } from "./transition/TransitionLink";
 import { ScaledCanvas } from "./ScaledCanvas";
+import { getPublishedProjectSlugs } from "@/lib/projects";
 import type { CanvasItem, CanvasPlacement } from "@/types/portfolio";
 
 const CANVAS_HEIGHT = 4200;
@@ -16,24 +17,29 @@ const MOBILE_CANVAS_HEIGHT = 2806;
 
 /**
  * Mobile placements are the original's own, read from its embedded layout table
- * and multiplied by the 375px reference width. Links are its real targets; the
- * homepage still points every poster at `/matteomeller` until the other
- * projects exist (Phase 4), so those stay as they were.
+ * and multiplied by the 375px reference width.
+ *
+ * Slugs are likewise the original's real link targets, read from `link.url` in
+ * that same table rather than inferred from the artwork — three had been guessed
+ * wrong: the video reel is Bella, not Meller; the gif is Nutrients; and the item
+ * at 2403 is the unannounced project the COMING SOON label sits on, which the
+ * original leaves unlinked. Each becomes a link only once its project renders,
+ * so adding one needs no change here.
  */
 const ITEMS: CanvasItem[] = [
   {
     id: "intersections",
     src: "/images/home/01K7FSHN3PBRK38PQNRBV3S3XH.webp",
     alt: "Intersections poster on gravel",
-    href: "/matteomeller",
+    slug: "intersections",
     desktop: { top: 192, left: 647, width: 581, height: 533, zIndex: 13, rotate: -10 },
     mobile: { top: 81, left: 56, width: 263, height: 223, zIndex: 325, rotate: -10 },
   },
   {
-    id: "nutrients-gif",
+    id: "nutrients",
     src: "/images/home/01K6ED322FX5PF204385YMPZ13.gif",
     alt: "Nutrients project animation",
-    href: "/matteomeller",
+    slug: "nutrients",
     desktop: { top: 622, left: 655, width: 583, height: 711, zIndex: 32 },
     mobile: { top: 332, left: 54, width: 267, height: 369, zIndex: 326 },
   },
@@ -48,17 +54,17 @@ const ITEMS: CanvasItem[] = [
     id: "matteomeller",
     src: "/images/home/01KFRM9P6S9WPJZY8WYQMH09AQ.png",
     alt: "Matteo Meller poster detail",
-    href: "/matteomeller",
+    slug: "matteomeller",
     desktop: { top: 1167, left: 610, width: 368, height: 494, zIndex: 42 },
     mobile: { top: 706, left: 74, width: 228, height: 306, zIndex: 323 },
   },
   {
-    id: "matteomeller-reel",
+    id: "bella-reel",
     kind: "video",
     src: "/videos/home/01K7FVNCECYCS9NXXCMDEPJFNY.mp4",
     poster: "/images/home/01KAVH6HP6ZK57SPGRTM885Q7M.jpeg",
-    alt: "Matteo Meller project video reel",
-    href: "/matteomeller",
+    alt: "Bella che ti Spiazza project video reel",
+    slug: "bella",
     desktop: { top: 1484, left: 898, width: 371, height: 464, zIndex: 43, rotate: -10 },
     // The original tilts this one the other way on mobile.
     mobile: { top: 1050, left: 65, width: 244, height: 272, zIndex: 324, rotate: 10 },
@@ -67,7 +73,7 @@ const ITEMS: CanvasItem[] = [
     id: "miche",
     src: "/images/home/01K7J9GXPKRC6EHA66C8E3TMWC.webp",
     alt: "Miche project photo",
-    href: "/matteomeller",
+    slug: "miche",
     desktop: { top: 1801, left: 632, width: 557, height: 557, zIndex: 10, borderRadius: 9999 },
     // 0.2146 of the layout width resolves to ~80px here, well short of the half
     // that would round it off — a rounded square on mobile, a circle on desktop.
@@ -77,15 +83,15 @@ const ITEMS: CanvasItem[] = [
     id: "anselmi",
     src: "/images/home/01K7H4E2QYKQSFEAY19RKRPFWJ.png",
     alt: "Anselmi project",
-    href: "/matteomeller",
+    slug: "anselmi",
     desktop: { top: 2204, left: 508, width: 570, height: 433, zIndex: 26 },
     mobile: { top: 1672, left: 18, width: 338, height: 257, zIndex: 220 },
   },
   {
-    id: "nutrients",
+    id: "coming-soon-project",
     src: "/images/home/01K7CH55PWQR15RV07GT255G67.webp",
-    alt: "Nutrients project",
-    href: "/matteomeller",
+    // Unlinked on the original: this is the project the COMING SOON label marks.
+    alt: "Unannounced project",
     desktop: { top: 2403, left: 757, width: 611, height: 599, zIndex: 29 },
     mobile: { top: 1908, left: 41, width: 293, height: 288, zIndex: 217 },
   },
@@ -93,7 +99,7 @@ const ITEMS: CanvasItem[] = [
     id: "visualgroup",
     src: "/images/home/01K7J8RZ7BY2Z2QGC84N1D65G7.webp",
     alt: "Visual Group project",
-    href: "/matteomeller",
+    slug: "visualgroup",
     desktop: { top: 2860, left: 558, width: 560, height: 588, zIndex: 28 },
     mobile: { top: 2218, left: 50, width: 275, height: 302, zIndex: 218 },
   },
@@ -101,7 +107,7 @@ const ITEMS: CanvasItem[] = [
     id: "attivaservizi",
     src: "/images/home/01K7CHHJ966KN521QRZEA3GEW7.webp",
     alt: "Attiva Servizi project",
-    href: "/matteomeller",
+    slug: "attivaservizi",
     // The original declares 934.572px here; the browser clamps it against the
     // box, so keeping the declared value reproduces the same rounded shape.
     desktop: { top: 3327, left: 784, width: 539, height: 413, zIndex: 27, borderRadius: 935 },
@@ -124,7 +130,7 @@ function placementVars(item: CanvasItem): CSSProperties {
   return { ...vars(item.mobile, "m"), ...vars(item.desktop, "d") } as CSSProperties;
 }
 
-function Item({ item }: { item: CanvasItem }) {
+function Item({ item, href }: { item: CanvasItem; href?: string }) {
   if (item.id === "coming-soon") {
     return (
       <div
@@ -169,9 +175,9 @@ function Item({ item }: { item: CanvasItem }) {
 
   return (
     <div className="canvas-item" style={placementVars(item)}>
-      {item.href ? (
+      {href ? (
         <TransitionLink
-          href={item.href}
+          href={href}
           aria-label={item.alt}
           className="block h-full w-full transition-[filter,opacity] duration-200 ease-linear hover:opacity-80 hover:blur-[1px]"
         >
@@ -184,7 +190,11 @@ function Item({ item }: { item: CanvasItem }) {
   );
 }
 
-export function PortfolioCanvas() {
+export async function PortfolioCanvas() {
+  // A thumbnail becomes a link only once its project renders, so every item can
+  // carry its real slug today without shipping dead links.
+  const published = new Set(await getPublishedProjectSlugs());
+
   return (
     <div
       // `isolation` keeps the items' z-indices inside their own stacking
@@ -205,7 +215,11 @@ export function PortfolioCanvas() {
           }}
         >
           {ITEMS.map((item) => (
-            <Item key={item.id} item={item} />
+            <Item
+              key={item.id}
+              item={item}
+              href={item.slug && published.has(item.slug) ? `/${item.slug}` : undefined}
+            />
           ))}
         </div>
       </ScaledCanvas>

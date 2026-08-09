@@ -144,15 +144,54 @@ Verified in a headless browser at 375px: all nine posters land within 1px of the
 coordinates, all nine are hit-testable via `elementFromPoint`, no horizontal overflow on either
 page, and the 1440px desktop layout is unchanged.
 
-## Phase 4 — Upload all project media
+## Phase 4 — Upload all project media — DONE (2026-08-09)
 
-Only `matteomeller` exists so far. The original site has these projects (see `PAGE_TOPOLOGY.md`):
-Intersections · Miche · Anselmi · Nutrients · Visual Group · Attiva Servizi
+All eight of the original's projects now exist: Intersections · Nutrients · Matteo Meller ·
+Bella che ti Spiazza · Miche · Anselmi · Visual Group · Attiva Servizi. (The earlier list of
+six was wrong — it omitted Bella, and three homepage thumbnails pointed at the wrong project.)
 
-- [ ] Create each project in `/keystatic` — **always upload through the CMS UI**, never by hand-editing JSON (see the gotchas in `AGENTS.md`)
-- [ ] Point each homepage thumbnail at its real slug — every item in `PortfolioCanvas.tsx`
-      currently hardcodes `href: "/matteomeller"` (moved here from Phase 2, where it was blocked)
-- [ ] Source media is staged locally in `content/_input/` (gitignored, ~64MB, 11 project folders)
+- [x] Create each project in `/keystatic` — done through the CMS UI, driven by Playwright
+- [x] Point each homepage thumbnail at its real slug — items now carry a `slug`, and
+      `PortfolioCanvas` links one only when its project actually renders, so adding a
+      project needs no code change here
+- [x] Media staged from the original's own CDN into `content/_input/_cdn/` (gitignored, 49MB)
+
+### How the import works, and how to add another project
+
+Three scripts in `scripts/`, run in order against a dev server:
+
+1. `import-stage-assets.mjs` — downloads every published asset, naming each by size and
+   position so it can be matched back to its item.
+2. `import-specs.mjs` — reads the layout table embedded in each original page and writes
+   `scripts/specs/<slug>.json`: meta, description, hero images, and the body as canvas items
+   at the original's exact coordinates.
+3. `import-author.mjs` — drives `/keystatic` in a real browser to author it. **Playwright is
+   deliberately not a dependency**; install it only for the import and uninstall afterwards.
+   The script header carries the exact sequence.
+
+Verified with `import-verify.mjs`: every item on all seven new pages lands within **0px** of
+its authored position at a 1492px viewport, and no page overflows horizontally at 375px. The
+one apparent exception is intersections' 45° image, whose axis-aligned bounding box is
+correctly 536px for a 379px square.
+
+### Deliberate decisions
+
+- **Bodies are one canvas block, not a stack of rows.** The original authors its own vertical
+  rhythm (anselmi's rows sit 83px apart, not a flex gap), and several pages place items rows
+  cannot express at all. One canvas reproduces both exactly. Media rows remain the right tool
+  for hand-authored pages and are unchanged; `matteomeller` still uses them.
+- **Cortina 2K26 was left out** at Alessandro's request. Galilei likewise has no route on the
+  original; both remain candidates for the COMING SOON slot, which stays deliberately unlinked.
+- **Weight:** `public/` now carries 83MB of media (65MB images, 18MB videos). `matteomeller`
+  is still the heaviest single project at 22MB, then intersections at 12MB. Worth a pass in
+  Phase 5 if it matters — these are the original's own already-compressed exports.
+
+### What the original turned out to contain
+
+- **`visualgroup` is half-finished on the original.** It keeps a Lorem ipsum intro block and a
+  duplicated Client/Type/Year, both behind `hidden.d`, and names its last two sections
+  identically. The import filters hidden items and keys sections by index rather than name.
+- Its real copy ("We sometimes forget that the mannequins…") is what we ship.
 
 ## Phase 5 — Check
 
@@ -175,6 +214,6 @@ Full QA pass before going public on the real domain.
 ## Parked — revisit when the phases above are done
 
 - **Entry/exit reveal animations.** `src/components/project/RevealOnView.tsx` is built and working (clip-path curtain wipe, direction-aware) but deliberately unhooked. Last state: 0.7s `ease-in-out`, no opacity fade. To re-enable, wrap the asset in `EntryImage.tsx` / `ExitImage.tsx` with `direction="down"` / `direction="up"`. Unrelated to the page wipe between routes, which is live — see `AGENTS.md`.
-- **Transition tags are hardcoded.** `src/lib/transitionTags.ts` maps `/matteomeller` by hand. Every project added in Phase 4 needs an entry, or it falls back to "Alessandro Zanatta".
+- **Transition tags are hardcoded.** `src/lib/transitionTags.ts` maps each route by hand; all eight projects now have an entry. Any *new* project still needs one, or it falls back to "Alessandro Zanatta".
 - **Lottie support.** Feasible: `fields.file()` accepts any file type, so uploads already work. Needs a third `"lottie"` asset kind in the schema, a player library (e.g. `lottie-react`), and wiring in `MediaAsset.tsx`.
 - **CMS thumbnails in list views.** Keystatic's `itemLabel` only accepts a plain string in v0.6.4 — no images possible in the collapsed Body-blocks list. Workaround: keep the live project page open in a second tab while editing.

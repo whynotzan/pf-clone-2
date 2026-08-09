@@ -1,0 +1,199 @@
+{
+ "slug": "nutrients",
+ "name": "Nutrients",
+ "client": "Personal",
+ "type": "Motion Design",
+ "year": "2024",
+ "description": "Nutrition labels are great: informative, precise, and clear.\nThey let consumers know what they’re inserting in their body with just a read.\nBut is it possible to do that in a glance?\nThe explorations of this personal project had this aim.",
+ "entry": "00-entry_1492x754_t0_l0.svg",
+ "exit": "99-exit_1492x906_t0_l0.png",
+ "body": [
+  {
+   "type": "canvas",
+   "height": 4927,
+   "items": [
+    {
+     "top": 0,
+     "left": 382,
+     "width": 728,
+     "zIndex": 278,
+     "rotate": 0,
+     "kind": "youtube",
+     "url": "https://www.youtube.com/watch?v=_f3ioKd7LSg",
+     "height": 787
+    },
+    {
+     "top": 1076,
+     "left": 137,
+     "width": 380,
+     "zIndex": 314,
+     "rotate": 0,
+     "kind": "text",
+     "text": "I tried transforming raw nutritional data\ninto a visual system.\n\nThe visual system was designed to make the data as communicative as possible.\n\nEach nutrient was assigned a geometric shape/color/texture proportional to its relative value, making it easy to understand the content.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 1078,
+     "left": 620,
+     "width": 742,
+     "zIndex": 310,
+     "rotate": 0,
+     "kind": "image",
+     "file": "11-body_742x295_t1078_l620.svg",
+     "height": 295
+    },
+    {
+     "top": 1616,
+     "left": 137,
+     "width": 464,
+     "zIndex": 319,
+     "rotate": 0,
+     "kind": "image",
+     "file": "12-body_464x580_t1616_l137.gif",
+     "height": 580
+    },
+    {
+     "top": 1616,
+     "left": 898,
+     "width": 464,
+     "zIndex": 318,
+     "rotate": 0,
+     "kind": "image",
+     "file": "13-body_464x580_t1616_l898.gif",
+     "height": 580
+    },
+    {
+     "top": 1891,
+     "left": 716,
+     "width": 60,
+     "zIndex": 325,
+     "rotate": 180,
+     "kind": "image",
+     "file": "14-body_60x30_t1891_l716_rot180.svg",
+     "height": 30
+    },
+    {
+     "top": 2398,
+     "left": 137,
+     "width": 547,
+     "zIndex": 327,
+     "rotate": 0,
+     "kind": "image",
+     "file": "15-body_547x769_t2398_l137.jpeg",
+     "height": 769
+    },
+    {
+     "top": 2398,
+     "left": 807,
+     "width": 547,
+     "zIndex": 329,
+     "rotate": 0,
+     "kind": "image",
+     "file": "16-body_547x769_t2398_l807.jpeg",
+     "height": 769
+    },
+    {
+     "top": 3290,
+     "left": 137,
+     "width": 546,
+     "zIndex": 328,
+     "rotate": 0,
+     "kind": "image",
+     "file": "17-body_546x769_t3290_l137.jpeg",
+     "height": 769
+    },
+    {
+     "top": 3290,
+     "left": 808,
+     "width": 546,
+     "zIndex": 330,
+     "rotate": 0,
+     "kind": "image",
+     "file": "18-body_546x764_t3290_l808.jpeg",
+     "height": 764
+    },
+    {
+     "top": 4287,
+     "left": 137,
+     "width": 212,
+     "zIndex": 310,
+     "rotate": 0,
+     "kind": "image",
+     "file": "19-body_212x262_t4287_l137.webp",
+     "height": 262
+    },
+    {
+     "top": 4287,
+     "left": 473,
+     "width": 212,
+     "zIndex": 315,
+     "rotate": 0,
+     "kind": "image",
+     "file": "20-body_212x262_t4287_l473.webp",
+     "height": 262
+    },
+    {
+     "top": 4287,
+     "left": 808,
+     "width": 212,
+     "zIndex": 312,
+     "rotate": 0,
+     "kind": "image",
+     "file": "21-body_212x262_t4287_l808.webp",
+     "height": 262
+    },
+    {
+     "top": 4287,
+     "left": 1143,
+     "width": 212,
+     "zIndex": 314,
+     "rotate": 0,
+     "kind": "image",
+     "file": "22-body_212x262_t4287_l1143.webp",
+     "height": 262
+    },
+    {
+     "top": 4665,
+     "left": 137,
+     "width": 212,
+     "zIndex": 317,
+     "rotate": 0,
+     "kind": "image",
+     "file": "23-body_212x262_t4665_l137.webp",
+     "height": 262
+    },
+    {
+     "top": 4665,
+     "left": 473,
+     "width": 212,
+     "zIndex": 318,
+     "rotate": 0,
+     "kind": "image",
+     "file": "24-body_212x262_t4665_l473.webp",
+     "height": 262
+    },
+    {
+     "top": 4665,
+     "left": 808,
+     "width": 212,
+     "zIndex": 311,
+     "rotate": 0,
+     "kind": "image",
+     "file": "25-body_212x262_t4665_l808.webp",
+     "height": 262
+    },
+    {
+     "top": 4665,
+     "left": 1143,
+     "width": 212,
+     "zIndex": 316,
+     "rotate": 0,
+     "kind": "image",
+     "file": "26-body_212x262_t4665_l1143.webp",
+     "height": 262
+    }
+   ]
+  }
+ ]
+}

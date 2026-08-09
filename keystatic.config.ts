@@ -35,6 +35,7 @@ export default config({
               options: [
                 { label: "Media row", value: "media" },
                 { label: "Text block", value: "text" },
+                { label: "Canvas (free placement)", value: "canvas" },
               ],
               defaultValue: "media",
             }),
@@ -121,6 +122,126 @@ export default config({
                   }
                 ),
               }),
+              // The original's project pages are not stacks of rows — they are the
+              // same canvas engine as the homepage, and several pages use it: a 45°
+              // image on intersections, columns that overlap by 198px, text floating
+              // over a row, a YouTube embed, colour blocks. Rows cover the regular
+              // cases; this covers the rest, authored in the original's own 1492px
+              // space so measurements can be transcribed rather than re-derived.
+              canvas: fields.object({
+                height: fields.integer({
+                  label: "Canvas height (px)",
+                  description:
+                    "Total height of this block on the 1492px design canvas. Leave empty to fit the lowest item.",
+                  validation: { min: 0, max: 12000 },
+                }),
+                items: fields.array(
+                  fields.object({
+                    kind: fields.select({
+                      label: "Kind",
+                      options: [
+                        { label: "Image / GIF", value: "image" },
+                        { label: "Video", value: "video" },
+                        { label: "YouTube embed", value: "youtube" },
+                        { label: "Colour block", value: "rectangle" },
+                        { label: "Text", value: "text" },
+                      ],
+                      defaultValue: "image",
+                    }),
+                    image: fields.image({
+                      label: "Image file",
+                      directory: "public/images/projects",
+                      publicPath: "/images/projects/",
+                    }),
+                    video: fields.file({
+                      label: "Video file (mp4)",
+                      directory: "public/videos/projects",
+                      publicPath: "/videos/projects/",
+                    }),
+                    youtubeUrl: fields.text({
+                      label: "YouTube URL",
+                      description: "Full watch URL or bare video id.",
+                      defaultValue: "",
+                    }),
+                    color: fields.text({
+                      label: "Colour",
+                      description: "CSS colour for a colour block, e.g. #eeeeee.",
+                      defaultValue: "",
+                    }),
+                    text: fields.text({ label: "Text", multiline: true, defaultValue: "" }),
+                    top: fields.integer({ label: "Top (px)", defaultValue: 0 }),
+                    left: fields.integer({ label: "Left (px)", defaultValue: 0 }),
+                    width: fields.integer({ label: "Width (px)", defaultValue: 400 }),
+                    height: fields.integer({
+                      label: "Height (px)",
+                      description: "Leave empty for text, which sizes to its content.",
+                    }),
+                    rotate: fields.integer({
+                      label: "Rotation (deg)",
+                      description: "Rotates about the item's centre, like the original.",
+                      defaultValue: 0,
+                      validation: { min: -360, max: 360 },
+                    }),
+                    blend: fields.select({
+                      label: "Blend",
+                      description:
+                        "Multiply drops a white background into the page colour, so a photo shot on white sits on the grey without a visible box. Darken is gentler and only replaces pixels lighter than the page.",
+                      options: [
+                        { label: "None", value: "normal" },
+                        { label: "Multiply (hide white)", value: "multiply" },
+                        { label: "Darken", value: "darken" },
+                      ],
+                      defaultValue: "normal",
+                    }),
+                    zIndex: fields.integer({
+                      label: "Layer",
+                      description: "Higher paints on top. Use to control overlaps.",
+                      defaultValue: 1,
+                    }),
+                    fontSize: fields.integer({ label: "Font size (px)", defaultValue: 22 }),
+                    fontWeight: fields.select({
+                      label: "Font weight",
+                      options: [
+                        { label: "Regular", value: "400" },
+                        { label: "Medium", value: "500" },
+                        { label: "Bold", value: "700" },
+                      ],
+                      defaultValue: "400",
+                    }),
+                  }),
+                  {
+                    label: "Canvas items",
+                    itemLabel: (props) => {
+                      const kind = props.fields.kind.value;
+                      const icon =
+                        kind === "video"
+                          ? "🎬"
+                          : kind === "youtube"
+                            ? "▶️"
+                            : kind === "rectangle"
+                              ? "🟦"
+                              : kind === "text"
+                                ? "📝"
+                                : "🖼️";
+                      const name =
+                        kind === "video"
+                          ? assetFilename(props.fields.video.value)
+                          : kind === "image"
+                            ? assetFilename(props.fields.image.value)
+                            : kind === "text"
+                              ? props.fields.text.value.slice(0, 24)
+                              : kind === "youtube"
+                                ? props.fields.youtubeUrl.value
+                                : props.fields.color.value;
+                      const at = `${props.fields.left.value ?? 0},${props.fields.top.value ?? 0}`;
+                      const rot = props.fields.rotate.value
+                        ? ` ${props.fields.rotate.value}°`
+                        : "";
+                      return `${icon} @${at}${rot} — ${name || "(empty)"}`;
+                    },
+                  }
+                ),
+              }),
               text: fields.object({
                 paragraphs: fields.array(
                   fields.text({ label: "Paragraph", multiline: true }),
@@ -166,6 +287,12 @@ export default config({
                 const first = props.value.fields.paragraphs.elements[0]?.value ?? "";
                 const cta = props.value.fields.ctaLabel.value;
                 return `📝 Text — ${first || cta || "(empty)"}`;
+              }
+              if (props.discriminant === "canvas") {
+                const canvas = props.value.fields;
+                const count = canvas.items.elements.length;
+                const height = canvas.height.value;
+                return `🧩 Canvas — ${count} item${count === 1 ? "" : "s"}${height ? ` · ${height}px` : ""}`;
               }
               const media = props.value.fields;
               const columns = media.columns.value;
