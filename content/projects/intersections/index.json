@@ -1,0 +1,195 @@
+{
+  "name": "Intersections",
+  "client": "Intersections Festival",
+  "type": "Visual Identity",
+  "year": "2024",
+  "firstDescription": "Intersections examines how art, technology, and humanity are blending\nto reshape cultural identity in today’s globalized world.\nThe event focuses on how design, architecture, and media are pushing\nthe boundaries of creativity and connection, redefining heritage\nin a rapidly evolving landscape.",
+  "entryImage": "/images/projects/intersections/entryImage.webp",
+  "body": [
+    {
+      "discriminant": "canvas",
+      "value": {
+        "height": 8122,
+        "items": [
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/0/image.webp",
+            "top": 0,
+            "left": 137,
+            "width": 1217,
+            "height": 953,
+            "rotate": 0,
+            "zIndex": 279,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/1/image.webp",
+            "top": 1036,
+            "left": 383,
+            "width": 726,
+            "height": 953,
+            "rotate": 0,
+            "zIndex": 280,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/2/image.webp",
+            "top": 2072,
+            "left": 137,
+            "width": 1217,
+            "height": 870,
+            "rotate": 0,
+            "zIndex": 281,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/3/image.webp",
+            "top": 3025,
+            "left": 137,
+            "width": 553,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 287,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/4/image.webp",
+            "top": 3025,
+            "left": 803,
+            "width": 551,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 285,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/5/image.webp",
+            "top": 3895,
+            "left": 137,
+            "width": 1217,
+            "height": 954,
+            "rotate": 0,
+            "zIndex": 284,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/6/image.png",
+            "top": 5032,
+            "left": 292,
+            "width": 379,
+            "height": 379,
+            "rotate": 45,
+            "zIndex": 297,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "text",
+            "text": "The core of a flexible visual identity.",
+            "top": 5135,
+            "left": 868,
+            "width": 452,
+            "rotate": 0,
+            "zIndex": 326,
+            "fontSize": 17,
+            "fontWeight": "500"
+          },
+          {
+            "kind": "text",
+            "text": "A star-shaped structure forms the backbone of the Intersections visual identity, serving as a dynamic and adaptable element that can be reshaped and combined in various ways. This basic sign supports the flexibility of the entire identity, allowing for consistent application across different media while maintaining harmony.",
+            "top": 5173,
+            "left": 868,
+            "width": 486,
+            "rotate": 0,
+            "zIndex": 324,
+            "fontSize": 17,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/9/image.webp",
+            "top": 5594,
+            "left": 137,
+            "width": 1217,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 286,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/10/image.webp",
+            "top": 6464,
+            "left": 596,
+            "width": 553,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 288,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/11/image.webp",
+            "top": 6464,
+            "left": 951,
+            "width": 553,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 289,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "text",
+            "text": "Beign flexible means beign able to tell more stories, to more people, with the same words.",
+            "top": 6706,
+            "left": 137,
+            "width": 361,
+            "rotate": 0,
+            "zIndex": 302,
+            "fontSize": 17,
+            "fontWeight": "500"
+          },
+          {
+            "kind": "text",
+            "text": "A flexible visual system allows the same core\ndesign elements to be adapted and applied\nacross various media, creating a consistent\nyet dynamic visual impression.\n\nBy adjusting colors, shapes, and layouts,\nthe system can be tailored to different platforms or tools, ensuring that the identity remains cohesive while being versatile enough to meet diverse communication needs, both pragmatic and semantic.",
+            "top": 6772,
+            "left": 137,
+            "width": 360,
+            "rotate": 0,
+            "zIndex": 301,
+            "fontSize": 17,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/intersections/body/0/value/items/14/image.webp",
+            "top": 7334,
+            "left": 137,
+            "width": 1217,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 290,
+            "fontSize": 22,
+            "fontWeight": "400"
+          }
+        ]
+      }
+    }
+  ],
+  "exitImage": "/images/projects/intersections/exitImage.webp"
+}

@@ -9,6 +9,13 @@
 const TAGS: Record<string, string> = {
   "/": "Alessandro Zanatta",
   "/matteomeller": "Matteo Meller",
+  "/intersections": "Intersections",
+  "/nutrients": "Nutrients",
+  "/bella": "Bella che ti Spiazza",
+  "/miche": "Miche",
+  "/anselmi": "Anselmi",
+  "/visualgroup": "Visual Group",
+  "/attivaservizi": "Attiva Servizi",
 };
 
 const FALLBACK = "Alessandro Zanatta";

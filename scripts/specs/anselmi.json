@@ -1,0 +1,58 @@
+{
+ "slug": "anselmi",
+ "name": "Anselmi",
+ "client": "Fabio Anselmi",
+ "type": "Brand Identity",
+ "year": "2025",
+ "description": "The project focused on refining the brand identity of attorney Fabio Anselmi, to reinforce a formal and technical professional image. Particular attention was given to the business card, which guided the redefinition of the logo’s proportions, resulting in a more balanced, authoritative, and coherent visual identity.",
+ "entry": "00-entry_1492x754_t0_l0.jpeg",
+ "exit": "99-exit_1492x906_t0_l0.webp",
+ "body": [
+  {
+   "type": "canvas",
+   "height": 2777,
+   "items": [
+    {
+     "top": 0,
+     "left": 0,
+     "width": 1492,
+     "zIndex": 278,
+     "rotate": 0,
+     "kind": "rectangle",
+     "color": "#000000",
+     "height": 1036
+    },
+    {
+     "top": 0,
+     "left": 98,
+     "width": 1295,
+     "zIndex": 279,
+     "rotate": 0,
+     "kind": "image",
+     "file": "10-body_1295x1036_t0_l98.webp",
+     "height": 1036
+    },
+    {
+     "top": 1119,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 281,
+     "rotate": 0,
+     "kind": "image",
+     "file": "11-body_1217x787_t1119_l137.webp",
+     "height": 787
+    },
+    {
+     "top": 1989,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 288,
+     "rotate": 0,
+     "kind": "image",
+     "file": "12-body_1217x788_t1989_l137.webp",
+     "height": 788
+    }
+   ]
+  }
+ ]
+}

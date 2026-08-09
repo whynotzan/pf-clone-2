@@ -1,0 +1,67 @@
+{
+  "name": "Anselmi",
+  "client": "Fabio Anselmi",
+  "type": "Brand Identity",
+  "year": "2025",
+  "firstDescription": "The project focused on refining the brand identity of attorney Fabio Anselmi, to reinforce a formal and technical professional image. Particular attention was given to the business card, which guided the redefinition of the logo’s proportions, resulting in a more balanced, authoritative, and coherent visual identity.",
+  "entryImage": "/images/projects/anselmi/entryImage.jpeg",
+  "body": [
+    {
+      "discriminant": "canvas",
+      "value": {
+        "height": 2777,
+        "items": [
+          {
+            "kind": "rectangle",
+            "color": "#000000",
+            "top": 0,
+            "left": 0,
+            "width": 1492,
+            "height": 1036,
+            "rotate": 0,
+            "zIndex": 278,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/anselmi/body/0/value/items/1/image.webp",
+            "top": 0,
+            "left": 98,
+            "width": 1295,
+            "height": 1036,
+            "rotate": 0,
+            "zIndex": 279,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/anselmi/body/0/value/items/2/image.webp",
+            "top": 1119,
+            "left": 137,
+            "width": 1217,
+            "height": 787,
+            "rotate": 0,
+            "zIndex": 281,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/anselmi/body/0/value/items/3/image.webp",
+            "top": 1989,
+            "left": 137,
+            "width": 1217,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 288,
+            "fontSize": 22,
+            "fontWeight": "400"
+          }
+        ]
+      }
+    }
+  ],
+  "exitImage": "/images/projects/anselmi/exitImage.webp"
+}

@@ -1,0 +1,163 @@
+{
+  "name": "Visual Group",
+  "client": "Visual Group",
+  "type": "Editorial",
+  "year": "2025",
+  "firstDescription": "We sometimes forget that the mannequins that are displayed \nin the windows do work because we feel like we're watching ourselves.\nThis physical catalogue wanted to enhance the mannequins value,\nbringing, thanks to its layout, the human touch back to the conversation.",
+  "entryImage": "/images/projects/visualgroup/entryImage.png",
+  "body": [
+    {
+      "discriminant": "canvas",
+      "value": {
+        "height": 9449,
+        "items": [
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/0/image.webp",
+            "top": 0,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 327,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "video",
+            "video": "/videos/projects/visualgroup/body/0/value/items/1/video.mp4",
+            "top": 125,
+            "left": 135,
+            "width": 1221,
+            "height": 526,
+            "rotate": 0,
+            "zIndex": 330,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/2/image.webp",
+            "top": 870,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 326,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/3/image.webp",
+            "top": 1741,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 325,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/4/image.webp",
+            "top": 2611,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 328,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/5/image.webp",
+            "top": 3477,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 329,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/6/image.webp",
+            "top": 4352,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 331,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/7/image.webp",
+            "top": 5222,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 339,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/8/image.webp",
+            "top": 6092,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 341,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/9/image.webp",
+            "top": 6963,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 340,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/10/image.webp",
+            "top": 7833,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 342,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/visualgroup/body/0/value/items/11/image.webp",
+            "top": 8703,
+            "left": 136,
+            "width": 1219,
+            "height": 746,
+            "rotate": 0,
+            "zIndex": 343,
+            "fontSize": 22,
+            "fontWeight": "400"
+          }
+        ]
+      }
+    }
+  ],
+  "exitImage": "/images/projects/visualgroup/exitImage.webp"
+}

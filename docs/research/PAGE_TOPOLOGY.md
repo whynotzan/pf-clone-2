@@ -28,10 +28,41 @@ props.pageProps.article.sections[].items    # every item, with area.m and area.d
   `/miche`, `/anselmi`, `/visualgroup`, `/attivaservizi`. That is what Phase 4 needs to
   replace the hardcoded `/matteomeller` on every homepage item.
 
-## Scope built
-- `/` — Homepage (canvas)
-- `/matteomeller` — Project case study (image stack)
-- `/bella` — Project case study (image stack)
+## Project routes on the original
+
+All eight, confirmed from the homepage's own `link.url` values, not inferred from artwork:
+`/intersections` · `/nutrients` · `/matteomeller` · `/bella` · `/miche` · `/anselmi` ·
+`/visualgroup` · `/attivaservizi`. All eight are built as of 2026-08-09.
+
+`content/_input/` also holds raw assets for **Galilei** and **Cortina 2K26**, which have no
+route on the original — the likely candidates for the COMING SOON slot, which the original
+leaves deliberately unlinked.
+
+### Page structure — six sections, keyed by position not name
+
+Every project page is the same six sections: chrome, hero, intro text, a spacer, the body, and
+a closing image. Heights are `control-units` (fractions of the 1492px width) or viewport-height
+units, which is why the hero resolves to the 1492x754 entry box and the closing section to
+1492x906.
+
+**Match sections by index, never by name.** `visualgroup` names its final two sections
+identically ("PORTFOLIO 2"), so name matching silently picks the wrong one. Index 1 is the
+entry image, index 2 the intro text, the last index the exit image, and 3..last-1 the body.
+
+**Items can be hidden per breakpoint.** `hidden.d` marks desktop-hidden items; `visualgroup`
+keeps a Lorem ipsum intro and a duplicate Client/Type/Year behind it. Filter these out or you
+will author the placeholder instead of the real copy.
+
+### Body layout — a canvas, not a stack of rows
+
+The body runs the same engine as the homepage. Beyond per-row heights and uneven splits it
+uses: **rotation** (a 379x379 image at 45° on intersections; 60x30 and 17x9 marks at 180° on
+nutrients and matteomeller), **overlap** (intersections' lower pair of 553px columns overlap by
+198px), **free-floating text** over media rows, a **youtube-embed** on nutrients, and solid
+**rectangles**. Groups nest, and children report coordinates relative to their group, so
+offsets must accumulate on the way down.
+
+Our template covers this with a canvas body block; see `docs/ROADMAP.md` Phase 4.
 
 ## Homepage (`/`)
 

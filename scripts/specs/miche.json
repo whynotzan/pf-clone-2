@@ -1,0 +1,276 @@
+{
+ "slug": "miche",
+ "name": "Miche",
+ "client": "Miche Srl",
+ "type": "Product Graphic Design",
+ "year": "2023-2025",
+ "description": "Founded in 1919 and based in San Vendemiano (TV), MICHE specializes\nin high-performance cycling components, from wheels and hubs to bike\nchains. The collaboration has the aim to create designs that not only present\ntheir products clearly, but also make them stand out in a crowded market.",
+ "entry": "00-entry_1492x754_t0_l0.webp",
+ "exit": "99-exit_1492x906_t0_l0.webp",
+ "body": [
+  {
+   "type": "canvas",
+   "height": 11988,
+   "items": [
+    {
+     "top": 0,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 319,
+     "rotate": 0,
+     "kind": "video",
+     "file": "10-body_1217x787_t0_l137.mp4",
+     "height": 787
+    },
+    {
+     "top": 915,
+     "left": 138,
+     "width": 482,
+     "zIndex": 327,
+     "rotate": 0,
+     "kind": "text",
+     "text": "Collaborating closely with MICHE develop and marketing departments to create a cohesive and functional design system for their products and brand.",
+     "fontSize": 17,
+     "fontWeight": 500
+    },
+    {
+     "top": 915,
+     "left": 751,
+     "width": 604,
+     "zIndex": 326,
+     "rotate": 0,
+     "kind": "text",
+     "text": "Collaborating closely with MICHE develop and marketing departments to create a cohesive and functional design system for their products and brand.\n\nWe developed a design system that brings order and clarity\nto the presentation of their wheels, creating a specific layout\nthat enhances both functionality and aesthetic.\n\nTo guarantee the highest quality across different applications,\nwe ensure the designs are adaptable to various production\nmethods—whether it’s laser cutting, screen printing, or other\nspecialized techniques.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 1332,
+     "left": 750,
+     "width": 604,
+     "zIndex": 331,
+     "rotate": 0,
+     "kind": "text",
+     "text": "The K1 RD is the latest evolution of the well-established K1 EVO\nnow enhanced with cutting-edge ceramic technology for even\ngreater durability and performance.\n\nOur work focused on developing a brand-new logo and visual identity\nthat aligns with the wheel’s innovative upgrades.\n\nThis redesign was aimed at emphasizing its advanced features\nwhile keeping the visual identity strong and distinctive.\n\nWe worked closely with MICHE to ensure the new logo\nwas perfectly suited for the K1 RD across various applications,\nfrom print to product, ensuring it communicated both the wheel’s\ntechnical excellence and its market positioning.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 1333,
+     "left": 139,
+     "width": 604,
+     "zIndex": 312,
+     "rotate": 0,
+     "kind": "text",
+     "text": "K1 RD - \nRedesigning the identity for a\ntop-performance MTB wheel.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 1725,
+     "left": 138,
+     "width": 547,
+     "zIndex": 313,
+     "rotate": 0,
+     "kind": "image",
+     "file": "11-body_547x525_t1725_l138.webp",
+     "height": 525
+    },
+    {
+     "top": 1738,
+     "left": 811,
+     "width": 532,
+     "zIndex": 315,
+     "rotate": 0,
+     "kind": "image",
+     "file": "12-body_532x510_t1738_l811.jpeg",
+     "height": 510
+    },
+    {
+     "top": 2432,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 309,
+     "rotate": 0,
+     "kind": "image",
+     "file": "13-body_1217x829_t2432_l137.webp",
+     "height": 829
+    },
+    {
+     "top": 3343,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 308,
+     "rotate": 0,
+     "kind": "image",
+     "file": "14-body_1217x953_t3343_l137.webp",
+     "height": 953
+    },
+    {
+     "top": 4379,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 310,
+     "rotate": 0,
+     "kind": "image",
+     "file": "15-body_1217x870_t4379_l137.webp",
+     "height": 870
+    },
+    {
+     "top": 5333,
+     "left": 137,
+     "width": 569,
+     "zIndex": 335,
+     "rotate": 0,
+     "kind": "image",
+     "file": "16-body_569x705_t5333_l137.jpeg",
+     "height": 705
+    },
+    {
+     "top": 5333,
+     "left": 784,
+     "width": 569,
+     "zIndex": 336,
+     "rotate": 0,
+     "kind": "image",
+     "file": "17-body_569x705_t5333_l784.jpeg",
+     "height": 705
+    },
+    {
+     "top": 6120,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 317,
+     "rotate": 0,
+     "kind": "image",
+     "file": "18-body_1217x788_t6120_l137.webp",
+     "height": 788
+    },
+    {
+     "top": 7089,
+     "left": 619,
+     "width": 862,
+     "zIndex": 321,
+     "rotate": 0,
+     "kind": "image",
+     "file": "19-body_862x788_t7089_l619.jpeg",
+     "height": 788
+    },
+    {
+     "top": 7477,
+     "left": 137,
+     "width": 604,
+     "zIndex": 328,
+     "rotate": 0,
+     "kind": "text",
+     "text": "KLEOS RD CRONO\n\nUnleashing creative potential with a bold, dynamic design\nto emphasize theperformance of a top-tier road wheel.\n\nThe KLEOS RD CRONO is a high-performance\nroad wheel with a striking, bold design.\n\nThis project gave us the freedom to explore\ncreative possibilities, and we took a maximalist\napproach to make the most of its visual impact.\n\nThe large “K” in the Kleos logo was key\nin conveying the sensation of rotation, creating\na dynamic, energetic effect. This design perfectly\ncaptures the wheel’s performance-driven nature\nand its cutting-edge identity.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 8027,
+     "left": 137,
+     "width": 1225,
+     "zIndex": 318,
+     "rotate": 0,
+     "kind": "image",
+     "file": "20-body_1225x788_t8027_l137.webp",
+     "height": 788
+    },
+    {
+     "top": 8897,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 318,
+     "rotate": 0,
+     "kind": "image",
+     "file": "21-body_1217x788_t8897_l137.webp",
+     "height": 788
+    },
+    {
+     "top": 9949,
+     "left": 137,
+     "width": 604,
+     "zIndex": 300,
+     "rotate": 0,
+     "kind": "text",
+     "text": "X1",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 9997,
+     "left": 139,
+     "width": 569,
+     "zIndex": 309,
+     "rotate": 0,
+     "kind": "image",
+     "file": "22-body_569x711_t9997_l139.jpeg",
+     "height": 711
+    },
+    {
+     "top": 9997,
+     "left": 784,
+     "width": 569,
+     "zIndex": 308,
+     "rotate": 0,
+     "kind": "image",
+     "file": "23-body_569x711_t9997_l784.jpeg",
+     "height": 711
+    },
+    {
+     "top": 10871,
+     "left": 139,
+     "width": 604,
+     "zIndex": 345,
+     "rotate": 0,
+     "kind": "text",
+     "text": "SYNTIUM",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 10930,
+     "left": 45,
+     "width": 1403,
+     "zIndex": 340,
+     "rotate": 0,
+     "kind": "video",
+     "file": "24-body_1403x256_t10930_l45.mp4",
+     "height": 256
+    },
+    {
+     "top": 11171,
+     "left": 106,
+     "width": 1281,
+     "zIndex": 344,
+     "rotate": 0,
+     "kind": "video",
+     "file": "25-body_1281x234_t11171_l106.mp4",
+     "height": 234
+    },
+    {
+     "top": 11602,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 278,
+     "rotate": 0,
+     "kind": "image",
+     "file": "26-body_1217x386_t11602_l137.jpeg",
+     "height": 386
+    },
+    {
+     "top": 11632,
+     "left": 137,
+     "width": 604,
+     "zIndex": 317,
+     "rotate": 0,
+     "kind": "text",
+     "text": "966",
+     "fontSize": 17,
+     "fontWeight": 400
+    }
+   ]
+  }
+ ]
+}

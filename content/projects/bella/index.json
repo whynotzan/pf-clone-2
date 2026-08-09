@@ -1,0 +1,207 @@
+{
+  "name": "Bella che ti Spiazza",
+  "client": "Bella che ti Spiazza",
+  "type": "Visual Identity",
+  "year": "2025",
+  "firstDescription": "On the occasion of the reopening of Piazza Caduti in the historic center\nof Mogliano Veneto, a series of activities have been organized for the city’s residents, inviting them to enjoy the brand new square and its iconic arches.\n\nFrom concerts, to theater, to gastronomy events, Mogliano brings life back\nto the square and communicates it with a language open to all ages.",
+  "entryImage": "/images/projects/bella/entryImage.webp",
+  "body": [
+    {
+      "discriminant": "canvas",
+      "value": {
+        "height": 6755,
+        "items": [
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/0/image.webp",
+            "top": 0,
+            "left": 260,
+            "width": 972,
+            "height": 995,
+            "rotate": 0,
+            "zIndex": 362,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/1/image.webp",
+            "top": 1119,
+            "left": 0,
+            "width": 723,
+            "height": 995,
+            "rotate": 0,
+            "zIndex": 376,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "text",
+            "text": "Choosing a simple figure to build\nthe entire visual identity.",
+            "top": 1541,
+            "left": 872,
+            "width": 361,
+            "rotate": 0,
+            "zIndex": 418,
+            "fontSize": 17,
+            "fontWeight": "500"
+          },
+          {
+            "kind": "text",
+            "text": "The arches, a symbol of Italianness,\nare the fundamental architectural element\nof the historic face of the central square\nin Mogliano Veneto.\n\nArranged in sequence, these individual elements recall the typical structure of porticoes.",
+            "top": 1608,
+            "left": 872,
+            "width": 360,
+            "rotate": 0,
+            "zIndex": 403,
+            "fontSize": 17,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/4/image.webp",
+            "top": 2238,
+            "left": 0,
+            "width": 1492,
+            "height": 794,
+            "rotate": 0,
+            "zIndex": 371,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/5/image.webp",
+            "top": 3172,
+            "left": 750,
+            "width": 605,
+            "height": 794,
+            "rotate": 0,
+            "zIndex": 374,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "text",
+            "text": "Beign flexible means beign able to tell more stories, to more people, with the same words.",
+            "top": 3438,
+            "left": 139,
+            "width": 361,
+            "rotate": 0,
+            "zIndex": 402,
+            "fontSize": 17,
+            "fontWeight": "500"
+          },
+          {
+            "kind": "text",
+            "text": "A flexible visual system allows the same core\ndesign elements to be adapted and applied\nacross various media, creating a consistent\nyet dynamic visual impression.\n\nBy adjusting colors, shapes, and layouts,\nthe system can be tailored to different platforms or tools, ensuring that the identity remains cohesive while being versatile enough to meet diverse communication needs, both pragmatic and semantic.",
+            "top": 3504,
+            "left": 139,
+            "width": 360,
+            "rotate": 0,
+            "zIndex": 387,
+            "fontSize": 17,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/8/image.jpeg",
+            "top": 4235,
+            "left": 7,
+            "width": 269,
+            "height": 379,
+            "rotate": 0,
+            "zIndex": 256,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/9/image.jpeg",
+            "top": 4235,
+            "left": 300,
+            "width": 269,
+            "height": 379,
+            "rotate": 0,
+            "zIndex": 256,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "video",
+            "video": "/videos/projects/bella/body/0/value/items/10/video.mp4",
+            "top": 4235,
+            "left": 594,
+            "width": 303,
+            "height": 379,
+            "rotate": 0,
+            "zIndex": 251,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/11/image.jpeg",
+            "top": 4235,
+            "left": 922,
+            "width": 269,
+            "height": 379,
+            "rotate": 0,
+            "zIndex": 252,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/12/image.jpeg",
+            "top": 4235,
+            "left": 1216,
+            "width": 269,
+            "height": 379,
+            "rotate": 0,
+            "zIndex": 254,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/13/image.webp",
+            "top": 4849,
+            "left": 180,
+            "width": 507,
+            "height": 677,
+            "rotate": 0,
+            "zIndex": 269,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/14/image.webp",
+            "top": 5102,
+            "left": 804,
+            "width": 507,
+            "height": 677,
+            "rotate": 0,
+            "zIndex": 288,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/bella/body/0/value/items/15/image.webp",
+            "top": 5944,
+            "left": 137,
+            "width": 1217,
+            "height": 811,
+            "rotate": 0,
+            "zIndex": 383,
+            "fontSize": 22,
+            "fontWeight": "400"
+          }
+        ]
+      }
+    }
+  ],
+  "exitImage": "/images/projects/bella/exitImage.webp"
+}

@@ -1,0 +1,103 @@
+{
+  "name": "Attiva Servizi",
+  "client": "Attiva Servizi",
+  "type": "Visual Identity",
+  "year": "2025",
+  "firstDescription": "Attiva Servizi is an established cleaning service company, specializing in office\nand industrial areas.\nThe brand expressed the need to comunicate their youthful\nbut precise work approach, which was possible with a modern type and geometric styling combination .",
+  "entryImage": "/images/projects/attivaservizi/entryImage.webp",
+  "body": [
+    {
+      "discriminant": "canvas",
+      "value": {
+        "height": 5223,
+        "items": [
+          {
+            "kind": "rectangle",
+            "color": "#000000",
+            "top": 0,
+            "left": 0,
+            "width": 1492,
+            "height": 1036,
+            "rotate": 0,
+            "zIndex": 278,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/attivaservizi/body/0/value/items/1/image.webp",
+            "top": 0,
+            "left": 382,
+            "width": 727,
+            "height": 1036,
+            "rotate": 0,
+            "zIndex": 279,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/attivaservizi/body/0/value/items/2/image.png",
+            "top": 1119,
+            "left": 137,
+            "width": 1217,
+            "height": 580,
+            "rotate": 0,
+            "zIndex": 281,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/attivaservizi/body/0/value/items/3/image.webp",
+            "top": 1782,
+            "left": 137,
+            "width": 1217,
+            "height": 829,
+            "rotate": 0,
+            "zIndex": 281,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/attivaservizi/body/0/value/items/4/image.png",
+            "top": 2694,
+            "left": 137,
+            "width": 1217,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 288,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/attivaservizi/body/0/value/items/5/image.webp",
+            "top": 3569,
+            "left": 137,
+            "width": 1217,
+            "height": 783,
+            "rotate": 0,
+            "zIndex": 290,
+            "fontSize": 22,
+            "fontWeight": "400"
+          },
+          {
+            "kind": "image",
+            "image": "/images/projects/attivaservizi/body/0/value/items/6/image.webp",
+            "top": 4435,
+            "left": 137,
+            "width": 1217,
+            "height": 788,
+            "rotate": 0,
+            "zIndex": 289,
+            "fontSize": 22,
+            "fontWeight": "400"
+          }
+        ]
+      }
+    }
+  ],
+  "exitImage": "/images/projects/attivaservizi/exitImage.webp"
+}

@@ -1,0 +1,182 @@
+{
+ "slug": "bella",
+ "name": "Bella che ti Spiazza",
+ "client": "Bella che ti Spiazza",
+ "type": "Visual Identity",
+ "year": "2025",
+ "description": "On the occasion of the reopening of Piazza Caduti in the historic center\nof Mogliano Veneto, a series of activities have been organized for the city’s residents, inviting them to enjoy the brand new square and its iconic arches.\n\nFrom concerts, to theater, to gastronomy events, Mogliano brings life back\nto the square and communicates it with a language open to all ages.",
+ "entry": "00-entry_1492x754_t0_l0.webp",
+ "exit": "99-exit_1492x906_t0_l0.webp",
+ "body": [
+  {
+   "type": "canvas",
+   "height": 6755,
+   "items": [
+    {
+     "top": 0,
+     "left": 260,
+     "width": 972,
+     "zIndex": 362,
+     "rotate": 0,
+     "kind": "image",
+     "file": "10-body_972x995_t0_l260.webp",
+     "height": 995
+    },
+    {
+     "top": 1119,
+     "left": 0,
+     "width": 723,
+     "zIndex": 376,
+     "rotate": 0,
+     "kind": "image",
+     "file": "11-body_723x995_t1119_l0.webp",
+     "height": 995
+    },
+    {
+     "top": 1541,
+     "left": 872,
+     "width": 361,
+     "zIndex": 418,
+     "rotate": 0,
+     "kind": "text",
+     "text": "Choosing a simple figure to build\nthe entire visual identity.",
+     "fontSize": 17,
+     "fontWeight": 500
+    },
+    {
+     "top": 1608,
+     "left": 872,
+     "width": 360,
+     "zIndex": 403,
+     "rotate": 0,
+     "kind": "text",
+     "text": "The arches, a symbol of Italianness,\nare the fundamental architectural element\nof the historic face of the central square\nin Mogliano Veneto.\n\nArranged in sequence, these individual elements recall the typical structure of porticoes.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 2238,
+     "left": 0,
+     "width": 1492,
+     "zIndex": 371,
+     "rotate": 0,
+     "kind": "image",
+     "file": "12-body_1492x794_t2238_l0.webp",
+     "height": 794
+    },
+    {
+     "top": 3172,
+     "left": 750,
+     "width": 605,
+     "zIndex": 374,
+     "rotate": 0,
+     "kind": "image",
+     "file": "13-body_605x794_t3172_l750.webp",
+     "height": 794
+    },
+    {
+     "top": 3438,
+     "left": 139,
+     "width": 361,
+     "zIndex": 402,
+     "rotate": 0,
+     "kind": "text",
+     "text": "Beign flexible means beign able to tell more stories, to more people, with the same words.",
+     "fontSize": 17,
+     "fontWeight": 500
+    },
+    {
+     "top": 3504,
+     "left": 139,
+     "width": 360,
+     "zIndex": 387,
+     "rotate": 0,
+     "kind": "text",
+     "text": "A flexible visual system allows the same core\ndesign elements to be adapted and applied\nacross various media, creating a consistent\nyet dynamic visual impression.\n\nBy adjusting colors, shapes, and layouts,\nthe system can be tailored to different platforms or tools, ensuring that the identity remains cohesive while being versatile enough to meet diverse communication needs, both pragmatic and semantic.",
+     "fontSize": 17,
+     "fontWeight": 400
+    },
+    {
+     "top": 4235,
+     "left": 7,
+     "width": 269,
+     "zIndex": 256,
+     "rotate": 0,
+     "kind": "image",
+     "file": "14-body_269x379_t4235_l7.jpeg",
+     "height": 379
+    },
+    {
+     "top": 4235,
+     "left": 300,
+     "width": 269,
+     "zIndex": 256,
+     "rotate": 0,
+     "kind": "image",
+     "file": "15-body_269x379_t4235_l300.jpeg",
+     "height": 379
+    },
+    {
+     "top": 4235,
+     "left": 594,
+     "width": 303,
+     "zIndex": 251,
+     "rotate": 0,
+     "kind": "video",
+     "file": "16-body_303x379_t4235_l594.mp4",
+     "height": 379
+    },
+    {
+     "top": 4235,
+     "left": 922,
+     "width": 269,
+     "zIndex": 252,
+     "rotate": 0,
+     "kind": "image",
+     "file": "17-body_269x379_t4235_l922.jpeg",
+     "height": 379
+    },
+    {
+     "top": 4235,
+     "left": 1216,
+     "width": 269,
+     "zIndex": 254,
+     "rotate": 0,
+     "kind": "image",
+     "file": "18-body_269x379_t4235_l1216.jpeg",
+     "height": 379
+    },
+    {
+     "top": 4849,
+     "left": 180,
+     "width": 507,
+     "zIndex": 269,
+     "rotate": 0,
+     "kind": "image",
+     "file": "19-body_507x677_t4849_l180.webp",
+     "height": 677
+    },
+    {
+     "top": 5102,
+     "left": 804,
+     "width": 507,
+     "zIndex": 288,
+     "rotate": 0,
+     "kind": "image",
+     "file": "20-body_507x677_t5102_l804.webp",
+     "height": 677
+    },
+    {
+     "top": 5944,
+     "left": 137,
+     "width": 1217,
+     "zIndex": 383,
+     "rotate": 0,
+     "kind": "image",
+     "file": "21-body_1217x811_t5944_l137.webp",
+     "height": 811
+    }
+   ]
+  }
+ ]
+}

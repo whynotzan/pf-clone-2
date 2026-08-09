@@ -130,6 +130,18 @@ save appears to succeed while nothing reaches disk. Always confirm an admin writ
 **7. `fields.integer()` renders with a locale thousands separator.** A saved `1036` reads back
 out of the input as `"1,036"`, so strip non-digits before comparing values in any check.
 
+**8. A conditional asset shows every branch's file button at once.** An item whose kind is
+Video renders *two* "Choose file" buttons — the image field's and the video field's, in schema
+order. Clicking the first puts the mp4 on the image field, which Keystatic drops silently: the
+item saves, the page renders, and the asset is simply gone. Every video on three pages vanished
+this way, and only an item *count* caught it — positions still matched, because the survivors
+just shifted up. Target the button by index, and assert the item count, not only geometry.
+
+**9. Don't locate a field with a bare `getByLabel`.** Playwright also matches `<select>`s whose
+*option text* contains the label — `getByLabel("Colour")` resolves to the Kind select, because
+one of its options is "Colour block", and the fill then fails on a non-editable element. Scope
+to a role: `getByRole("textbox", { name })`.
+
 ## Code style
 
 - TypeScript strict, no `any`
