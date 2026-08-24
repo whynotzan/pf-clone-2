@@ -20,11 +20,13 @@ const MOBILE_CANVAS_HEIGHT = 2806;
  * and multiplied by the 375px reference width.
  *
  * Slugs are likewise the original's real link targets, read from `link.url` in
- * that same table rather than inferred from the artwork — three had been guessed
- * wrong: the video reel is Bella, not Meller; the gif is Nutrients; and the item
- * at 2403 is the unannounced project the COMING SOON label sits on, which the
- * original leaves unlinked. Each becomes a link only once its project renders,
- * so adding one needs no change here.
+ * that same table rather than inferred from the artwork — two had been guessed
+ * wrong: the video reel is Bella, not Meller, and the gif is Nutrients. Each
+ * becomes a link only once its project renders, so adding one needs no change
+ * here.
+ *
+ * The original's unannounced project at 2403 and the COMING SOON label that
+ * marked it are deliberately dropped from this rebuild.
  */
 const ITEMS: CanvasItem[] = [
   {
@@ -42,13 +44,6 @@ const ITEMS: CanvasItem[] = [
     slug: "nutrients",
     desktop: { top: 622, left: 655, width: 583, height: 711, zIndex: 32 },
     mobile: { top: 332, left: 54, width: 267, height: 369, zIndex: 326 },
-  },
-  {
-    id: "coming-soon",
-    src: "",
-    alt: "",
-    desktop: { top: 2684, left: 1043, width: 105, height: 25, zIndex: 48 },
-    mobile: { top: 675, left: 262, width: 105, height: 25, zIndex: 328 },
   },
   {
     id: "matteomeller",
@@ -88,14 +83,6 @@ const ITEMS: CanvasItem[] = [
     mobile: { top: 1672, left: 18, width: 338, height: 257, zIndex: 220 },
   },
   {
-    id: "coming-soon-project",
-    src: "/images/home/01K7CH55PWQR15RV07GT255G67.webp",
-    // Unlinked on the original: this is the project the COMING SOON label marks.
-    alt: "Unannounced project",
-    desktop: { top: 2403, left: 757, width: 611, height: 599, zIndex: 29 },
-    mobile: { top: 1908, left: 41, width: 293, height: 288, zIndex: 217 },
-  },
-  {
     id: "visualgroup",
     src: "/images/home/01K7J8RZ7BY2Z2QGC84N1D65G7.webp",
     alt: "Visual Group project",
@@ -131,24 +118,6 @@ function placementVars(item: CanvasItem): CSSProperties {
 }
 
 function Item({ item, href }: { item: CanvasItem; href?: string }) {
-  if (item.id === "coming-soon") {
-    return (
-      <div
-        className="canvas-item"
-        style={{
-          ...placementVars(item),
-          fontSize: 16,
-          fontWeight: 500,
-          letterSpacing: "0.05em",
-          color: "#1b1b1b",
-          whiteSpace: "nowrap",
-        }}
-      >
-        COMING SOON
-      </div>
-    );
-  }
-
   // The original rotates the asset inside its positioned wrapper, so the tilt
   // pivots on the item's centre and leaves the recorded top/left untouched.
   const media =
@@ -198,8 +167,9 @@ export async function PortfolioCanvas() {
   return (
     <div
       // `isolation` keeps the items' z-indices inside their own stacking
-      // context. Without it the tallest of them (coming-soon at 48, the poster
-      // at 42) paint straight over the CV panel's z-30 as it sticks into view.
+      // context. Without it the tallest of them (the Bella reel at 43, the
+      // Meller poster at 42) paint straight over the CV panel's z-30 as it
+      // sticks into view.
       className="canvas-root relative w-full"
       style={{
         isolation: "isolate",

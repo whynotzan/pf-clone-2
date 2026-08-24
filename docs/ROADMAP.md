@@ -181,7 +181,8 @@ correctly 536px for a 379px square.
   cannot express at all. One canvas reproduces both exactly. Media rows remain the right tool
   for hand-authored pages and are unchanged; `matteomeller` still uses them.
 - **Cortina 2K26 was left out** at Alessandro's request. Galilei likewise has no route on the
-  original; both remain candidates for the COMING SOON slot, which stays deliberately unlinked.
+  original. The COMING SOON slot they were candidates for — the unlinked project at 2403 and
+  its label — has since been dropped from the homepage canvas.
 - **Weight:** `public/` now carries 83MB of media (65MB images, 18MB videos). `matteomeller`
   is still the heaviest single project at 22MB, then intersections at 12MB. Worth a pass in
   Phase 5 if it matters — these are the original's own already-compressed exports.

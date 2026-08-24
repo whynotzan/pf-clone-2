@@ -28,8 +28,7 @@ export interface CanvasItem {
    * The project this thumbnail belongs to, as it is named on the original site.
    * Rendered as a link only once a project with this slug renders in the CMS, so
    * an item can carry its real destination before its page has been built.
-   * Omitted for items that link nowhere on the original — the COMING SOON label
-   * and the unannounced project above it.
+   * Omitted for items that link nowhere on the original.
    */
   slug?: string;
   /** Renders as an autoplaying, muted, looping <video> instead of an <img>. `src` is the video file, `poster` is its cover frame. */
