@@ -263,6 +263,48 @@ The homepage's 8.4 MB before a single scroll is the number to watch if it ever m
 the first impression and the heaviest entry point. Everything else is the original's own
 already-compressed exports on a CDN.
 
+### Homepage performance — partly done (2026-08-24)
+
+It mattered. Lighthouse, mobile, throttled: **LCP 29.8s**, and the overall score of 75 hid it
+because FCP, Speed Index, CLS and TBT were all 100. Desktop was fine throughout. Three fixes
+landed; the two that need `ffmpeg` did not.
+
+| | before | after |
+|---|---|---|
+| Mobile score / LCP | 75 / 29.8 s | 78 / **6.1 s** |
+| Desktop score / LCP | 96 / 1.4 s | 98 / **1.1 s** |
+| Homepage image bytes | 3.54 MB | ~0.3 MB |
+
+Done:
+
+1. **`prefetch={false}` on the canvas links.** The big one, and it was invisible in the HTML:
+   6.7 MB of *project entry images* were being downloaded by the homepage. See the note in
+   `AGENTS.md` — React preloads every non-lazy `<img>`, and those preloads ride along inside
+   prefetched route payloads. Navigation still lands in ~875 ms, inside the 1400 ms wipe.
+2. **Dropped `unoptimized`, added `sizes`.** The optimizer now serves per-width WebP:
+   1537 KB → 118 KB at mobile widths, 886 KB → 37 KB. Verified pixel-faithful against
+   production at 1440 and 390 wide.
+3. **`loadStrategy` on the two above-the-fold items** — and the GIF wants `"eager"`, not
+   `"priority"`; the comment in `PortfolioCanvas.tsx` has the measurements.
+
+Still open, both need `brew install ffmpeg`:
+
+- [ ] **The Nutrients GIF → a looping muted `<video>`.** 2.6 MB, and it is the mobile LCP
+      element. Next passes animated GIFs through untouched, so no amount of config helps.
+      Lighthouse rates this one change at ~11 s. Once it lands, revisit its `loadStrategy`.
+- [ ] **Re-encode the Bella reel.** 8.0 MB for 9.98 s — **6.7 Mbps** for a tile that renders
+      at 371x464. Set `preload="none"` so it does not stream until it is in view.
+
+Two smaller ones, neither needing ffmpeg:
+
+- [ ] **Fonts are `.otf`** (48 KB each gzipped, all three preloaded). WOFF2 is a drop-in for
+      `next/font/local` and roughly halves them.
+- [ ] **The stills are still uncropped.** The optimizer resizes on the original's aspect ratio,
+      then CSS `object-fit: cover` throws much of it away — two are 1440x2160 portraits inside
+      landscape boxes. Cover-cropping the sources before upload gets the whole set to ~275 KB
+      as AVIF, versus ~0.3 MB now. Diminishing returns; noted for whenever the assets are
+      touched anyway.
+
 ### Branch housekeeping
 
 `worktree-phase-4-projects` and `worktree-wipe-home-return` are fully merged into `master` and

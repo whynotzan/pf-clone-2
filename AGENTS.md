@@ -163,6 +163,33 @@ just shifted up. Target the button by index, and assert the item count, not only
 one of its options is "Colour block", and the fill then fails on a non-editable element. Scope
 to a role: `getByRole("textbox", { name })`.
 
+## Performance gotcha — one page's images can be another page's problem
+
+**React preloads every `<img>` that is not `loading="lazy"`, and those preloads travel inside
+prefetched route payloads.** `react-dom`'s img fast path emits a preload for any image unless it
+is lazy, has `fetchPriority="low"`, or sits inside `<picture>`/`<noscript>`. So a project page's
+eager Entry Image gets a `<link rel="preload" fetchpriority="high">` — and when `<Link>` prefetches
+that route from the homepage, the preload lands in the *homepage's* head.
+
+It cost the homepage 6.7 MB: eight entry images, all `fetchpriority=high`, outranking the
+homepage's own LCP image in the network queue. Mobile LCP was 29.8 s. The fix is `prefetch={false}`
+on the canvas links (`PortfolioCanvas.tsx`) — the route payloads are ~1 KB and the chunks are
+shared with the homepage, so the 1400 ms wipe more than covers what is lost.
+
+Two things follow from this:
+
+- **A page's byte weight is not what its own HTML references.** Measure with a real browser after
+  scrolling, and look at what `initiatorType: "link"` pulled in — `curl` and the build output both
+  miss this entirely.
+- **`priority` is not free, and not always right.** It makes an image eager, which means React will
+  hold the first paint until it decodes. On a heavy asset that is a loss: marking the 2.6 MB
+  Nutrients GIF `priority` moved desktop LCP 1.0 s → 3.1 s. `loading="eager"` with
+  `fetchPriority="low"` is the middle setting — it starts early without blocking the paint, and it
+  is what `loadStrategy: "eager"` means in `PortfolioCanvas.tsx`.
+
+**Next passes animated GIFs through the optimizer untouched.** `unoptimized` or not, the Nutrients
+GIF is 2.6 MB. Converting it to a looping muted `<video>` is the only thing that helps.
+
 ## Code style
 
 - TypeScript strict, no `any`

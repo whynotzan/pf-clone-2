@@ -43,6 +43,7 @@ const ITEMS: CanvasItem[] = [
     src: "/images/home/01K7FSHN3PBRK38PQNRBV3S3XH.webp",
     alt: "Intersections poster on gravel",
     slug: "intersections",
+    loadStrategy: "priority",
     desktop: { top: 192, left: 647, width: 581, height: 533, zIndex: 13, rotate: -10 },
     mobile: { top: 81, left: 56, width: 263, height: 223, zIndex: 325, rotate: -10 },
   },
@@ -51,6 +52,14 @@ const ITEMS: CanvasItem[] = [
     src: "/images/home/01K6ED322FX5PF204385YMPZ13.gif",
     alt: "Nutrients project animation",
     slug: "nutrients",
+    // "eager" rather than "priority", and the difference is worth 12 seconds.
+    // Next passes animated GIFs through unoptimized, so this stays 2.6MB no
+    // matter what, and it is the LCP element on mobile. Left lazy it lands last
+    // in the queue: mobile LCP 18.8s. Marked priority it becomes an eager image
+    // React will hold the first paint for, which cost desktop 1.0s -> 3.1s.
+    // Eager at low fetch priority is the one that wins both — mobile 6.0s,
+    // desktop 1.1s. Revisit once it is a looping <video> of a few hundred KB.
+    loadStrategy: "eager",
     desktop: { top: 622, left: 655, width: 583, height: 711, zIndex: 32 },
     mobile: { top: 332, left: 54, width: 267, height: 369, zIndex: 326 },
   },
@@ -118,6 +127,20 @@ const ITEMS: CanvasItem[] = [
   },
 ];
 
+/**
+ * What share of the viewport the item actually occupies, so the optimizer can
+ * pick a width instead of shipping the full-resolution original.
+ *
+ * Both canvases scale to 100vw (1492px wide on desktop, 375 on mobile — the
+ * `--canvas-w` values in `globals.css`), so an item's on-screen width is a
+ * fixed fraction of the viewport at every window size. The breakpoint has to
+ * stay in step with the 1024px one `globals.css` switches placements at.
+ */
+function sizesFor(item: CanvasItem): string {
+  const share = (width: number, canvas: number) => `${((width / canvas) * 100).toFixed(1)}vw`;
+  return `(min-width: 1024px) ${share(item.desktop.width, 1492)}, ${share(item.mobile.width, 375)}`;
+}
+
 /** Both placements as custom properties; `globals.css` picks a set per breakpoint. */
 function placementVars(item: CanvasItem): CSSProperties {
   const vars = (p: CanvasPlacement, prefix: string) => ({
@@ -154,7 +177,14 @@ function Item({ item, href }: { item: CanvasItem; href?: string }) {
         alt={item.alt}
         width={item.desktop.width}
         height={item.desktop.height}
-        unoptimized
+        sizes={sizesFor(item)}
+        priority={item.loadStrategy === "priority"}
+        // Low fetch priority is what keeps an eager image out of the paint's
+        // way: react-dom skips both its preload and its suspensey-image hold
+        // for anything marked low, so it loads early without blocking.
+        {...(item.loadStrategy === "eager"
+          ? { loading: "eager" as const, fetchPriority: "low" as const }
+          : {})}
       />
     );
 
@@ -164,6 +194,15 @@ function Item({ item, href }: { item: CanvasItem; href?: string }) {
         <TransitionLink
           href={href}
           aria-label={item.alt}
+          // Prefetch off, and it is the *images* that make it worth it. React
+          // emits a preload link for every <img> that is not lazy, so each
+          // project's eager Entry Image travels inside that route's prefetched
+          // payload and lands in this page's <head> — eight of them, 6.7MB,
+          // marked fetchpriority=high, outranking this page's own LCP image in
+          // the network queue. The route payloads themselves are ~1KB and the
+          // chunks are shared with this page, so almost nothing is lost: the
+          // 1400ms wipe already covers the navigation.
+          prefetch={false}
           className="block h-full w-full transition-[filter,opacity] duration-200 ease-linear hover:opacity-80 hover:blur-[1px]"
         >
           {media}
