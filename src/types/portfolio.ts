@@ -35,6 +35,20 @@ export interface CanvasItem {
   /** Renders as an autoplaying, muted, looping <video> instead of an <img>. `src` is the video file, `poster` is its cover frame. */
   kind?: "video";
   poster?: string;
+  /**
+   * How hard the browser should work to have this item painted on arrival.
+   * Omitted means below the fold: lazy, fetched when it scrolls near view.
+   *
+   * - `"priority"` — above the fold and light enough to be worth a preload
+   *   link and a place at the front of the network queue.
+   * - `"eager"` — above the fold but heavy. Starts immediately rather than
+   *   waiting out the lazy queue, but at low network priority, which also
+   *   keeps React from holding the first paint until it has decoded.
+   *
+   * Only genuinely visible items belong here; every extra one competes with
+   * the real LCP element for bandwidth.
+   */
+  loadStrategy?: "priority" | "eager";
   desktop: CanvasPlacement;
   mobile: CanvasPlacement;
 }
