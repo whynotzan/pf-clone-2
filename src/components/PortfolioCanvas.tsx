@@ -5,15 +5,24 @@ import { ScaledCanvas } from "./ScaledCanvas";
 import { getPublishedProjectSlugs } from "@/lib/projects";
 import type { CanvasItem, CanvasPlacement } from "@/types/portfolio";
 
-const CANVAS_HEIGHT = 4200;
+/**
+ * The original's 4200, less the 368 the bottom two items came up by when the
+ * dropped project's gap was closed. Keeps its 460px of run-out below Attiva,
+ * the lowest item, so the CV section starts where it always did relative to
+ * the artwork. Mirrored in `globals.css` as `--canvas-h`.
+ */
+const CANVAS_HEIGHT = 3832;
 
 /**
- * Stops where the original's mobile bio begins (its item sits at top 2806 of
- * the 375px canvas), so the bio and CV flow straight on underneath rather than
- * after a gap. The original's own mobile section runs to 3926, but the rest of
- * that height is the bio and CV, which we render as normal blocks.
+ * Where the mobile bio begins, so it and the CV flow straight on underneath
+ * rather than after a gap. The original puts its own bio item at top 2806; we
+ * sit 265 above that, the distance the bottom two items came up by when the
+ * dropped project's gap was closed, which keeps its 74px of run-out below
+ * Attiva. (The original's mobile section runs to 3926, but the rest of that
+ * height is the bio and CV, which we render as normal blocks.)
+ * Mirrored in `globals.css` as `--canvas-h`.
  */
-const MOBILE_CANVAS_HEIGHT = 2806;
+const MOBILE_CANVAS_HEIGHT = 2541;
 
 /**
  * Mobile placements are the original's own, read from its embedded layout table
@@ -79,7 +88,11 @@ const ITEMS: CanvasItem[] = [
     src: "/images/home/01K7H4E2QYKQSFEAY19RKRPFWJ.png",
     alt: "Anselmi project",
     slug: "anselmi",
-    desktop: { top: 2204, left: 508, width: 570, height: 433, zIndex: 26 },
+    // Nudged right from the original's 508: it was the leftmost item on the
+    // canvas by 50px, and the collage leaned left once the project below it
+    // went. Mobile keeps 18 — at 338 wide on a 375 canvas it is already inset
+    // symmetrically and has nowhere to go.
+    desktop: { top: 2204, left: 578, width: 570, height: 433, zIndex: 26 },
     mobile: { top: 1672, left: 18, width: 338, height: 257, zIndex: 220 },
   },
   {
@@ -87,8 +100,11 @@ const ITEMS: CanvasItem[] = [
     src: "/images/home/01K7J8RZ7BY2Z2QGC84N1D65G7.webp",
     alt: "Visual Group project",
     slug: "visualgroup",
-    desktop: { top: 2860, left: 558, width: 560, height: 588, zIndex: 28 },
-    mobile: { top: 2218, left: 50, width: 275, height: 302, zIndex: 218 },
+    // Raised 368 desktop / 265 mobile to close the hole the dropped project
+    // left. Attiva moves by the same amount below, so the pair keeps the
+    // spacing the original gave it.
+    desktop: { top: 2492, left: 558, width: 560, height: 588, zIndex: 28 },
+    mobile: { top: 1953, left: 50, width: 275, height: 302, zIndex: 218 },
   },
   {
     id: "attivaservizi",
@@ -97,8 +113,8 @@ const ITEMS: CanvasItem[] = [
     slug: "attivaservizi",
     // The original declares 934.572px here; the browser clamps it against the
     // box, so keeping the declared value reproduces the same rounded shape.
-    desktop: { top: 3327, left: 784, width: 539, height: 413, zIndex: 27, borderRadius: 935 },
-    mobile: { top: 2544, left: 50, width: 275, height: 188, zIndex: 206, borderRadius: 235 },
+    desktop: { top: 2959, left: 784, width: 539, height: 413, zIndex: 27, borderRadius: 935 },
+    mobile: { top: 2279, left: 50, width: 275, height: 188, zIndex: 206, borderRadius: 235 },
   },
 ];
 

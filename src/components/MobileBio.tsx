@@ -2,9 +2,10 @@ import { BIO_PARAGRAPHS } from "./bioText";
 
 /**
  * Below 1024 the original abandons the fixed, vertically-centred bio panel and
- * places the same text in the scroll flow, directly after the last poster — it
- * sits at top 2806 of its 375px canvas, which is where `PortfolioCanvas` ends
- * its mobile canvas so this follows on without a gap.
+ * places the same text in the scroll flow, directly after the last poster. It
+ * starts wherever `PortfolioCanvas` ends its mobile canvas, so this follows on
+ * without a gap (the original's own bio item sits at top 2806; ours is higher
+ * by the amount the bottom posters came up).
  *
  * 18px side margins are the original's mobile content inset, the same one its
  * project pages use.
