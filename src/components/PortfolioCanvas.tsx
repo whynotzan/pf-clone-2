@@ -38,16 +38,18 @@ const ITEMS: CanvasItem[] = [
   },
   {
     id: "nutrients",
-    src: "/images/home/01K6ED322FX5PF204385YMPZ13.gif",
+    kind: "video",
+    // Was a 2.6MB GIF, and the mobile LCP element with it. Next passes animated
+    // GIFs through the optimizer untouched, so the format was the only lever.
+    // Three quarters of the frame is transparent and it overlaps the poster
+    // above it, so plain H.264 was out — hence the alpha pair. 2.6MB -> 748KB.
+    src: "/videos/home/01K6ED322FX5PF204385YMPZ13.webm",
+    sources: [
+      { src: "/videos/home/01K6ED322FX5PF204385YMPZ13.mov", type: "video/quicktime" },
+      { src: "/videos/home/01K6ED322FX5PF204385YMPZ13.webm", type: "video/webm" },
+    ],
     alt: "Nutrients project animation",
     slug: "nutrients",
-    // "eager" rather than "priority", and the difference is worth 12 seconds.
-    // Next passes animated GIFs through unoptimized, so this stays 2.6MB no
-    // matter what, and it is the LCP element on mobile. Left lazy it lands last
-    // in the queue: mobile LCP 18.8s. Marked priority it becomes an eager image
-    // React will hold the first paint for, which cost desktop 1.0s -> 3.1s.
-    // Eager at low fetch priority is the one that wins both — mobile 6.0s,
-    // desktop 1.1s. Revisit once it is a looping <video> of a few hundred KB.
     loadStrategy: "eager",
     desktop: { top: 622, left: 655, width: 583, height: 711, zIndex: 32 },
     mobile: { top: 332, left: 54, width: 267, height: 369, zIndex: 326 },
@@ -178,13 +180,22 @@ function Item({ item, href }: { item: CanvasItem; href?: string }) {
     item.kind === "video" ? (
       <video
         className="canvas-media"
-        src={item.src}
+        // `src` and <source> children cannot coexist — src wins — so an item
+        // offering alternatives has to go through the children alone.
+        {...(item.sources ? {} : { src: item.src })}
         poster={item.poster}
+        // Nothing is fetched for a below-the-fold reel until the browser means
+        // to play it; an item marked above the fold loads up front instead.
+        preload={item.loadStrategy ? "auto" : "none"}
         autoPlay
         loop
         muted
         playsInline
-      />
+      >
+        {item.sources?.map((source) => (
+          <source key={source.src} src={source.src} type={source.type} />
+        ))}
+      </video>
     ) : (
       <Image
         className="canvas-media"
@@ -196,7 +207,9 @@ function Item({ item, href }: { item: CanvasItem; href?: string }) {
         priority={item.loadStrategy === "priority"}
         // Low fetch priority is what keeps an eager image out of the paint's
         // way: react-dom skips both its preload and its suspensey-image hold
-        // for anything marked low, so it loads early without blocking.
+        // for anything marked low, so it loads early without blocking. No
+        // image uses this today — it is what the Nutrients GIF needed before
+        // it became a video — but the strategy is per-item, not per-kind.
         {...(item.loadStrategy === "eager"
           ? { loading: "eager" as const, fetchPriority: "low" as const }
           : {})}

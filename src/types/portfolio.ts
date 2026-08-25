@@ -36,6 +36,18 @@ export interface CanvasItem {
   kind?: "video";
   poster?: string;
   /**
+   * Alternative encodings, offered to the browser in order before `src`. The
+   * one case that needs it is transparency: no single format carries an alpha
+   * channel everywhere, so an item can ship HEVC-in-QuickTime for Safari and
+   * VP9-in-WebM for everyone else.
+   *
+   * Order is load-bearing, and so is the QuickTime container. Chromium can
+   * decode HEVC but *not* HEVC's alpha channel, so if it ever picked that file
+   * the transparent area would paint opaque — listing it as `video/quicktime`
+   * is what makes Chromium skip it and fall through to the WebM.
+   */
+  sources?: { src: string; type: string }[];
+  /**
    * How hard the browser should work to have this item painted on arrival.
    * Omitted means below the fold: lazy, fetched when it scrolls near view.
    *
@@ -44,6 +56,10 @@ export interface CanvasItem {
    * - `"eager"` — above the fold but heavy. Starts immediately rather than
    *   waiting out the lazy queue, but at low network priority, which also
    *   keeps React from holding the first paint until it has decoded.
+   *
+   * On a video item this picks the `preload` instead: either strategy loads it
+   * up front, and omitting it means `preload="none"` — nothing is fetched until
+   * the browser decides to play, which is what a below-the-fold reel wants.
    *
    * Only genuinely visible items belong here; every extra one competes with
    * the real LCP element for bandwidth.

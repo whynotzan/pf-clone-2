@@ -286,13 +286,44 @@ Done:
 3. **`loadStrategy` on the two above-the-fold items** — and the GIF wants `"eager"`, not
    `"priority"`; the comment in `PortfolioCanvas.tsx` has the measurements.
 
-Still open, both need `brew install ffmpeg`:
+4. **The Nutrients GIF → a transparent `<video>`** (2026-08-25). The catch: three quarters of
+   the frame is transparent and it overlaps the poster above it, so plain H.264 was out —
+   it would have painted an opaque box over the artwork. Animated WebP was worse than the
+   GIF (5.7 MB; flat colour is exactly what GIF's palette encoding is good at). What worked
+   is the alpha pair — VP9-in-WebM 731 KB, HEVC-in-QuickTime 814 KB for Safari — and the
+   container matters: Chromium decodes HEVC but not its alpha, so listing that file as
+   `video/quicktime` is what makes Chromium skip it. Verified in Chromium: it picks the
+   WebM and the frame corner reads rgba(0,0,0,0).
+5. **Re-encoded the Bella reel** — 8.0 MB → 948 KB. It was 864x1080 **50 fps at 6.7 Mbps**
+   for a tile that renders at 371x464; 742px at CRF 24 keeps the 50 fps motion and is
+   frame-for-frame indistinguishable. Its poster went 289 KB → 47 KB. `preload="none"` is
+   set, though `autoplay` overrides it — the file is still fetched up front, just 948 KB of
+   it instead of 8 MB. Chrome pauses it while offscreen and plays it on scroll.
 
-- [ ] **The Nutrients GIF → a looping muted `<video>`.** 2.6 MB, and it is the mobile LCP
-      element. Next passes animated GIFs through untouched, so no amount of config helps.
-      Lighthouse rates this one change at ~11 s. Once it lands, revisit its `loadStrategy`.
-- [ ] **Re-encode the Bella reel.** 8.0 MB for 9.98 s — **6.7 Mbps** for a tile that renders
-      at 371x464. Set `preload="none"` so it does not stream until it is in view.
+| | before | after steps 1-3 | now |
+|---|---|---|---|
+| Mobile score / LCP | 75 / 29.8 s | 78 / 6.1 s | **84-95 / 3.0-3.9 s** |
+| Desktop score / LCP | 96 / 1.4 s | 98 / 1.1 s | **100 / 0.7 s** |
+| Homepage bytes | 11.4 MB | 6.9 MB | **2.3 MB** |
+
+Mobile score varies run to run; the spread above is three runs. One run showed TBT 250 ms
+from a cold VP9-alpha decode, but it settles at 10 ms.
+
+Still open, none of it urgent:
+
+- [ ] **Fonts are `.otf`** (48 KB each gzipped, all three preloaded). WOFF2 is a drop-in for
+      `next/font/local` and roughly halves them. The largest single item left.
+- [ ] **The stills are still uncropped.** The optimizer resizes on the original's aspect
+      ratio, then CSS `object-fit: cover` throws much of it away — two are 1440x2160
+      portraits inside landscape boxes. Cover-cropping the sources before upload would get
+      the set to ~275 KB as AVIF. Diminishing returns at this point.
+- [ ] **The reel still loads before it is seen.** `autoplay` beats `preload="none"`; only an
+      IntersectionObserver that sets `src` on approach would truly defer it. 948 KB, so
+      probably not worth the machinery.
+- [ ] **Verify the Nutrients video on real Safari / iOS.** The HEVC-alpha file is correct by
+      probe (74.9% transparent, matching the source) and the container trick is Apple's own
+      documented pattern, but it has not been opened in Safari itself. If transparency ever
+      shows as an opaque box there, that file is the suspect.
 
 Two smaller ones, neither needing ffmpeg:
 
