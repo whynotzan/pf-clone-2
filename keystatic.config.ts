@@ -28,6 +28,17 @@ export default config({
           directory: "public/images/projects",
           publicPath: "/images/projects/",
         }),
+        // No isRequired and no defaultValue, deliberately. Keystatic's integer
+        // field never populates its validated state from a saved value, so
+        // isRequired would block Save forever on every existing entry (see the
+        // CMS gotchas in AGENTS.md). Empty is also meaningful here: it inherits
+        // the template's own responsive 16/24px rather than pinning a number.
+        bodyGap: fields.integer({
+          label: "Spacing between body blocks (px)",
+          description:
+            "Fixed vertical gap between this project's body images, at every window width. Leave empty to use the default, which is 16px on phones and 24px above that.",
+          validation: { min: 0, max: 400 },
+        }),
         body: fields.array(
           fields.conditional(
             fields.select({

@@ -18,7 +18,12 @@ export function ProjectTemplate({ project }: { project: ProjectData }) {
         <EntryImage image={project.entryImage} />
         <ProjectInfo meta={project.meta} firstDescription={project.firstDescription} />
 
-        <div className="mt-12 flex flex-col gap-4 sm:mt-20 sm:gap-6">
+        {/* A project can pin its own fixed gap; without one the responsive
+            default stands, which is what every project but OCTA LINK uses. */}
+        <div
+          className={`mt-12 flex flex-col sm:mt-20 ${project.bodyGap === null ? "gap-4 sm:gap-6" : ""}`}
+          style={project.bodyGap === null ? undefined : { gap: project.bodyGap }}
+        >
           {project.body.map((item, i) => {
             if (item.type === "media") return <ProjectMedia key={i} block={item.block} />;
             if (item.type === "canvas") return <ProjectCanvas key={i} block={item.block} />;

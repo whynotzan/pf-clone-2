@@ -116,6 +116,8 @@ export interface ProjectData {
   entryImage: EntryImage;
   meta: ProjectMeta;
   firstDescription: string;
+  /** Fixed px gap between body blocks, or null to keep the responsive default. */
+  bodyGap: number | null;
   body: ProjectBodyItem[];
   exitImage: ExitImage;
 }

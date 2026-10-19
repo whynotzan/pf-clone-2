@@ -5,6 +5,7 @@
   "year": "2026",
   "firstDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.",
   "entryImage": "/images/projects/octalink/entryImage.webp",
+  "bodyGap": 48,
   "body": [
     {
       "discriminant": "canvas",

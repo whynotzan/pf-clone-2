@@ -265,6 +265,7 @@ async function toProjectData(
     entryImage: { kind: "image", src: entryImage, ...entryDimensions },
     meta: { client: entry.client, type: entry.type, year: entry.year },
     firstDescription: entry.firstDescription,
+    bodyGap: entry.bodyGap ?? null,
     body,
     exitImage: { kind: "image", src: exitImage, ...exitDimensions },
   };
