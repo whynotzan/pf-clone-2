@@ -54,7 +54,7 @@ export function ExperienceSection() {
               </div>
               {section.heading === "Education" && (
                 <a
-                  href="https://www.dropbox.com/scl/fi/crq3uste4nb7yyx3e6i8j/Zanatta-Alessandro-CV.pdf"
+                  href="https://www.dropbox.com/scl/fo/8gxt6zdavvwwu0rs1aaq9/ACEl4EXcKJOCTWNzn_-XbEc/ALESSANDROZANATTA_ENG.pdf?rlkey=1wgmz5k9817xc17a94qnbshny&e=2&st=omqmh58m&dl=0"
                   target="_blank"
                   rel="noreferrer"
                   style={{ fontSize: 17, fontWeight: 500, display: "block", marginTop: 24, color: "#1b1b1b" }}
