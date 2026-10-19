@@ -5,7 +5,7 @@ import { ScaledCanvas } from "./ScaledCanvas";
 import { getPublishedProjectSlugs } from "@/lib/projects";
 import type { CanvasItem, CanvasPlacement } from "@/types/portfolio";
 
-const CANVAS_HEIGHT = 4810;
+const CANVAS_HEIGHT = 5050;
 
 /**
  * Stopped at 2806, where the original's mobile bio begins, so the bio and CV
@@ -14,7 +14,7 @@ const CANVAS_HEIGHT = 4810;
  * which we render as normal blocks.) Now 3149: OCTA LINK is appended past the
  * original's last item, and the bio moves down by exactly what it needs.
  */
-const MOBILE_CANVAS_HEIGHT = 3149;
+const MOBILE_CANVAS_HEIGHT = 3143;
 
 /**
  * Mobile placements are the original's own, read from its embedded layout table
@@ -39,18 +39,22 @@ const ITEMS: CanvasItem[] = [
   },
   {
     id: "nutrients",
-    kind: "video",
-    // Was a 2.6MB GIF, and the mobile LCP element with it. Next passes animated
-    // GIFs through the optimizer untouched, so the format was the only lever.
-    // Three quarters of the frame is transparent and it overlaps the poster
-    // above it, so plain H.264 was out — hence the alpha pair. 2.6MB -> 748KB.
-    src: "/videos/home/01K6ED322FX5PF204385YMPZ13.webm",
-    sources: [
-      { src: "/videos/home/01K6ED322FX5PF204385YMPZ13.mov", type: "video/quicktime" },
-      { src: "/videos/home/01K6ED322FX5PF204385YMPZ13.webm", type: "video/webm" },
-    ],
+    // Restored from the webm/mov pair commit 3fe8a4e converted it to. The
+    // artwork is large flat areas of saturated red, which is the worst case for
+    // a lossy codec at 4:2:0: the conversion mottled them visibly. Turning the
+    // quality up does not buy it back — CRF 18 moves SSIM 0.940 -> 0.944 for
+    // 732KB -> 2.3MB, because the damage is chroma subsampling, and VP9's alpha
+    // mode cannot do 4:4:4. At 2.3MB the GIF is both smaller and exact.
+    src: "/images/home/01K6ED322FX5PF204385YMPZ13.gif",
     alt: "Nutrients project animation",
     slug: "nutrients",
+    // "eager" rather than "priority", and the difference is worth 12 seconds.
+    // Next passes animated GIFs through unoptimized, so this stays 2.6MB no
+    // matter what, and it is the LCP element on mobile. Left lazy it lands last
+    // in the queue: mobile LCP 18.8s. Marked priority it becomes an eager image
+    // React will hold the first paint for, which cost desktop 1.0s -> 3.1s.
+    // Eager at low fetch priority is the one that wins both — mobile 6.0s,
+    // desktop 1.1s.
     loadStrategy: "eager",
     desktop: { top: 622, left: 655, width: 583, height: 711, zIndex: 32 },
     mobile: { top: 332, left: 54, width: 267, height: 369, zIndex: 326 },
@@ -59,7 +63,7 @@ const ITEMS: CanvasItem[] = [
     id: "coming-soon",
     src: "",
     alt: "",
-    desktop: { top: 2684, left: 1043, width: 105, height: 25, zIndex: 48 },
+    desktop: { top: 3534, left: 1043, width: 105, height: 25, zIndex: 48 },
     mobile: { top: 675, left: 262, width: 105, height: 25, zIndex: 328 },
   },
   {
@@ -77,43 +81,43 @@ const ITEMS: CanvasItem[] = [
     poster: "/images/home/01KAVH6HP6ZK57SPGRTM885Q7M.jpeg",
     alt: "Bella che ti Spiazza project video reel",
     slug: "bella",
-    desktop: { top: 1484, left: 898, width: 371, height: 464, zIndex: 43, rotate: -10 },
+    desktop: { top: 2334, left: 898, width: 371, height: 464, zIndex: 43, rotate: -10 },
     // The original tilts this one the other way on mobile.
-    mobile: { top: 1050, left: 65, width: 244, height: 272, zIndex: 324, rotate: 10 },
+    mobile: { top: 1387, left: 65, width: 244, height: 272, zIndex: 324, rotate: 10 },
   },
   {
     id: "miche",
     src: "/images/home/01K7J9GXPKRC6EHA66C8E3TMWC.webp",
     alt: "Miche project photo",
     slug: "miche",
-    desktop: { top: 1801, left: 632, width: 557, height: 557, zIndex: 10, borderRadius: 9999 },
+    desktop: { top: 2651, left: 632, width: 557, height: 557, zIndex: 10, borderRadius: 9999 },
     // 0.2146 of the layout width resolves to ~80px here, well short of the half
     // that would round it off — a rounded square on mobile, a circle on desktop.
-    mobile: { top: 1360, left: 37, width: 301, height: 301, zIndex: 207, borderRadius: 80 },
+    mobile: { top: 1697, left: 37, width: 301, height: 301, zIndex: 207, borderRadius: 80 },
   },
   {
     id: "anselmi",
     src: "/images/home/01K7H4E2QYKQSFEAY19RKRPFWJ.png",
     alt: "Anselmi project",
     slug: "anselmi",
-    desktop: { top: 2204, left: 508, width: 570, height: 433, zIndex: 26 },
-    mobile: { top: 1672, left: 18, width: 338, height: 257, zIndex: 220 },
+    desktop: { top: 3054, left: 508, width: 570, height: 433, zIndex: 26 },
+    mobile: { top: 2009, left: 18, width: 338, height: 257, zIndex: 220 },
   },
   {
     id: "coming-soon-project",
     src: "/images/home/01K7CH55PWQR15RV07GT255G67.webp",
     // Unlinked on the original: this is the project the COMING SOON label marks.
     alt: "Unannounced project",
-    desktop: { top: 2403, left: 757, width: 611, height: 599, zIndex: 29 },
-    mobile: { top: 1908, left: 41, width: 293, height: 288, zIndex: 217 },
+    desktop: { top: 3253, left: 757, width: 611, height: 599, zIndex: 29 },
+    mobile: { top: 2245, left: 41, width: 293, height: 288, zIndex: 217 },
   },
   {
     id: "visualgroup",
     src: "/images/home/01K7J8RZ7BY2Z2QGC84N1D65G7.webp",
     alt: "Visual Group project",
     slug: "visualgroup",
-    desktop: { top: 2860, left: 558, width: 560, height: 588, zIndex: 28 },
-    mobile: { top: 2218, left: 50, width: 275, height: 302, zIndex: 218 },
+    desktop: { top: 3710, left: 558, width: 560, height: 588, zIndex: 28 },
+    mobile: { top: 2555, left: 50, width: 275, height: 302, zIndex: 218 },
   },
   {
     id: "attivaservizi",
@@ -122,8 +126,8 @@ const ITEMS: CanvasItem[] = [
     slug: "attivaservizi",
     // The original declares 934.572px here; the browser clamps it against the
     // box, so keeping the declared value reproduces the same rounded shape.
-    desktop: { top: 3327, left: 784, width: 539, height: 413, zIndex: 27, borderRadius: 935 },
-    mobile: { top: 2544, left: 50, width: 275, height: 188, zIndex: 206, borderRadius: 235 },
+    desktop: { top: 4177, left: 784, width: 539, height: 413, zIndex: 27, borderRadius: 935 },
+    mobile: { top: 2881, left: 50, width: 275, height: 188, zIndex: 206, borderRadius: 235 },
   },
   {
     id: "octalink",
@@ -146,8 +150,8 @@ const ITEMS: CanvasItem[] = [
     // this is a project the original never had, so there is no recorded
     // coordinate to transcribe. Centre ~850 continues the left/right swing the
     // existing items make, and the 450px step between tops is their own rhythm.
-    desktop: { top: 3790, left: 570, width: 560, height: 560, zIndex: 25 },
-    mobile: { top: 2800, left: 50, width: 275, height: 275, zIndex: 219 },
+    desktop: { top: 1711, left: 570, width: 560, height: 560, zIndex: 25 },
+    mobile: { top: 1062, left: 50, width: 275, height: 275, zIndex: 219 },
   },
 ];
 
