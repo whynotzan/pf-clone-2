@@ -151,7 +151,7 @@
 
 .canvas-root {
   --canvas-w: 375;
-  --canvas-h: 2806;
+  --canvas-h: 3149;
 }
 
 .canvas-item {
@@ -175,7 +175,7 @@
 @media (min-width: 1024px) {
   .canvas-root {
     --canvas-w: 1492;
-    --canvas-h: 4200;
+    --canvas-h: 4810;
   }
 
   .canvas-item {

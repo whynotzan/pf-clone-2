@@ -5,15 +5,16 @@ import { ScaledCanvas } from "./ScaledCanvas";
 import { getPublishedProjectSlugs } from "@/lib/projects";
 import type { CanvasItem, CanvasPlacement } from "@/types/portfolio";
 
-const CANVAS_HEIGHT = 4200;
+const CANVAS_HEIGHT = 4810;
 
 /**
- * Stops where the original's mobile bio begins (its item sits at top 2806 of
- * the 375px canvas), so the bio and CV flow straight on underneath rather than
- * after a gap. The original's own mobile section runs to 3926, but the rest of
- * that height is the bio and CV, which we render as normal blocks.
+ * Stopped at 2806, where the original's mobile bio begins, so the bio and CV
+ * flowed straight on underneath rather than after a gap. (The original's own
+ * mobile section runs to 3926, but the rest of that height is the bio and CV,
+ * which we render as normal blocks.) Now 3149: OCTA LINK is appended past the
+ * original's last item, and the bio moves down by exactly what it needs.
  */
-const MOBILE_CANVAS_HEIGHT = 2806;
+const MOBILE_CANVAS_HEIGHT = 3149;
 
 /**
  * Mobile placements are the original's own, read from its embedded layout table
@@ -123,6 +124,30 @@ const ITEMS: CanvasItem[] = [
     // box, so keeping the declared value reproduces the same rounded shape.
     desktop: { top: 3327, left: 784, width: 539, height: 413, zIndex: 27, borderRadius: 935 },
     mobile: { top: 2544, left: 50, width: 275, height: 188, zIndex: 206, borderRadius: 235 },
+  },
+  {
+    id: "octalink",
+    kind: "video",
+    // ProRes 4444 at 1450x1450, and the alpha is doing the work: the artwork is
+    // a halftone ring whose gaps are transparent, so ~98% of the frame is. That
+    // rules out plain H.264 exactly as it did for Nutrients, and wants the same
+    // pair — VP9-in-WebM for Chromium and Firefox, HEVC-in-QuickTime for Safari.
+    // Chromium decodes HEVC but not its alpha, so declaring the .mov as
+    // video/quicktime is what makes it skip past and take the WebM. 35MB -> 220KB
+    // (WebM) / 964KB (HEVC), encoded at 1120px for a 560px tile at 2x.
+    src: "/videos/home/octalink.webm",
+    sources: [
+      { src: "/videos/home/octalink.mov", type: "video/quicktime" },
+      { src: "/videos/home/octalink.webm", type: "video/webm" },
+    ],
+    alt: "OCTA LINK project animation",
+    slug: "octalink",
+    // Appended below the original's last item rather than placed among them:
+    // this is a project the original never had, so there is no recorded
+    // coordinate to transcribe. Centre ~850 continues the left/right swing the
+    // existing items make, and the 450px step between tops is their own rhythm.
+    desktop: { top: 3790, left: 570, width: 560, height: 560, zIndex: 25 },
+    mobile: { top: 2800, left: 50, width: 275, height: 275, zIndex: 219 },
   },
 ];
 
