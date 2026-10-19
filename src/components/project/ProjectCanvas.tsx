@@ -93,6 +93,11 @@ function renderContent(item: ProjectCanvasItem) {
       return (
         <iframe
           className="project-canvas-media"
+          // Below 1024 the media stacks at full width with `height: auto`, and an
+          // iframe has no intrinsic ratio to fall back on: it took the browser's
+          // 150px default and letterboxed the video. The authored box gives it
+          // one; on desktop both dimensions are set, so this is ignored.
+          style={{ aspectRatio: `${item.width} / ${item.height ?? (item.width * 9) / 16}` }}
           src={`https://www.youtube-nocookie.com/embed/${item.src}`}
           title="Embedded video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

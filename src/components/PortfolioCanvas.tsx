@@ -6,31 +6,31 @@ import { getPublishedProjectSlugs } from "@/lib/projects";
 import type { CanvasItem, CanvasPlacement } from "@/types/portfolio";
 
 /**
- * 86px past Visual Group's bottom edge (3814), which with `--canvas-tail` in
- * `globals.css` puts the CV ~100px below it at any window height. Was 4274,
- * which left the CV adrift.
+ * 40px past Visual Group's bottom edge (3363), which with `--canvas-tail` in
+ * `globals.css` puts the CV ~60px below it at any window height.
  */
-const CANVAS_HEIGHT = 3900;
+const CANVAS_HEIGHT = 3403;
 
 /**
- * Stopped at 2806, where the original's mobile bio begins, so the bio and CV
- * flowed straight on underneath rather than after a gap. (The original's own
- * mobile section runs to 3926, but the rest of that height is the bio and CV,
- * which we render as normal blocks.) Now 3149: OCTA LINK is appended past the
- * original's last item, and the bio moves down by exactly what it needs.
+ * Where the mobile bio begins, 40px past Visual Group's bottom edge (2273), so
+ * the bio and CV flow straight on underneath. (The original's own mobile
+ * section runs on to 3926, but the rest of that height is the bio and CV, which
+ * we render as normal blocks.)
  */
-const MOBILE_CANVAS_HEIGHT = 2664;
+const MOBILE_CANVAS_HEIGHT = 2313;
 
 /**
  * Mobile placements are the original's own, read from its embedded layout table
  * and multiplied by the 375px reference width.
  *
  * Slugs are likewise the original's real link targets, read from `link.url` in
- * that same table rather than inferred from the artwork — three had been guessed
- * wrong: the video reel is Bella, not Meller; the gif is Nutrients; and the item
- * at 2403 is the unannounced project the COMING SOON label sits on, which the
- * original leaves unlinked. Each becomes a link only once its project renders,
- * so adding one needs no change here.
+ * that same table rather than inferred from the artwork — two had been guessed
+ * wrong: the video reel is Bella, not Meller, and the gif is Nutrients. Each
+ * becomes a link only once its project renders, so adding one needs no change
+ * here.
+ *
+ * The original's unannounced Istituto Galilei project and the COMING SOON label
+ * on it are deliberately dropped; Visual Group takes over its place.
  */
 const ITEMS: CanvasItem[] = [
   {
@@ -63,13 +63,6 @@ const ITEMS: CanvasItem[] = [
     loadStrategy: "eager",
     desktop: { top: 622, left: 655, width: 583, height: 711, zIndex: 32 },
     mobile: { top: 332, left: 54, width: 267, height: 369, zIndex: 326 },
-  },
-  {
-    id: "coming-soon",
-    src: "",
-    alt: "",
-    desktop: { top: 3050, left: 1043, width: 105, height: 25, zIndex: 48 },
-    mobile: { top: 675, left: 262, width: 105, height: 25, zIndex: 328 },
   },
   {
     id: "matteomeller",
@@ -109,20 +102,15 @@ const ITEMS: CanvasItem[] = [
     mobile: { top: 1742, left: 18, width: 338, height: 257, zIndex: 220 },
   },
   {
-    id: "coming-soon-project",
-    src: "/images/home/01K7CH55PWQR15RV07GT255G67.webp",
-    // Unlinked on the original: this is the project the COMING SOON label marks.
-    alt: "Unannounced project",
-    desktop: { top: 2769, left: 757, width: 611, height: 599, zIndex: 29 },
-    mobile: { top: 1978, left: 41, width: 293, height: 288, zIndex: 217 },
-  },
-  {
     id: "visualgroup",
     src: "/images/home/01K7J8RZ7BY2Z2QGC84N1D65G7.webp",
     alt: "Visual Group project",
     slug: "visualgroup",
-    desktop: { top: 3226, left: 558, width: 560, height: 588, zIndex: 28 },
-    mobile: { top: 2288, left: 50, width: 275, height: 302, zIndex: 218 },
+    // Centred where the dropped Istituto Galilei project stood (desktop 2769 /
+    // 757, 611x599; mobile 1978 / 41, 293x288), so the collage closes up
+    // instead of leaving its hole.
+    desktop: { top: 2775, left: 783, width: 560, height: 588, zIndex: 28 },
+    mobile: { top: 1971, left: 50, width: 275, height: 302, zIndex: 218 },
   },
   {
     id: "octalink",
@@ -179,24 +167,6 @@ function placementVars(item: CanvasItem): CSSProperties {
 }
 
 function Item({ item, href }: { item: CanvasItem; href?: string }) {
-  if (item.id === "coming-soon") {
-    return (
-      <div
-        className="canvas-item"
-        style={{
-          ...placementVars(item),
-          fontSize: 16,
-          fontWeight: 500,
-          letterSpacing: "0.05em",
-          color: "#1b1b1b",
-          whiteSpace: "nowrap",
-        }}
-      >
-        COMING SOON
-      </div>
-    );
-  }
-
   // The original rotates the asset inside its positioned wrapper, so the tilt
   // pivots on the item's centre and leaves the recorded top/left untouched.
   const media =
@@ -273,7 +243,7 @@ export async function PortfolioCanvas() {
   return (
     <div
       // `isolation` keeps the items' z-indices inside their own stacking
-      // context. Without it the tallest of them (coming-soon at 48, the poster
+      // context. Without it the tallest of them (OCTA LINK at 44, the poster
       // at 42) paint straight over the CV panel's z-30 as it sticks into view.
       className="canvas-root relative w-full"
       style={{

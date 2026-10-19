@@ -151,7 +151,7 @@
 
 .canvas-root {
   --canvas-w: 375;
-  --canvas-h: 2664;
+  --canvas-h: 2313;
   --canvas-tail: 0px;
 }
 
@@ -176,7 +176,7 @@
 @media (min-width: 1024px) {
   .canvas-root {
     --canvas-w: 1492;
-    --canvas-h: 3900;
+    --canvas-h: 3403;
     /* The CV panel sticks at mid-viewport, so at the end of the page it sits
        this far above where the canvas puts it. Adding the same amount here
        keeps the gap between the last poster and the CV fixed at every window
