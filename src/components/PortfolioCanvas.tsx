@@ -5,7 +5,7 @@ import { ScaledCanvas } from "./ScaledCanvas";
 import { getPublishedProjectSlugs } from "@/lib/projects";
 import type { CanvasItem, CanvasPlacement } from "@/types/portfolio";
 
-const CANVAS_HEIGHT = 5050;
+const CANVAS_HEIGHT = 4274;
 
 /**
  * Stopped at 2806, where the original's mobile bio begins, so the bio and CV
@@ -14,7 +14,7 @@ const CANVAS_HEIGHT = 5050;
  * which we render as normal blocks.) Now 3149: OCTA LINK is appended past the
  * original's last item, and the bio moves down by exactly what it needs.
  */
-const MOBILE_CANVAS_HEIGHT = 3143;
+const MOBILE_CANVAS_HEIGHT = 2664;
 
 /**
  * Mobile placements are the original's own, read from its embedded layout table
@@ -63,7 +63,7 @@ const ITEMS: CanvasItem[] = [
     id: "coming-soon",
     src: "",
     alt: "",
-    desktop: { top: 3534, left: 1043, width: 105, height: 25, zIndex: 48 },
+    desktop: { top: 3050, left: 1043, width: 105, height: 25, zIndex: 48 },
     mobile: { top: 675, left: 262, width: 105, height: 25, zIndex: 328 },
   },
   {
@@ -81,53 +81,43 @@ const ITEMS: CanvasItem[] = [
     poster: "/images/home/01KAVH6HP6ZK57SPGRTM885Q7M.jpeg",
     alt: "Bella che ti Spiazza project video reel",
     slug: "bella",
-    desktop: { top: 2334, left: 898, width: 371, height: 464, zIndex: 43, rotate: -10 },
+    desktop: { top: 1850, left: 898, width: 371, height: 464, zIndex: 43, rotate: -10 },
     // The original tilts this one the other way on mobile.
-    mobile: { top: 1387, left: 65, width: 244, height: 272, zIndex: 324, rotate: 10 },
+    mobile: { top: 1120, left: 65, width: 244, height: 272, zIndex: 324, rotate: 10 },
   },
   {
     id: "miche",
     src: "/images/home/01K7J9GXPKRC6EHA66C8E3TMWC.webp",
     alt: "Miche project photo",
     slug: "miche",
-    desktop: { top: 2651, left: 632, width: 557, height: 557, zIndex: 10, borderRadius: 9999 },
+    desktop: { top: 2167, left: 632, width: 557, height: 557, zIndex: 10, borderRadius: 9999 },
     // 0.2146 of the layout width resolves to ~80px here, well short of the half
     // that would round it off — a rounded square on mobile, a circle on desktop.
-    mobile: { top: 1697, left: 37, width: 301, height: 301, zIndex: 207, borderRadius: 80 },
+    mobile: { top: 1430, left: 37, width: 301, height: 301, zIndex: 207, borderRadius: 80 },
   },
   {
     id: "anselmi",
     src: "/images/home/01K7H4E2QYKQSFEAY19RKRPFWJ.png",
     alt: "Anselmi project",
     slug: "anselmi",
-    desktop: { top: 3054, left: 508, width: 570, height: 433, zIndex: 26 },
-    mobile: { top: 2009, left: 18, width: 338, height: 257, zIndex: 220 },
+    desktop: { top: 2570, left: 508, width: 570, height: 433, zIndex: 26 },
+    mobile: { top: 1742, left: 18, width: 338, height: 257, zIndex: 220 },
   },
   {
     id: "coming-soon-project",
     src: "/images/home/01K7CH55PWQR15RV07GT255G67.webp",
     // Unlinked on the original: this is the project the COMING SOON label marks.
     alt: "Unannounced project",
-    desktop: { top: 3253, left: 757, width: 611, height: 599, zIndex: 29 },
-    mobile: { top: 2245, left: 41, width: 293, height: 288, zIndex: 217 },
+    desktop: { top: 2769, left: 757, width: 611, height: 599, zIndex: 29 },
+    mobile: { top: 1978, left: 41, width: 293, height: 288, zIndex: 217 },
   },
   {
     id: "visualgroup",
     src: "/images/home/01K7J8RZ7BY2Z2QGC84N1D65G7.webp",
     alt: "Visual Group project",
     slug: "visualgroup",
-    desktop: { top: 3710, left: 558, width: 560, height: 588, zIndex: 28 },
-    mobile: { top: 2555, left: 50, width: 275, height: 302, zIndex: 218 },
-  },
-  {
-    id: "attivaservizi",
-    src: "/images/home/01K7CHHJ966KN521QRZEA3GEW7.webp",
-    alt: "Attiva Servizi project",
-    slug: "attivaservizi",
-    // The original declares 934.572px here; the browser clamps it against the
-    // box, so keeping the declared value reproduces the same rounded shape.
-    desktop: { top: 4177, left: 784, width: 539, height: 413, zIndex: 27, borderRadius: 935 },
-    mobile: { top: 2881, left: 50, width: 275, height: 188, zIndex: 206, borderRadius: 235 },
+    desktop: { top: 3226, left: 558, width: 560, height: 588, zIndex: 28 },
+    mobile: { top: 2288, left: 50, width: 275, height: 302, zIndex: 218 },
   },
   {
     id: "octalink",
@@ -150,8 +140,8 @@ const ITEMS: CanvasItem[] = [
     // this is a project the original never had, so there is no recorded
     // coordinate to transcribe. Centre ~850 continues the left/right swing the
     // existing items make, and the 450px step between tops is their own rhythm.
-    desktop: { top: 1711, left: 570, width: 560, height: 560, zIndex: 25 },
-    mobile: { top: 1062, left: 50, width: 275, height: 275, zIndex: 219 },
+    desktop: { top: 1540, left: 570, width: 460, height: 460, zIndex: 44 },
+    mobile: { top: 950, left: 50, width: 230, height: 230, zIndex: 327 },
   },
 ];
 
