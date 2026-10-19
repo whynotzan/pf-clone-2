@@ -138,20 +138,6 @@
           }
         ]
       }
-    },
-    {
-      "discriminant": "media",
-      "value": {
-        "columns": 1,
-        "gap": 24,
-        "fullBleed": false,
-        "assets": [
-          {
-            "kind": "image",
-            "image": "/images/projects/octalink/body/9/value/assets/0/image.webp"
-          }
-        ]
-      }
     }
   ],
   "exitImage": "/images/projects/octalink/exitImage.webp"
