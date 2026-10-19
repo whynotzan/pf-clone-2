@@ -1,0 +1,157 @@
+{
+  "name": "OCTA LINK",
+  "client": "CMS",
+  "type": "Motion Design",
+  "year": "2026",
+  "firstDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.",
+  "entryImage": "/images/projects/octalink/entryImage.webp",
+  "body": [
+    {
+      "discriminant": "canvas",
+      "value": {
+        "height": 685,
+        "items": [
+          {
+            "kind": "youtube",
+            "youtubeUrl": "",
+            "top": 0,
+            "left": 137,
+            "width": 1217,
+            "height": 685,
+            "rotate": 0,
+            "zIndex": 1,
+            "fontSize": 22,
+            "fontWeight": "400"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/1/value/assets/0/image.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/2/value/assets/0/image.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/3/value/assets/0/image.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/4/value/assets/0/image.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/5/value/assets/0/image.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/6/value/assets/0/image.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/7/value/assets/0/image.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/8/value/assets/0/image.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "media",
+      "value": {
+        "columns": 1,
+        "gap": 24,
+        "fullBleed": false,
+        "assets": [
+          {
+            "kind": "image",
+            "image": "/images/projects/octalink/body/9/value/assets/0/image.webp"
+          }
+        ]
+      }
+    }
+  ],
+  "exitImage": "/images/projects/octalink/exitImage.webp"
+}

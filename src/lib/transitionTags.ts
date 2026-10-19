@@ -16,6 +16,7 @@ const TAGS: Record<string, string> = {
   "/anselmi": "Anselmi",
   "/visualgroup": "Visual Group",
   "/attivaservizi": "Attiva Servizi",
+  "/octalink": "OCTA LINK",
 };
 
 const FALLBACK = "Alessandro Zanatta";
