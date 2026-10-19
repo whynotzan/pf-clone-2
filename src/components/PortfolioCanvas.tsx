@@ -5,7 +5,12 @@ import { ScaledCanvas } from "./ScaledCanvas";
 import { getPublishedProjectSlugs } from "@/lib/projects";
 import type { CanvasItem, CanvasPlacement } from "@/types/portfolio";
 
-const CANVAS_HEIGHT = 4274;
+/**
+ * 86px past Visual Group's bottom edge (3814), which with `--canvas-tail` in
+ * `globals.css` puts the CV ~100px below it at any window height. Was 4274,
+ * which left the CV adrift.
+ */
+const CANVAS_HEIGHT = 3900;
 
 /**
  * Stopped at 2806, where the original's mobile bio begins, so the bio and CV
@@ -136,11 +141,10 @@ const ITEMS: CanvasItem[] = [
     ],
     alt: "OCTA LINK project animation",
     slug: "octalink",
-    // Appended below the original's last item rather than placed among them:
-    // this is a project the original never had, so there is no recorded
-    // coordinate to transcribe. Centre ~850 continues the left/right swing the
-    // existing items make, and the 450px step between tops is their own rhythm.
-    desktop: { top: 1540, left: 570, width: 460, height: 460, zIndex: 44 },
+    // A project the original never had, so there is no recorded coordinate to
+    // transcribe. Centre ~935 sits halfway across between Matteo Meller (~794)
+    // above it and Bella (~1083) below, continuing their left/right swing.
+    desktop: { top: 1540, left: 705, width: 460, height: 460, zIndex: 44 },
     mobile: { top: 950, left: 50, width: 230, height: 230, zIndex: 327 },
   },
 ];
@@ -274,7 +278,7 @@ export async function PortfolioCanvas() {
       className="canvas-root relative w-full"
       style={{
         isolation: "isolate",
-        height: "calc(var(--canvas-h) / var(--canvas-w) * 100vw)",
+        height: "calc(var(--canvas-h) / var(--canvas-w) * 100vw + var(--canvas-tail, 0px))",
       }}
     >
       <ScaledCanvas>

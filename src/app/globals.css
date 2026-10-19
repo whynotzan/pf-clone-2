@@ -152,6 +152,7 @@
 .canvas-root {
   --canvas-w: 375;
   --canvas-h: 2664;
+  --canvas-tail: 0px;
 }
 
 .canvas-item {
@@ -175,7 +176,12 @@
 @media (min-width: 1024px) {
   .canvas-root {
     --canvas-w: 1492;
-    --canvas-h: 4274;
+    --canvas-h: 3900;
+    /* The CV panel sticks at mid-viewport, so at the end of the page it sits
+       this far above where the canvas puts it. Adding the same amount here
+       keeps the gap between the last poster and the CV fixed at every window
+       height; without it, tall windows slid the panel over Visual Group. */
+    --canvas-tail: max(0px, 50vh - 170px);
   }
 
   .canvas-item {
